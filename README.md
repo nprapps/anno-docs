@@ -29,8 +29,8 @@ Debates
 * [Install web services](#install-web-services)
 * [Run a remote fab command](#run-a-remote-fab-command)
 * [Report analytics](#report-analytics)
-* [License and credits](#license-credits)
-* [Additional contributors](#contributors)
+* [License and credits](#license-and-credits)
+* [Additional contributors](#additional-contributors)
 
 What is this?
 -------------
