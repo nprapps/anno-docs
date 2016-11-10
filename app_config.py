@@ -276,13 +276,19 @@ def configure_targets(deployment_target):
         TRANSCRIPT_GDOC_KEY = '1yIAJWnZGKvgxXRXMObUHeRleWA1mBsgrQhSdwOm7EFc'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
+        # Override S3_BASE_URL to use another port locally for fab app
         try:
-            # Override S3_BASE_URL to use another port locally for fab app
             from local_settings import S3_BASE_URL
-            # Override TRANSCRIPT_GDOC_KEY to point to a different google doc
+        except ImportError:
+            pass
+        # Override TRANSCRIPT_GDOC_KEY to point to a different google doc
+        try:
             from local_settings import TRANSCRIPT_GDOC_KEY
-            # Override GAS_LOG_KEY to point to a different google app script log
-            from local_settings import GAS_LOG_KEY
+        except ImportError:
+            pass
+        # Override GAS_LOG_KEY to point to a different google app script log
+        try:
+            from local_settings import S3_BASE_URL
         except ImportError:
             pass
 
