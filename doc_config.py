@@ -233,5 +233,12 @@ FACT_CHECKERS = {
         "role": "NPR National Desk Correspondent/Covers Voting",
         "page": "http://www.npr.org/people/2100470/pam-fessler",
         "img": "http://media.npr.org/assets/img/2012/01/03/pamfessier_7_sq-8734f0373778e5331a608257afa3370572680347-s200-c85.jpg",
+    },
+    "nt": {
+        "initials": "nt",
+        "name": "Nina Totenberg",
+        "role": "NPR Legal Affairs Correspondent",
+        "page": "http://www.npr.org/people/2101289/nina-totenberg",
+        "img": "http://media.npr.org/assets/img/2016/10/31/20160915_nina_totenberg-30-retouched_sq-b392c67217a68a7c32bb2a3b2a30a2524a713797-s200-c85.jpg"
     }
 }
