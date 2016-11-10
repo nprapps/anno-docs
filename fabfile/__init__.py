@@ -14,6 +14,7 @@ import app_config
 
 # Other fabfiles
 import assets
+import daemons
 import data
 import flat
 import render
