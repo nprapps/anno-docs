@@ -1,3 +1,4 @@
+# _*_ coding:utf-8 _*_
 # Speaker information coming from the transcript
 #
 # Example:
@@ -10,6 +11,11 @@ SPEAKERS = {
     'MIKE PENCE': 'speaker gop'
 }
 
+# Fact checker information for each annotation
+#
+# Example:
+#   NPR: dm-content-slug TKTKTKTK
+#
 FACT_CHECKERS = {
     "dm": {
         "initials": "dm",
