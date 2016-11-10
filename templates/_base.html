@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>{{ COPY.content.project_name }}</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+
+    {% block extra_head %}
+    {% endblock extra_head %}
+
+    <style>
+        body {
+            font: 14px/1.4 Helvetica, Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            font-size: 20px;
+            margin: 0;
+        }
+        h2 {
+            font-size: 14px;
+            margin: 0 0 11px 0;
+        }
+        a, a:link,
+        a:visited {
+            color: #4774CC;
+            text-decoration: none;
+        }
+        a:hover,
+        a:active {
+            color: #bccae5;
+        }
+        a.btn {
+            font-size: 12px;
+            line-height: 28px;
+            margin: 0;
+            float: left;
+            padding: 0 11px;
+            border-radius: 4px;
+            background-color: #f7f7f7;
+            font-weight: bold;
+            -webkit-font-smoothing: antialiased;
+        }
+        a.btn:hover,
+        a.btn:active {
+            background-color: #fff;
+        }
+
+
+        /* Header */
+        .parent-header {
+            background-color: #ebebeb;
+            position: fixed;
+            top: 0px;
+            width: 100%;
+            height: 40px;
+            padding: 10px 5px 0 5px;
+            overflow: hidden;
+        }
+        .parent-header:after { clear: both; }
+        .parent-header .segment {
+            float: left;
+            padding-left: 5px;
+            padding-right: 5px;
+            white-space: nowrap;
+        }
+        .parent-header .right {
+            float: right;
+            margin-right: 15px;
+        }
+        .localhost,
+        a.localhost,
+        a.localhost:visited {
+            color: green;
+        }
+        .staging,
+        a.staging,
+        a.staging:visited {
+            color: orange;
+        }
+        .production,
+        a.production,
+        a.production:visited {
+            color: red;
+        }
+        .resize {
+            background-color: white;
+        }
+        /* Content */
+        .content {
+            margin: 60px 10px 10px 10px;
+        }
+
+        textarea {
+            display: block;
+            margin-bottom: 20px;
+        }
+        #preview-wrapper {
+            border: 2px dashed #ddd;
+            margin-bottom: 20px;
+    }
+
+    </style>
+
+</head>
+<body>
+    <header class="parent-header">
+        <div class="segment">
+            <h1 class="{{ DEPLOYMENT_TARGET or 'localhost' }}">{{ DEPLOYMENT_TARGET or 'localhost' }}</h1>
+        </div>
+
+        <div class="segment">
+            <a id="resize-sidebar" class="btn" href="#">Sidebar (180px)</a>
+        </div>
+
+        <div class="segment">
+            <a id="resize-mobile" class="btn" href="#">Mobile (300px)</a>
+        </div>
+
+        <div class="segment">
+            <a id="resize-desktop" class="btn" href="#">Desktop (730px)</a>
+        </div>
+
+        <div class="segment">
+            <a id="resize-fluid" class="btn" href="#">Fluid (100%)</a>
+        </div>
+
+        <div class="right">
+
+            {% if DEPLOYMENT_TARGET != "production" %}
+                {% if DEPLOYMENT_TARGET != None %}
+                <div class="segment">
+                    <a class="btn localhost" href="http://localhost:8000/">localhost &raquo;</a>
+                </div>
+                {% endif %}
+
+                {% if DEPLOYMENT_TARGET != 'staging' %}
+                <div class="segment">
+                    <a class="btn staging" href="http://stage-apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">staging &raquo;</a>
+                </div>
+                {% endif %}
+
+                {% if DEPLOYMENT_TARGET != 'production' %}
+                <div class="segment">
+                    <a class="btn production" href="http://apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">production &raquo;</a>
+                </div>
+                {% endif %}
+            {% endif %}
+        </div>
+    </header>
+
+
+    <div class="content">
+        {% block content %}
+        {% endblock content %}
+
+        <h2><span class="production">Production</span> embed code (for Seamus)</h2>
+        <textarea readonly="readonly" rows="10" cols="50">
+<div id="responsive-embed-{{ CURRENT_DEBATE }}"></div>
+<script type=text/javascript>
+    (function(jQuery) {
+        if (typeof jQuery !== 'undefined' && typeof jQuery.getScript === 'function') {
+            // messaging functionality
+            var sendOnScreen = function(id) {
+                // TODO: Improve hack
+                // Ignore events to empty embeds, keeps listening after unloading the page
+                if (this.el.getElementsByTagName('iframe').length !== 0) {
+                    this.sendMessage('on-screen', id);
+                }
+            };
+            var sendViewportHeight = function() {
+                var height = window.innerHeight || document.documentElement.clientHeight;
+                if (this.el.getElementsByTagName('iframe').length !== 0) {
+                    this.sendMessage('viewport-height', height);
+                }
+            };
+            var onTestVisibilityTracker = function() {
+                var id = location.hash;
+                if (this.el.getElementsByTagName('iframe').length !== 0) {
+                    this.sendMessage('visibility-available', id);
+                }
+            };
+            var onRemoveTracker = function(id) {
+                this.trackers[id].stopTracking();
+                delete this.trackers[id];
+            };
+            var onNewFactCheck = function(local_tracker, id) {
+                // Config to override default timing parameters on the visibility tracker
+                //
+                //    WAIT_TO_ENSURE_SCROLLING_IS_DONE: 40,
+                //    WAIT_TO_MARK_READ: 500,
+                //    ANIMATION_DURATION: 800
+                //
+                var config = {};
+
+                if (local_tracker) {
+                    var t = new local_tracker.VisibilityTracker(this, id, sendOnScreen.bind(this, id), config);
+                    this.trackers[id] = t;
+                } else {
+                    var tracker = new window.ChildTracker.VisibilityTracker(this, id, sendOnScreen.bind(this, id), config);
+                    this.trackers[id] = tracker;
+                }
+            };
+
+            // add randomness to id to support for multiple graphic instances in one story
+            var el = document.getElementById("responsive-embed-{{ CURRENT_DEBATE }}");
+            el.id = el.id + "-" + Math.random().toString(36).substr(2,5);
+            jQuery.getScript("//pym.nprapps.org/pym.v1.min.js").done(function () {
+                jQuery(function () { // Wait for page load
+                    var pymParent = new pym.Parent(
+                        el.id,
+                        'http://apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html',
+                        {
+                            id: 'transcript-embed'
+                        }
+                    );
+                    jQuery.getScript("//carebot.nprapps.org/child-tracker.v1.min.js").done(function () {
+                        pymParent.trackers = {};
+                        pymParent.onMessage('test-visibility-tracker', onTestVisibilityTracker);
+                        pymParent.onMessage('remove-tracker', onRemoveTracker);
+                        pymParent.onMessage('new-fact-check', onNewFactCheck.bind(pymParent, null));
+                        pymParent.onMessage('get-viewport-height', sendViewportHeight);
+                        // Check for resize and send updated viewport height to the child
+                        window.addEventListener('resize', sendViewportHeight.bind(pymParent));
+                    });
+                });
+            });
+        } else {
+            console.error('could not load graphic: jQuery is not on the page.');
+        }
+    })(window.jQuery);
+</script>
+        </textarea>
+
+        <h2><span class="production">Production</span> autoinit embed code for member stations</h2>
+
+<!-- textarea contents -->
+    <textarea readonly="readonly" rows="10" cols="50">
+<p data-pym-src="http://{{ PRODUCTION_S3_BUCKET }}/{{ CURRENT_DEBATE }}/child.html">Loading...</p><script src="//pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
+    </textarea>
+<!-- end textarea contents -->
+    </div>
+
+    <script type="text/javascript">
+        var resizeSidebarEl = document.querySelector('#resize-sidebar');
+        var resizeMobileEl = document.querySelector('#resize-mobile');
+        var resizeDesktopEl = document.querySelector('#resize-desktop');
+        var resizeFluidEl = document.querySelector('#resize-fluid');
+        var previewWrapperEl = document.querySelector('#preview-wrapper');
+        resizeSidebarEl.addEventListener('click', function(e) {
+            e.preventDefault();
+            previewWrapperEl.style.width = '180px';
+            pymParent.sendWidth();
+            window.location.hash = 'sidebar';
+        });
+        resizeMobileEl.addEventListener('click', function(e) {
+            e.preventDefault();
+            previewWrapperEl.style.width = '300px';
+            pymParent.sendWidth();
+            window.location.hash = 'mobile';
+        });
+        resizeDesktopEl.addEventListener('click', function(e) {
+            e.preventDefault();
+            previewWrapperEl.style.width = '730px';
+            pymParent.sendWidth();
+            window.location.hash = 'desktop';
+        });
+        resizeFluidEl.addEventListener('click', function(e) {
+            e.preventDefault();
+            previewWrapperEl.style.width = '100%';
+            pymParent.sendWidth();
+            window.location.hash = 'fluid';
+        });
+        if (window.location.hash == '#sidebar') {
+            previewWrapperEl.style.width = '180px';
+        } else if (window.location.hash == '#mobile') {
+            previewWrapperEl.style.width = '300px';
+        } else if (window.location.hash == '#desktop') {
+            previewWrapperEl.style.width = '730px';
+        } else if (window.location.hash == '#fluid') {
+            previewWrapperEl.style.width = '100%';
+        }
+    </script>
+{% if AUTOINIT_LOADER %}
+    <script src="//pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
+{% else %}
+    <script src="//pym.nprapps.org/pym.v1.min.js" type="text/javascript"></script>
+    <script src="//carebot.nprapps.org/child-tracker.v1.min.js"></script>
+    <script>
+        var sendOnScreen = function(id) {
+            if (this.el.getElementsByTagName('iframe').length !== 0) {
+                this.sendMessage('on-screen', id);
+            }
+        };
+
+        var sendViewportHeight = function() {
+            var height = window.innerHeight || document.documentElement.clientHeight;
+            if (this.el.getElementsByTagName('iframe').length !== 0) {
+                this.sendMessage('viewport-height', height);
+            }
+        };
+
+        var onTestVisibilityTracker = function() {
+            var id = location.hash;
+            if (this.el.getElementsByTagName('iframe').length !== 0) {
+                this.sendMessage('visibility-available', id);
+            }
+        };
+        var onRemoveTracker = function(id) {
+            this.trackers[id].stopTracking();
+            delete this.trackers[id];
+        };
+
+        var onNewFactCheck = function(local_tracker, id) {
+            // Config to override default timing parameters on the visibility tracker
+            //
+            //    WAIT_TO_ENSURE_SCROLLING_IS_DONE: 40,
+            //    WAIT_TO_MARK_READ: 500,
+            //    ANIMATION_DURATION: 800
+            //
+            var config = {};
+
+            if (local_tracker) {
+                var t = new local_tracker.VisibilityTracker(this, id, sendOnScreen.bind(this, id), config);
+                this.trackers[id] = t;
+            } else {
+                var tracker = new window.ChildTracker.VisibilityTracker(this, id, sendOnScreen.bind(this, id), config);
+                this.trackers[id] = tracker;
+            }
+        };
+        var pymParent = new pym.Parent('preview', 'child.html', {
+            id: 'transcript-embed'
+        });
+        pymParent.trackers = {};
+        pymParent.onMessage('test-visibility-tracker', onTestVisibilityTracker);
+        pymParent.onMessage('remove-tracker', onRemoveTracker);
+        pymParent.onMessage('new-fact-check', onNewFactCheck.bind(pymParent, null));
+        pymParent.onMessage('get-viewport-height', sendViewportHeight);
+        // Check for resize and send updated viewport height to the child
+        window.addEventListener('resize', sendViewportHeight.bind(pymParent));
+    </script>
+
+{% endif %}
+</body>
+</html>

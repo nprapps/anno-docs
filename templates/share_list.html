@@ -1,0 +1,87 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    {% if DEPLOYMENT_TARGET %}
+    <link rel="stylesheet" href="css/rendered/app.min.css">
+    {% else %}
+    <link rel="stylesheet" href="less/app.less">
+    {% endif %}
+    <style>
+      body{
+        padding: 40px;
+      }
+      .annotation{
+        margin-bottom: .5em;
+      }
+      .outerCheck{
+        margin-bottom: 2em;
+      }
+
+      p {
+        margin-bottom: .5em;
+      }
+
+      input {
+        width: 80%;
+      }
+    </style>
+  </head>
+  <body>
+
+  {% for check in fact_checks %}
+    <div class="outerCheck">
+      {{check|safe}}
+    </div>
+  {% endfor %}
+
+  <script type="text/javascript">
+    var theId = null;
+    var div = null;
+
+    function createShareLink(){
+      allDivs = document.getElementsByClassName('outerCheck')
+      allChecks = document.getElementsByClassName('annotation');
+      for (var i = 0; i < allChecks.length; i++){
+        div = allDivs[i];
+        thisCheck = allChecks[i];
+        theId = thisCheck.getAttribute('id');
+        theURL = 'http://www.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}#' + theId;
+        var p = document.createElement('p');
+        p.setAttribute('class', 'shareLink');
+        var checkLink = document.createElement('a');
+        checkLink.setAttribute('href', theURL);
+        checkLink.setAttribute('target', "_blank");
+        checkLink.innerHTML = theURL;
+        p.appendChild(checkLink);
+        div.appendChild(p);
+
+        theURL = 'http://www.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}&utm_source=twitter.com&utm_medium=social&utm_campaign=npr&utm_term=nprnews&utm_content=202604#' + theId;
+        var p = document.createElement('p');
+        var span = document.createElement('span');
+        span.innerHTML = "NPR Twitter: ";
+        p.appendChild(span);
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('value', theURL);
+        p.appendChild(input);
+        div.appendChild(p);
+
+        theURL = 'http://www.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}&utm_source=twitter.com&utm_medium=social&utm_campaign=politics&utm_term=nprnews&utm_content=202604#' + theId;
+        var p = document.createElement('p');
+        var span = document.createElement('span');
+        span.innerHTML = "Politics Twitter: ";
+        p.appendChild(span);
+        var input = document.createElement('input');
+        input.setAttribute('type', 'text');
+        input.setAttribute('value', theURL);
+        p.appendChild(input);
+        div.appendChild(p);
+      }
+    };
+      window.onload = createShareLink();
+
+    </script>
+  </body>
+  </html>

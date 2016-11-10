@@ -1,0 +1,64 @@
+*.py[co]
+*.sw[op]
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+node_modules
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+
+#Translations
+*.mo
+
+.DS_store
+
+# Rendered files
+www/*.html
+www/css/*.min.*.css
+www/css/*.min.css
+www/css/*.less.css
+www/css/font/*
+www/css/icon/*
+www/css/rendered/*.css
+www/js/bundle*
+www/js/header*
+www/js/*.min.*.js
+www/js/*.min.js
+www/js/templates.js
+www/js/app_config.js
+www/js/copy.js
+www/test/test.html
+www/comments/index.html
+confs/rendered/*
+
+# Local data
+data/gdoc*.csv
+data/copy.xls
+data/copy.xlsx
+data/*.html
+www/assets/*
+!www/assets/assetsignore
+www/live-data/*
+.copydoc/*
+.share_list/*
+
+#Logs
+logs/*.log
+
+# Ignore override local settings file
+local_settings.py

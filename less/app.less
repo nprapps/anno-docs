@@ -1,0 +1,433 @@
+@import "variables.less";
+
+// Add custom styles here
+html {
+    font-size: 16px;
+    line-height: 1;
+}
+body {
+    padding: 0;
+    max-width: 800px;
+    margin: 0 auto;
+}
+.init {
+    height: 100px;
+}
+// HEADER/FOOTER STYLES
+.header {
+    margin-bottom: 2em;
+}
+
+.header, .footer {
+    background: @black;
+    color: @white;
+    padding: 1em 1em 0.7em;
+    .clearfix();
+
+    // Logo for non-whitelisted sites
+    .header-logo {
+        height: 24px;
+
+        @media @screen-tiny-above {
+            float: right;
+        }
+
+        @media @screen-tiny {
+            height: 22px;
+            margin: 0 0 5px;
+        }
+    }
+
+    h2.header-title {
+        .knockout-upper();
+        font-size: 1rem;
+        line-height: 1.5rem;
+        margin: 0;
+    }
+
+    p.header-info, .footer-nav {
+        .sans-serif();
+        font-size: 0.75rem;
+        line-height: 1.5rem;
+        margin: 0;
+        color: @text-gray;
+
+        .last-updated {
+            color: @text-gray;
+        }
+
+        .num-annotations {
+            font-weight: bold;
+            color: @brightwhite;
+        }
+    }
+
+    p.update-notice {
+        .gotham();
+        border: 2px solid @highlight;
+        background: @highlight-pale;
+        padding: 0.7em 1em;
+        color: @black;
+
+        .update-number {
+            font-weight: bold;
+        }
+    }
+
+    p.update-info {
+        .gotham();
+        font-size: 0.8rem;
+        line-height: 1.3rem;
+    }
+
+    .footer-nav {
+        border-top: 1px solid darken(@text-gray, 20%);
+        padding: 0.7em 0 0;
+        color: @text-gray;
+
+        .jump-to-top {
+            float: right;
+            color: @text-gray;
+
+            &:hover {
+                color: @white;
+            }
+
+            &:after {
+                content: '\2191';
+                margin-left: 5px;
+            }
+        }
+    }
+}
+
+body.before {
+    .header{
+        p.header-info {
+            line-height: 1rem;
+            margin-top: 0.2em;
+
+            @media @screen-tiny-above {
+                margin-top: 0.8em;
+            }
+        }
+    }
+
+    .footer-wrapper {
+        display: none;
+    }
+}
+
+body.after {
+    .footer-wrapper {
+        display: none;
+    }
+
+    .header {
+        height: auto;
+        padding: 7px;
+        border: none;
+
+        a {
+            line-height: 0;
+            display: block;
+        }
+
+        .header-logo {
+            float: none;
+            margin: 0;
+        }
+    }
+}
+
+body.whitelabel {
+    .header-logo {
+        display: none;
+    }
+
+    &.before {
+        .header p.header-info {
+            @media @screen-tiny-above {
+                margin-top: 0.2em;
+            }
+        }
+    }
+
+    &.after .header {
+        height: 0;
+        padding: 0;
+        border-top: 4px solid @black;
+    }
+}
+
+.vis-not-available .footer {
+    .update-wrapper {
+        display: none;
+    }
+
+    .footer-nav {
+        border-top: none;
+        padding: 0;
+    }
+}
+
+@keyframes pulse {
+    50% {
+        background: @white;
+    }
+}
+
+.loading-anim {
+    @loader-height: 10px;
+    @pulse-duration: 1100ms;
+
+    margin-bottom: 2em;
+    margin-left: 1em;
+    text-indent: -9999em;
+    position: relative;
+    animation: pulse @pulse-duration infinite;
+    animation-delay: @pulse-duration / 3;
+
+    &, &:before, &:after {
+        border-radius: 50%;
+        width: @loader-height;
+        height: @loader-height;
+        background: @text-gray;
+    }
+
+    &:before, &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        animation: pulse @pulse-duration infinite;
+    }
+
+    &:before {
+        left: -@loader-height - 3px;
+    }
+
+    &:after {
+        left: @loader-height + 3px;
+        animation-delay: @pulse-duration / 1.5;
+    }
+
+    // Hide before and after the debate
+    .before &, .transcript-end &, .after & {
+        display: none;
+    }
+}
+
+// TRANSCRIPT TYPE
+p {
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    margin-bottom: 1.5em;
+    margin-top: 0;
+
+    &.soundbite {
+        .knockout-upper();
+        color: @text-gray;
+        text-align: center;
+    }
+}
+
+.speaker_wrapper {
+    margin-bottom: 0.3em;
+}
+
+h4 {
+    .knockout-upper();
+    display: inline-block;
+    margin-bottom: 5px;
+    margin-top: 0;
+
+    &.gop {
+        color: @republican;
+    }
+
+    &.dem {
+        color: @democrat;
+    }
+
+    @media @screen-small {
+        font-size: 0.9rem;
+    }
+}
+
+.timestamp {
+    .knockout-upper();
+    font-size: 0.9rem;
+    line-height: 1.1rem;
+    color: @text-gray;
+    text-align: right;
+    float: right;
+
+    @media @screen-small {
+        font-size: 0.8rem;
+    }
+}
+
+a, a:link, a:visited {
+    color: @link-blue;
+    text-decoration: none;
+    transition: 200ms ease-in;
+}
+
+a:hover, a:active { color: @link-active; }
+
+.fact-checked {
+    font-weight: normal;
+    border-bottom: 4px solid @highlight;
+    line-height: 1.9rem;
+    padding-bottom: 3px;
+}
+
+// For ease of editing, so we don't have to repeat as much with the vis-enabled
+.annotation-base() {
+    box-sizing: border-box;
+    opacity: 1;
+    background-color: @quote-gray;
+    border: 2px solid @quote-border;
+    padding: 1em;
+    margin: 0 0 3em;
+    max-height: 9999px;
+    transition: all 600ms linear;
+    position: relative;
+
+    .annotations-wrapper, .annotation-header {
+        opacity: 1;
+        transition: opacity 600ms linear;
+    }
+}
+
+.annotation {
+    .annotation-base();
+
+    &.unread {
+        border: 2px solid @highlight;
+        background: @highlight-pale;
+    }
+
+    &.offscreen, &.offscreen.unread {
+        max-height: 0;
+        overflow: hidden;
+        border-color: transparent;
+        border-top-width: 0;
+        border-bottom-width: 0;
+        padding: 0 1em;
+        margin: 0;
+        opacity: 0;
+
+        .annotations-wrapper, .annotation-header {
+            opacity: 0;
+        }
+    }
+
+    .annotation-nav{
+      position: absolute;
+      bottom: -2em;
+      .sans-serif();
+      font-size: 0.75rem;
+      left: 0;
+      width: 100%;
+
+      a{
+          color: @text-gray;
+          -webkit-text-size-adjust: 100%;
+          &:hover{
+            color: lighten(@text-gray, 15%);
+          }
+      }
+
+      .noShow{
+        display: none;
+      }
+
+      .nextNav{
+        float: right;
+      }
+
+      .triangleIcon{
+        font-size: .75em;
+      }
+    }
+
+    // Disable unread style for embeds with no visibility tracking
+    .vis-not-available &, body.after.vis-not-available & {
+        &.unread, &.offscreen, &.offscreen.unread {
+            .annotation-base();
+        }
+    }
+    body.after & {
+        &.offscreen {
+            .annotation-base();
+        }
+
+        &.unread, &.offscreen.unread {
+            border: 2px solid @highlight;
+            background: @highlight-pale;
+        }
+    }
+
+    @byline-height: 40px;
+
+    .annotation-header {
+        display: flex;
+    }
+
+    .annotation-label {
+        display: inline-block;
+        margin-right: 0.5em;
+        width: @byline-height;
+        height: @byline-height;
+
+        &.no-img {
+            display: none;
+        }
+    }
+
+    .annotation-byline {
+        .gotham();
+        font-size: 0.8rem;
+        display: inline-block;
+
+        a, span {
+            display: block;
+            line-height: 1.2rem;
+
+            &.byline-name {
+                font-weight: bold;
+            }
+        }
+    }
+
+    p {
+        .gotham();
+    }
+}
+
+.transcription-notice {
+    margin-top: 1em;
+
+    hr {
+        display: none;
+    }
+
+    body.after & {
+        hr {
+            border: none;
+            border-top: 1px solid @quote-border;
+            display: block;
+            margin-bottom: 1em;
+        }
+    }
+    p {
+        .gotham();
+        font-size: 0.8rem;
+    }
+}
+
+.shareLink{
+  margin-top: 2em;
+}

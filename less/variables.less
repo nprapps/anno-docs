@@ -1,0 +1,73 @@
+// FONTS
+.gotham() {
+    font-family: 'Gotham SSm',Helvetica,Arial,sans-serif;
+    font-weight: normal;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+}
+
+.knockout() {
+    font-family: 'Knockout 31 4r';
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+}
+
+.knockout-upper() {
+    .knockout();
+    text-transform: uppercase;
+}
+
+.sans-serif() {
+    font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+
+// BREAKPOINTS
+@screen-jumbo-above: ~"screen and (min-width: 1920px)";
+@screen-mega-above: ~"screen and (min-width: 1600px)";
+@screen-large-above: ~"screen and (min-width: 1201px)";
+@screen-large: ~"screen and (min-width: 1200px)";
+@screen-medium-above: ~"screen and (min-width: 992px)";
+@screen-medium: ~"screen and (max-width: 991px)";
+@screen-small-above: ~"screen and (min-width: 768px)";
+@screen-small: ~"screen and (max-width: 767px)";
+@screen-tiny-above: ~"screen and (min-width: 481px)";
+@screen-tiny: ~"screen and (max-width: 480px)";
+
+// COLORS
+@black          : #2a2a2a;
+@darkblack     : #000;
+@white          : #eee;
+@brightwhite    : #fff;
+@text-gray      : #999;
+@quote-gray     : #f1f1f1;
+@quote-border   : #ccc;
+
+@republican     : #e61e1d;
+@democrat       : #4167b0;
+
+@highlight      : #EFC637;
+@highlight-pale : #f5ebc8;
+@link-blue      : #4774CC;
+@link-active    : #bccae5;
+
+// HELPERS
+.unselectable() {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+.clearfix() {
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
