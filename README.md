@@ -564,9 +564,9 @@ The Google Analytics events tracked in this application are:
 
 License and credits
 ---------
-Released under the MIT open source license. See LICENSE for details.
+Released under the MIT open source license. See ``LICENSE`` for details.
 
 
 Additional contributors
 ---------
-See CONTRIBUTORS
+See ``CONTRIBUTORS``
