@@ -363,13 +363,8 @@ const renderFootervDOM = function(data) {
  * Build correct transcript URL based on hostname
  */
 const buildTranscriptURL = function() {
-    if (document.location.hostname === '127.0.0.1' ||
-        document.location.hostname === 'localhost' ||
-        document.location.hostname === '0.0.0.0') {
-        return document.location.protocol + '//' + document.location.hostname + ':' + document.location.port + '/copydoc.html';
-    } else {
-        return document.location.protocol + '//' + document.location.hostname + '/' + APP_CONFIG.DEBATE_DIRECTORY_PREFIX + APP_CONFIG.CURRENT_DEBATE + '/copydoc.html';
-    }
+    let transcript_page = '/copydoc.html';
+    return APP_CONFIG.S3_BASE_URL + transcript_page;
 }
 
 const onViewHeight = function(height){

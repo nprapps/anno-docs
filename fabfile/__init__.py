@@ -22,6 +22,11 @@ import render
 import text
 import utils
 import spreadsheet
+import logging
+
+logging.basicConfig(format=app_config.LOG_FORMAT)
+logger = logging.getLogger(__name__)
+logger.setLevel(app_config.LOG_LEVEL)
 
 if app_config.DEPLOY_TO_SERVERS:
     import servers
@@ -157,7 +162,6 @@ def deploy(remote='origin', reload=False):
     Deploy the latest app to S3 and, if configured, to our servers.
     """
     require('settings', provided_by=[production, staging])
-
     if app_config.DEPLOY_TO_SERVERS:
         require('branch', provided_by=[stable, master, branch])
 
@@ -203,6 +207,10 @@ def deploy(remote='origin', reload=False):
         }
     )
 
+    if app_config.DEPLOY_STATIC_FACTCHECK:
+        execute('deploy_transcript')
+        execute('deploy_share_list')
+
     if reload:
         reset_browsers()
 
@@ -239,23 +247,6 @@ def deploy_share_list():
 
 
 @task
-def deploy_transcript_backup():
-    """
-    deploy to our backup S3 bucket election-backup.apps.npr.org
-    """
-    now = datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
-
-    flat.deploy_folder(
-        app_config.ARCHIVE_S3_BUCKET,
-        '.copydoc',
-        'debates/%s-%s' % (now, app_config.CURRENT_DEBATE),
-        headers={
-            'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
-        }
-    )
-
-
-@task
 def deploy_server(remote='origin'):
     """
     Deploy code to our servers and restart daemons.
@@ -274,6 +265,23 @@ def deploy_server(remote='origin'):
         servers.checkout_latest(remote)
     # Restart daemon service
     servers.restart_service('deploy')
+
+
+@task
+def deploy_transcript_backup():
+    """
+    deploy to our backup S3 bucket election-backup.apps.npr.org
+    """
+    now = datetime.now().strftime('%Y-%m-%d-%H:%M:%S')
+
+    flat.deploy_folder(
+        app_config.ARCHIVE_S3_BUCKET,
+        '.copydoc',
+        'debates/%s-%s' % (now, app_config.CURRENT_DEBATE),
+        headers={
+            'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
+        }
+    )
 
 
 @task

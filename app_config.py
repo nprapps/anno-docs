@@ -40,7 +40,13 @@ ASSETS_SLUG = 'debates'
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks'
 CURRENT_DEBATE = 'factcheck-trump-100days-20161110'
-SEAMUS_ID = '498293478'  # SEAMUS PAGE ID FOR DEEP LINKING
+SEAMUS_ID = '501597652'  # SEAMUS PAGE ID FOR DEEP LINKING
+try:
+    from local_settings import CURRENT_DEBATE
+    # Override SEAMUS_ID to generate the sharing list accordingly
+    from local_settings import SEAMUS_ID
+except ImportError:
+    pass
 
 """
 DEPLOYMENT
@@ -63,6 +69,20 @@ STAGING_SERVERS = ['54.221.49.36']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
+try:
+    # Override whether we should deploy to a cutom webserver
+    from local_settings import DEPLOY_TO_SERVERS
+except ImportError:
+    pass
+
+DEPLOY_STATIC_FACTCHECK = False
+try:
+    # Override whether we are going to deploy a static factcheck
+    # from our local environment. Useful for non-live factchecks
+    from local_settings import DEPLOY_STATIC_FACTCHECK
+except ImportError:
+    pass
+
 
 SERVER_USER = 'ubuntu'
 SERVER_PYTHON = 'python2.7'
@@ -211,10 +231,13 @@ def configure_targets(deployment_target):
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
-        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
+        document.location.protocol + '//' + document.location.hostname + '/' + APP_CONFIG.DEBATE_DIRECTORY_PREFIX + APP_CONFIG.CURRENT_DEBATE
+        S3_BASE_URL = '//%s/%s/%s' % (S3_BUCKET,
+                                      DEBATE_DIRECTORY_PREFIX,
+                                      CURRENT_DEBATE)
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
         SERVERS = PRODUCTION_SERVERS
-        SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
+        SERVER_BASE_URL = '//%s/%s' % (SERVERS[0], PROJECT_SLUG)
         SERVER_LOG_PATH = '/var/log/%s' % PROJECT_FILENAME
         LOG_LEVEL = logging.INFO
         DEBUG = False
@@ -225,10 +248,12 @@ def configure_targets(deployment_target):
         GAS_LOG_KEY = ''
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
-        S3_BASE_URL = 'http://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
+        S3_BASE_URL = '//%s/%s/%s' % (S3_BUCKET,
+                                      DEBATE_DIRECTORY_PREFIX,
+                                      CURRENT_DEBATE)
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
         SERVERS = STAGING_SERVERS
-        SERVER_BASE_URL = 'http://%s/%s' % (SERVERS[0], PROJECT_SLUG)
+        SERVER_BASE_URL = '//%s/%s' % (SERVERS[0], PROJECT_SLUG)
         SERVER_LOG_PATH = '/var/log/%s' % PROJECT_FILENAME
         LOG_LEVEL = logging.INFO
         DEBUG = True
@@ -239,7 +264,7 @@ def configure_targets(deployment_target):
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
         S3_BUCKET = None
-        S3_BASE_URL = 'http://127.0.0.1:8000'
+        S3_BASE_URL = '//127.0.0.1:8000'
         S3_DEPLOY_URL = None
         SERVERS = []
         SERVER_BASE_URL = 'http://127.0.0.1:8001/%s' % PROJECT_SLUG
@@ -252,9 +277,12 @@ def configure_targets(deployment_target):
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         try:
-            from local_settings import TRANSCRIPT_GDOC_KEY
-            from local_settings import GAS_LOG_KEY
+            # Override S3_BASE_URL to use another port locally for fab app
             from local_settings import S3_BASE_URL
+            # Override TRANSCRIPT_GDOC_KEY to point to a different google doc
+            from local_settings import TRANSCRIPT_GDOC_KEY
+            # Override GAS_LOG_KEY to point to a different google app script log
+            from local_settings import GAS_LOG_KEY
         except ImportError:
             pass
 

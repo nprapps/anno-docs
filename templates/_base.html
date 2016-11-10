@@ -134,19 +134,19 @@
             {% if DEPLOYMENT_TARGET != "production" %}
                 {% if DEPLOYMENT_TARGET != None %}
                 <div class="segment">
-                    <a class="btn localhost" href="http://localhost:8000/">localhost &raquo;</a>
+                    <a class="btn localhost" href="//localhost:8000/">localhost &raquo;</a>
                 </div>
                 {% endif %}
 
                 {% if DEPLOYMENT_TARGET != 'staging' %}
                 <div class="segment">
-                    <a class="btn staging" href="http://stage-apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">staging &raquo;</a>
+                    <a class="btn staging" href="//stage-apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">staging &raquo;</a>
                 </div>
                 {% endif %}
 
                 {% if DEPLOYMENT_TARGET != 'production' %}
                 <div class="segment">
-                    <a class="btn production" href="http://apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">production &raquo;</a>
+                    <a class="btn production" href="//apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">production &raquo;</a>
                 </div>
                 {% endif %}
             {% endif %}
@@ -213,7 +213,7 @@
                 jQuery(function () { // Wait for page load
                     var pymParent = new pym.Parent(
                         el.id,
-                        'http://apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html',
+                        '//apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html',
                         {
                             id: 'transcript-embed'
                         }
@@ -240,7 +240,7 @@
 
 <!-- textarea contents -->
     <textarea readonly="readonly" rows="10" cols="50">
-<p data-pym-src="http://{{ PRODUCTION_S3_BUCKET }}/{{ CURRENT_DEBATE }}/child.html">Loading...</p><script src="//pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
+<p data-pym-src="//{{ PRODUCTION_S3_BUCKET }}/{{ CURRENT_DEBATE }}/child.html">Loading...</p><script src="//pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
     </textarea>
 <!-- end textarea contents -->
     </div>
