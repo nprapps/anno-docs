@@ -242,6 +242,7 @@ def parse(doc):
     """
     global slugs
     # Counters for checking number of fact checks and speaker tags
+    parsed_document = {}
     number_of_fact_checks = 0
     number_of_speakers = 0
 
@@ -249,16 +250,16 @@ def parse(doc):
     slugs = []
     # Stores the state of the transcript
     # before, during or after needed on the front end
-    fact_check_state = None
+    fact_check_status = None
     logger.info('-------------start------------')
     hr = doc.soup.hr
     # If we see an h1 with that starts with END
     if hr.find("p", text=end_fact_check_regex):
-        fact_check_state = 'after'
+        fact_check_status = 'after'
         # Get rid of everything after the Horizontal Rule
         hr.extract()
     elif hr.find("p", text=end_transcript_regex):
-        fact_check_state = 'transcript-end'
+        fact_check_status = 'transcript-end'
         # Get rid of everything after the Horizontal Rule
         hr.extract()
     else:
@@ -316,14 +317,14 @@ def parse(doc):
             logger.debug('Speaker Paragraph. Transform')
             markup = transform_speaker(paragraph)
             paragraph.replace_with(markup)
-            if not fact_check_state:
-                fact_check_state = 'during'
+            if not fact_check_status:
+                fact_check_status = 'during'
         elif soundbite_regex.match(text):
             logger.debug('SoundBites Paragraph. Transform')
             markup = transform_soundbite(paragraph)
             paragraph.replace_with(markup)
-            if not fact_check_state:
-                fact_check_state = 'during'
+            if not fact_check_status:
+                fact_check_status = 'during'
         else:
             markup = transform_other_text(paragraph)
             paragraph.replace_with(markup)
@@ -332,8 +333,8 @@ def parse(doc):
 
     # If we have not detected a speaker, a soundbite or the end
     # Then we mark the status as not started
-    if not fact_check_state:
-        fact_check_state = 'before'
+    if not fact_check_status:
+        fact_check_status = 'before'
 
     # Test for duplicates on slugs
     # via:
@@ -347,6 +348,10 @@ def parse(doc):
     logger.info('Fact Checks: %s, Speaker Paragraphs: %s' % (
                 number_of_fact_checks,
                 number_of_speakers))
-    logger.info('Application state: %s' % fact_check_state)
+    logger.info('Application state: %s' % fact_check_status)
+
+    parsed_document['doc'] = doc
+    parsed_document['fact_check_status'] = fact_check_status
+    parsed_document['fact_checks'] = fact_checks
     logger.info('-------------end------------')
-    return fact_check_state, fact_checks
+    return parsed_document

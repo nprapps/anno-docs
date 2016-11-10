@@ -17,7 +17,8 @@ import static
 from copydoc import CopyDoc
 from flask import Flask, make_response, render_template
 from flask_cors import CORS, cross_origin
-from render_utils import flatten_app_config, make_context, smarty_filter, urlencode_filter
+from render_utils import flatten_app_config, make_context
+from render_utils import smarty_filter, urlencode_filter
 from werkzeug.debug import DebuggedApplication
 
 app = Flask(__name__)
@@ -31,8 +32,26 @@ logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
 logger.setLevel(app_config.LOG_LEVEL)
 
+
+@app.route('/factcheck.html', methods=['GET', 'OPTIONS'])
+def _factcheck():
+    """
+    Liveblog only contains published posts
+    """
+    context = get_factcheck_context()
+    return make_response(render_template('factcheck.html', **context))
+
+
+@app.route('/share.html', methods=['GET', 'OPTIONS'])
+def _share():
+    """
+    Preview contains published and draft posts
+    """
+    context = get_factcheck_context()
+    return make_response(render_template('share.html', **context))
+
+
 @app.route('/copydoc.html', methods=['GET', 'OPTIONS'])
-@oauth.oauth_required
 def _copydoc():
     """
     Example view demonstrating rendering a simple HTML page.
@@ -40,9 +59,13 @@ def _copydoc():
     with open(app_config.TRANSCRIPT_HTML_PATH) as f:
         html = f.read()
 
-    context = parse_document(html)
+    doc = CopyDoc(html)
+    context = {
+        'doc': doc
+    }
 
-    return make_response(render_template('copy.html', **context))
+    return make_response(render_template('copydoc.html', **context))
+
 
 @app.route('/child.html')
 @oauth.oauth_required
@@ -54,17 +77,6 @@ def child():
 
     return make_response(render_template('child.html', **context))
 
-@app.route('/share.html')
-def _share():
-    with open(app_config.TRANSCRIPT_HTML_PATH) as f:
-        html = f.read()
-
-    parsed = parse_document(html)
-
-    context = flatten_app_config()
-    context['fact_checks'] = parsed['fact_checks']
-
-    return make_response(render_template('share_list.html', **context))
 
 @app.route('/')
 @oauth.oauth_required
@@ -76,20 +88,37 @@ def index():
 
     return make_response(render_template('parent.html', **context))
 
+
 app.register_blueprint(static.static)
 app.register_blueprint(oauth.oauth)
 
+
+def get_factcheck_context():
+    """
+    Get factcheck context
+    for production we will reuse a fake g context
+    in order not to perform the parsing twice
+    """
+    from flask import g
+    context = flatten_app_config()
+    parsed_factcheck_doc = getattr(g, 'parsed_factcheck', None)
+    if parsed_factcheck_doc is None:
+        logger.debug("did not find parsed_factcheck")
+        with open(app_config.TRANSCRIPT_HTML_PATH) as f:
+            html = f.read()
+        context.update(parse_document(html))
+    else:
+        logger.debug("found parsed_factcheck in g")
+        context.update(parsed_factcheck_doc)
+    return context
+
+
 def parse_document(html):
     doc = CopyDoc(html)
-    fact_check_state, fact_checks = parse_doc.parse(doc)
-
-    parsed_document = {
-        'doc': doc,
-        'fact_check_state': fact_check_state,
-        'fact_checks': fact_checks
-    }
+    parsed_document = parse_doc.parse(doc)
 
     return parsed_document
+
 
 # Enable Werkzeug debug pages
 if app_config.DEBUG:
@@ -99,4 +128,4 @@ else:
 
 # Catch attempts to run the app directly
 if __name__ == '__main__':
-    logging.error('This command has been removed! Please run "fab app" instead!')
+    logging.error('This command has been removed! Run "fab app" instead!')

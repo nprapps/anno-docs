@@ -363,7 +363,7 @@ const renderFootervDOM = function(data) {
  * Build correct transcript URL based on hostname
  */
 const buildTranscriptURL = function() {
-    let transcript_page = '/copydoc.html';
+    let transcript_page = '/factcheck.html';
     return APP_CONFIG.S3_BASE_URL + transcript_page;
 }
 

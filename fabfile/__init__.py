@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# _*_ coding:utf-8 _*_
 
 from datetime import datetime
 import json
@@ -13,15 +14,11 @@ import app_config
 
 # Other fabfiles
 import assets
-import daemons
 import data
 import flat
-import gs
-import issues
 import render
 import text
 import utils
-import spreadsheet
 import logging
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
@@ -191,7 +188,8 @@ def deploy(remote='origin', reload=False):
     flat.deploy_folder(
         app_config.S3_BUCKET,
         'www',
-        '%s%s' % (app_config.DEBATE_DIRECTORY_PREFIX, app_config.CURRENT_DEBATE),
+        '%s%s' % (app_config.DEBATE_DIRECTORY_PREFIX,
+                  app_config.CURRENT_DEBATE),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
         },
@@ -201,15 +199,16 @@ def deploy(remote='origin', reload=False):
     flat.deploy_folder(
         app_config.S3_BUCKET,
         'www/assets',
-        '%s%s/assets' % (app_config.DEBATE_DIRECTORY_PREFIX, app_config.CURRENT_DEBATE),
+        '%s%s/assets' % (app_config.DEBATE_DIRECTORY_PREFIX,
+                         app_config.CURRENT_DEBATE),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.ASSETS_MAX_AGE
         }
     )
 
+    # DEPLOY STATIC FACTCHECK FROM LOCAL ENVIRONMENT
     if app_config.DEPLOY_STATIC_FACTCHECK:
-        execute('deploy_transcript')
-        execute('deploy_share_list')
+        execute('deploy_factcheck')
 
     if reload:
         reset_browsers()
@@ -219,12 +218,13 @@ def deploy(remote='origin', reload=False):
 
 
 @task
-def deploy_transcript():
-    render.render_copydoc()
+def deploy_factcheck():
+    render.render_factcheck()
     flat.deploy_folder(
         app_config.S3_BUCKET,
-        '.copydoc',
-        '%s%s' % (app_config.DEBATE_DIRECTORY_PREFIX, app_config.CURRENT_DEBATE),
+        '.factcheck',
+        '%s%s' % (app_config.DEBATE_DIRECTORY_PREFIX,
+                  app_config.CURRENT_DEBATE),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
         }
@@ -232,18 +232,6 @@ def deploy_transcript():
 
     if app_config.DEPLOYMENT_TARGET == 'production':
         execute('deploy_transcript_backup')
-
-@task
-def deploy_share_list():
-    render.render_share_list()
-    flat.deploy_folder(
-        app_config.S3_BUCKET,
-        '.share_list',
-        '%s%s' % (app_config.DEBATE_DIRECTORY_PREFIX, app_config.CURRENT_DEBATE),
-        headers={
-            'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
-        }
-    )
 
 
 @task

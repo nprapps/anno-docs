@@ -3,7 +3,6 @@
 
 from time import sleep, time
 from fabric.api import execute, require, settings, task
-from fabric.state import env
 
 import app_config
 import logging
@@ -26,6 +25,7 @@ def deploy(run_once=False):
     except KeyboardInterrupt:
         sys.exit(0)
 
+
 @task
 def main(run_once=False):
     """
@@ -33,15 +33,16 @@ def main(run_once=False):
     """
     copy_start = 0
 
+    if not app_config.LOAD_COPY_INTERVAL:
+        logger.error('did not find LOAD_COPY_INTERVAL in app_config')
+        exit()
+
     while True:
         now = time()
-
-        if app_config.LOAD_COPY_INTERVAL and (now - copy_start) > app_config.LOAD_COPY_INTERVAL:
+        if (now - copy_start) > app_config.LOAD_COPY_INTERVAL:
             copy_start = now
             logger.info('Update transcript')
             execute('text.get_transcript')
             if app_config.DEPLOYMENT_TARGET:
-                execute('deploy_transcript')
-                execute('deploy_share_list')
-
+                execute('deploy_factcheck')
         sleep(1)

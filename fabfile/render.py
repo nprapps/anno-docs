@@ -150,24 +150,7 @@ def render_all():
         with open(filename, 'w') as f:
             f.write(content)
 
-@task
-def render_share_list():
-    from flask import url_for
 
-    view_name = '_share'
-
-    with app.app.test_request_context():
-        path = url_for(view_name)
-        view = app.__dict__[view_name]
-        response = view()
-
-    try:
-        os.makedirs('.share_list/')
-    except OSError:
-        pass
-
-    with codecs.open('.share_list/{0}'.format(path), 'w', 'utf-8') as f:
-        f.write(response.data.decode('utf-8'))
 @task
 def render_copydoc():
     from flask import url_for
@@ -186,3 +169,44 @@ def render_copydoc():
 
     with codecs.open('.copydoc/{0}'.format(path), 'w', 'utf-8') as f:
         f.write(response.data.decode('utf-8'))
+
+
+def generate_views(views, parsed_liveblog):
+    from flask import url_for, g
+
+    view_paths = []
+    with app.app.test_request_context():
+        for view_name in views:
+            path = url_for(view_name)
+            view_paths.append((view_name, path))
+
+    for view_name, path in view_paths:
+        logger.info("%s, %s" % (view_name, path))
+        with _fake_context(path):
+            # add parsed liveblog to g
+            g.parsed_liveblog = parsed_liveblog
+            logger.info(path)
+            view = app.__dict__[view_name]
+            response = view()
+
+            try:
+                os.makedirs('.factcheck/')
+            except OSError:
+                pass
+
+            with codecs.open('.factcheck/{0}'.format(path), 'w', 'utf-8') as f:
+                f.write(response.data.decode('utf-8'))
+
+
+def parse_factcheck():
+    with open(app_config.TRANSCRIPT_HTML_PATH) as f:
+        html = f.read()
+    parsed_factcheck = app.parse_document(html)
+    return parsed_factcheck
+
+
+@task
+def render_factcheck():
+    parsed_factcheck = parse_factcheck()
+    generate_views(['_factcheck', '_share'],
+                   parsed_factcheck)
