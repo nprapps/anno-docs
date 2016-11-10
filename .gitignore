@@ -55,7 +55,7 @@ www/assets/*
 !www/assets/assetsignore
 www/live-data/*
 .copydoc/*
-.share_list/*
+.factcheck/*
 
 #Logs
 logs/*.log
