@@ -56,12 +56,12 @@ def sync():
         logger.error('The following filenames are not lowercase, please change them before running `assets.sync`:')
 
         for name in not_lowercase:
-            logger.error('    %s' % name)
+            logger.error(name)
 
         return
 
     bucket = utils.get_bucket(app_config.ASSETS_S3_BUCKET)
-    keys = bucket.list(app_config.ASSETS_SLUG)
+    keys = bucket.list('%s/' % app_config.ASSETS_SLUG)
 
     which = None
     always = False
