@@ -29,11 +29,14 @@ Debates
 * [Install web services](#install-web-services)
 * [Run a remote fab command](#run-a-remote-fab-command)
 * [Report analytics](#report-analytics)
+* [License and credits](#license-credits)
+* [Additional contributors](#contributors)
 
 What is this?
 -------------
 
-**TKTK: Describe debates2 here.**
+A live transcription application for debates with embedded fact checks and annotations.
+For a detailed explanation of how this works, check out [this blog post](https://source.opennews.org/en-US/articles/how-npr-transcribes-and-fact-checks-debates-live/) by Tyler Fisher.
 
 Assumptions
 -----------
@@ -90,8 +93,8 @@ curl https://npmjs.org/install.sh | sh
 Then bootstrap the project:
 
 ```
-cd debates2
-mkvirtualenv debates2
+cd debates
+mkvirtualenv debates
 pip install -r requirements.txt
 npm install
 fab update
@@ -453,7 +456,7 @@ Compile static assets
 Compile LESS to CSS, compile javascript templates to Javascript and minify all assets:
 
 ```
-workon debates2
+workon debates
 fab render
 ```
 
@@ -505,7 +508,7 @@ Install cron jobs
 Cron jobs are defined in the file `crontab`. Each task should use the `cron.sh` shim to ensure the project's virtualenv is properly activated prior to execution. For example:
 
 ```
-* * * * * ubuntu bash /home/ubuntu/apps/debates2/repository/cron.sh fab $DEPLOYMENT_TARGET cron_jobs.test
+* * * * * ubuntu bash /home/ubuntu/apps/debates/repository/cron.sh fab $DEPLOYMENT_TARGET cron_jobs.test
 ```
 
 To install your crontab set `INSTALL_CRONTAB` to `True` in `app_config.py`. Cron jobs will be automatically installed each time you deploy to EC2.
@@ -549,12 +552,21 @@ The Google Analytics events tracked in this application are:
 
 |Category|Action|Label|Value|
 |--------|------|-----|-----|
-|debates2|tweet|`location`||
-|debates2|facebook|`location`||
-|debates2|email|`location`||
-|debates2|new-comment||
-|debates2|open-share-discuss||
-|debates2|close-share-discuss||
-|debates2|summary-copied||
-|debates2|featured-tweet-action|`action`|
-|debates2|featured-facebook-action|`action`|
+|debates|tweet|`location`||
+|debates|facebook|`location`||
+|debates|email|`location`||
+|debates|new-comment||
+|debates|open-share-discuss||
+|debates|close-share-discuss||
+|debates|summary-copied||
+|debates|featured-tweet-action|`action`|
+|debates|featured-facebook-action|`action`|
+
+License and credits
+---------
+Released under the MIT open source license. See LICENSE for details.
+
+
+Additional contributors
+---------
+See CONTRIBUTORS
