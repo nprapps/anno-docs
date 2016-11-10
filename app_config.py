@@ -231,7 +231,6 @@ def configure_targets(deployment_target):
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
-        document.location.protocol + '//' + document.location.hostname + '/' + APP_CONFIG.DEBATE_DIRECTORY_PREFIX + APP_CONFIG.CURRENT_DEBATE
         S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
                                      DEBATE_DIRECTORY_PREFIX,
                                      CURRENT_DEBATE)
