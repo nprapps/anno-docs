@@ -70,6 +70,9 @@ const setBodyClass = function() {
     const domain = url.hostname.split('.').slice(-2).join('.');
     if (WHITELIST.domains.indexOf(domain) != -1) {
         document.body.classList.add('whitelabel');
+    } else if (domain == 'npr.org' || url.hostname == 'localhost' ||
+               url.hostname == '127.0.0.1') {
+        document.body.classList.add('whitelabel');
     }
 }
 
