@@ -10,7 +10,7 @@ Werkzeug==0.8.3
 bcdoc==0.12.0
 beautifulsoup4==4.4.1
 boto==2.34.0
-botocore==0.31.0
+botocore==1.4.56
 clan==0.1.3
 -e git+https://github.com/nprapps/copydoc.git#egg=copydoc
 copytext==0.1.9
@@ -18,7 +18,7 @@ csvkit==0.9.1
 docutils==0.11
 gunicorn==19.1.1
 httplib2==0.9
-jmespath==0.2.1
+jmespath==0.9.0
 nose==1.2.1
 odict==1.5.1
 openpyxl==2.2.0
