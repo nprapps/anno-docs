@@ -48,6 +48,22 @@ FACT_CHECK_TPL = '''
 </div>
 '''
 
+FACT_CHECK_TPL_NO_PAGE = '''
+<div class="annotation" id="%(slug)s">
+    %(fact_check_text)s
+    <div class="annotation-header">
+        <img class="%(annotation_label_class)s" src="%(author_img)s"></img>
+        <div class="annotation-byline">
+            <span class="byline-name">%(author_name)s</span>
+            <span class="byline-role">%(author_role)s</span>
+        </div>
+    </div>
+    <div class="annotation-nav">
+        <a href="#" class="previousNav"><span class="triangleIcon">&#9650;</span> <span class="navText">Previous annotation</span></a><a href="#" class="nextNav" ><span class="navText">Next annotation</span> <span class="triangleIcon">&#9660;</span></a>
+    </div>
+</div>
+'''
+
 PARAGRAPH_TPL = '<p>%s</p>'
 
 SPEAKER_TPL = '''
@@ -132,7 +148,12 @@ def transform_fact_check(paragraphs, doc):
                 PARAGRAPH_TPL % (clean_text), "html.parser")
             fact_check_wrapper.append(new_paragraph)
 
-    fact_check_markup = FACT_CHECK_TPL % {
+    logger.info(author_page)
+    logger.info(author_page == '')
+
+    tpl = FACT_CHECK_TPL if author_page != '' else FACT_CHECK_TPL_NO_PAGE
+
+    fact_check_markup = tpl % {
         'slug': slug,
         'annotation_label_class': annotation_label_class,
         'author_page': author_page,
