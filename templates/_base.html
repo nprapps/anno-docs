@@ -134,7 +134,7 @@
             {% if DEPLOYMENT_TARGET != "production" %}
                 {% if DEPLOYMENT_TARGET != None %}
                 <div class="segment">
-                    <a class="btn localhost" href="//localhost:8000/">localhost &raquo;</a>
+                    <a class="btn localhost" href="{{ S3_BASE_URL }}">localhost &raquo;</a>
                 </div>
                 {% endif %}
 

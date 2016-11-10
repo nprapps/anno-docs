@@ -38,7 +38,7 @@ REPOSITORY_ALT_URL = None  # 'git@bitbucket.org:nprapps/%s.git' % REPOSITORY_NAM
 ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
-DEBATE_DIRECTORY_PREFIX = 'factchecks'
+DEBATE_DIRECTORY_PREFIX = 'factchecks/'
 CURRENT_DEBATE = 'factcheck-trump-100days-20161110'
 SEAMUS_ID = '501597652'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
@@ -231,10 +231,9 @@ def configure_targets(deployment_target):
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
-        document.location.protocol + '//' + document.location.hostname + '/' + APP_CONFIG.DEBATE_DIRECTORY_PREFIX + APP_CONFIG.CURRENT_DEBATE
-        S3_BASE_URL = '//%s/%s/%s' % (S3_BUCKET,
-                                      DEBATE_DIRECTORY_PREFIX,
-                                      CURRENT_DEBATE)
+        S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
+                                     DEBATE_DIRECTORY_PREFIX,
+                                     CURRENT_DEBATE)
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
         SERVERS = PRODUCTION_SERVERS
         SERVER_BASE_URL = '//%s/%s' % (SERVERS[0], PROJECT_SLUG)
@@ -248,9 +247,9 @@ def configure_targets(deployment_target):
         GAS_LOG_KEY = ''
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
-        S3_BASE_URL = '//%s/%s/%s' % (S3_BUCKET,
-                                      DEBATE_DIRECTORY_PREFIX,
-                                      CURRENT_DEBATE)
+        S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
+                                     DEBATE_DIRECTORY_PREFIX,
+                                     CURRENT_DEBATE)
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
         SERVERS = STAGING_SERVERS
         SERVER_BASE_URL = '//%s/%s' % (SERVERS[0], PROJECT_SLUG)
