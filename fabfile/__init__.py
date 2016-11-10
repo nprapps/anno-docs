@@ -153,6 +153,8 @@ def update():
     text.update()
     assets.sync()
     data.update()
+    # Get google document exported as HTML
+    text.get_transcript()
 
 @task
 def deploy(remote='origin', reload=False):
