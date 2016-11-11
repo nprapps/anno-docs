@@ -206,9 +206,9 @@ This was particularly true for the google document that we would use as source o
 So we provided a way to override the app configuration locally. In order to do so you will need to create a file called `local_settings.py` on your project root.
 
 The properties that you can override are:
-* TRANSCRIPT_GDOC_KEY: The google doc key used as the input to our parsing process
-* GAS_LOG_KEY: The google spreadsheet that stores the logs from the google app script execution
-* S3_BASE_URL: Useful if you want to override the default port of the local server.
+* `TRANSCRIPT_GDOC_KEY`: The google doc key used as the input to our parsing process
+* `GAS_LOG_KEY`: The google spreadsheet that stores the logs from the google app script execution
+* `S3_BASE_URL`: Useful if you want to override the default port of the local server.
 
 There are oher properties that you can set up but they will be better explained over the next section.
 
@@ -220,10 +220,10 @@ Sometimes it is not a live event that you want to fact check but a straight-from
 In this particular case we would not use the google app script side of this repo, since we are not going to need to be pulling a transcript periodically from an API, also we may want to generate the parsing locally and just sent the results to S3 to create a static version of the application.
 
 By default, this repo is configured to be used for a live event situation, but using `local_settings.py` to override configuration we can turn it into a more static approach. Here are the properties that you can change:
-* DEPLOY_TO_SERVERS: Turn it to `False` if you plan on deploying a static app
-* DEPLOY_STATIC_FACTCHECK: Turn it to `True` so that the fabric `deploy` command will also issue the parsing of the last transcript and add it to the deploy process to S3.
-* CURRENT_DEBATE: Bucket where you want to deploy the application
-* SEAMUS_ID: In npr.org we need this to generate a share.html page that our editors can use to send our readers to specific annotations through social media.
+* `DEPLOY_TO_SERVERS`: Turn it to `False` if you plan on deploying a static app
+* `DEPLOY_STATIC_FACTCHECK`: Turn it to `True` so that the fabric `deploy` command will also issue the parsing of the last transcript and add it to the deploy process to S3.
+* `CURRENT_DEBATE`: Bucket where you want to deploy the application
+* `SEAMUS_ID`: In npr.org we need this to generate a share.html page that our editors can use to send our readers to specific annotations through social media.
 
 
 
