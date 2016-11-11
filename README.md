@@ -158,7 +158,7 @@ fab daemons.main
 
 If you use iTerm2 v3 or above (3.0.10 is the latest as of 10th Nov. 2016) you can find an apple script on the `etc` folder named ` itermv3_debates.scpt` that will help you get up and running quickly. You'll need to tweak the paths on the apple script to suit your configuration and run it.
 
-We recommend that you add it to your `.bash_profile` as an alias to make your life even easier, for example this is my `.bash_prolile` alias line for debates
+We recommend that you add it to your `.bash_profile` as an alias to make your life even easier, for example this is my `.bash_profile` alias for debates
 
 ```
 alias debates="osascript ~/npr/aux_scripts/itermv3_debates.scpt"
