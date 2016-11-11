@@ -4,7 +4,10 @@ import re
 import copy
 import app_config
 import doc_config
+from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
+
+env = Environment(loader=FileSystemLoader('templates/transcript'))
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
@@ -32,52 +35,7 @@ extract_speaker_metadata_regex = re.compile(
 extract_soundbite_metadata_regex = re.compile(
     ur'^\s*(?:<.*?>)?\s*:\[\((.*)\)\]', re.UNICODE)
 
-FACT_CHECK_TPL = '''
-<div class="annotation" id="%(slug)s">
-    %(fact_check_text)s
-    <div class="annotation-header">
-        <img class="%(annotation_label_class)s" src="%(author_img)s"></img>
-        <div class="annotation-byline">
-            <a class="byline-name" href="%(author_page)s">%(author_name)s</a>
-            <span class="byline-role">%(author_role)s</span>
-        </div>
-    </div>
-    <div class="annotation-nav">
-        <a href="#" class="previousNav"><span class="triangleIcon">&#9650;</span> <span class="navText">Previous annotation</span></a><a href="#" class="nextNav" ><span class="navText">Next annotation</span> <span class="triangleIcon">&#9660;</span></a>
-    </div>
-</div>
-'''
-
-FACT_CHECK_TPL_NO_PAGE = '''
-<div class="annotation" id="%(slug)s">
-    %(fact_check_text)s
-    <div class="annotation-header">
-        <img class="%(annotation_label_class)s" src="%(author_img)s"></img>
-        <div class="annotation-byline">
-            <span class="byline-name">%(author_name)s</span>
-            <span class="byline-role">%(author_role)s</span>
-        </div>
-    </div>
-    <div class="annotation-nav">
-        <a href="#" class="previousNav"><span class="triangleIcon">&#9650;</span> <span class="navText">Previous annotation</span></a><a href="#" class="nextNav" ><span class="navText">Next annotation</span> <span class="triangleIcon">&#9660;</span></a>
-    </div>
-</div>
-'''
-
 PARAGRAPH_TPL = '<p>%s</p>'
-
-SPEAKER_TPL = '''
-<div class="speaker_wrapper">
-    <h4 class="%(speaker_class)s">%(speaker)s</h4>
-    <span class="timestamp">%(timestamp)s</span>
-</div>
-%(transcript_text)s
-'''
-
-SOUNDBITE_TPL = '''
-<p class="soundbite">%(soundbite)s</p>
-'''
-
 # Handle duplicate slugs warning
 slugs = []
 
@@ -148,18 +106,16 @@ def transform_fact_check(paragraphs, doc):
                 PARAGRAPH_TPL % (clean_text), "html.parser")
             fact_check_wrapper.append(new_paragraph)
 
-    tpl = FACT_CHECK_TPL if author_page != '' else FACT_CHECK_TPL_NO_PAGE
-
-    fact_check_markup = tpl % {
-        'slug': slug,
-        'annotation_label_class': annotation_label_class,
-        'author_page': author_page,
-        'author_name': author_name,
-        'author_role': author_role,
-        'author_img': author_img,
-        'fact_check_text': fact_check_wrapper}
+    context = {'slug': slug,
+               'annotation_label_class': annotation_label_class,
+               'author_page': author_page,
+               'author_name': author_name,
+               'author_role': author_role,
+               'author_img': author_img,
+               'fact_check_text': fact_check_wrapper}
+    template = env.get_template('factcheck.html')
+    fact_check_markup = template.render(**context)
     markup = BeautifulSoup(fact_check_markup, "html.parser")
-
     return markup
 
 
@@ -191,11 +147,12 @@ def transform_speaker(paragraph):
         return paragraph
 
     new_paragraph = BeautifulSoup(PARAGRAPH_TPL % (clean_text), "html.parser")
-    speaker_markup = SPEAKER_TPL % {
-        'speaker_class': speaker_class,
-        'speaker': speaker,
-        'timestamp': timestamp,
-        'transcript_text': new_paragraph}
+    context = {'speaker_class': speaker_class,
+               'speaker': speaker,
+               'timestamp': timestamp,
+               'transcript_text': new_paragraph}
+    template = env.get_template('speaker.html')
+    speaker_markup = template.render(**context)
 
     # Change strong tags
     speaker_markup = replace_strong_tags(speaker_markup)
@@ -220,10 +177,11 @@ def transform_soundbite(paragraph):
                      combined_contents)
         return paragraph
 
-    soundbite_markup = SOUNDBITE_TPL % {'soundbite': clean_text}
+    context = {'soundbite': clean_text}
+    template = env.get_template('soundbite.html')
+    soundbite_markup = template.render(**context)
     soundbite_markup = replace_strong_tags(soundbite_markup)
     markup = BeautifulSoup(soundbite_markup, "html.parser")
-
     return markup
 
 
@@ -237,7 +195,9 @@ def transform_other_text(paragraph):
         combined_contents += unicode(content)
 
     clean_text = combined_contents
-    other_markup = PARAGRAPH_TPL % (clean_text)
+    context = {'text': clean_text}
+    template = env.get_template('other.html')
+    other_markup = template.render(**context)
     other_markup = replace_strong_tags(other_markup)
     markup = BeautifulSoup(other_markup, "html.parser")
     return markup
