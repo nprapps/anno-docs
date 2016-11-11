@@ -35,7 +35,6 @@ extract_speaker_metadata_regex = re.compile(
 extract_soundbite_metadata_regex = re.compile(
     ur'^\s*(?:<.*?>)?\s*:\[\((.*)\)\]', re.UNICODE)
 
-PARAGRAPH_TPL = '<p>%s</p>'
 # Handle duplicate slugs warning
 slugs = []
 
@@ -44,11 +43,7 @@ def transform_fact_check(paragraphs, doc):
     """
     adds markup to each fact check
     """
-
-    # This will wrap all the fact check paragraphs
-    fact_check_wrapper = doc.soup.new_tag('div')
-    fact_check_wrapper['class'] = 'annotations-wrapper'
-
+    clean_paragraphs = []
     for paragraph in paragraphs:
         # We need to recreate the contents since copyDoc
         # is stripping the spans but leaving the child structure untouched
@@ -65,9 +60,7 @@ def transform_fact_check(paragraphs, doc):
                 clean_text = m.group(1) + m.group(2)
             else:
                 clean_text = m.group(2)
-            new_paragraph = BeautifulSoup(
-                PARAGRAPH_TPL % (clean_text), "html.parser")
-            fact_check_wrapper.append(new_paragraph)
+            clean_paragraphs.append({'text': clean_text})
         else:
             # Check to see if the slug is on this child tag
             m = extract_fact_metadata_regex.match(combined_contents)
@@ -102,9 +95,7 @@ def transform_fact_check(paragraphs, doc):
                 logger.error("ERROR: Unexpected metadata format %s" %
                              combined_contents)
                 return None
-            new_paragraph = BeautifulSoup(
-                PARAGRAPH_TPL % (clean_text), "html.parser")
-            fact_check_wrapper.append(new_paragraph)
+            clean_paragraphs.append({'text': clean_text})
 
     context = {'slug': slug,
                'annotation_label_class': annotation_label_class,
@@ -112,7 +103,7 @@ def transform_fact_check(paragraphs, doc):
                'author_name': author_name,
                'author_role': author_role,
                'author_img': author_img,
-               'fact_check_text': fact_check_wrapper}
+               'paragraphs': clean_paragraphs}
     template = env.get_template('factcheck.html')
     fact_check_markup = template.render(**context)
     markup = BeautifulSoup(fact_check_markup, "html.parser")
@@ -146,11 +137,10 @@ def transform_speaker(paragraph):
                      combined_contents)
         return paragraph
 
-    new_paragraph = BeautifulSoup(PARAGRAPH_TPL % (clean_text), "html.parser")
     context = {'speaker_class': speaker_class,
                'speaker': speaker,
                'timestamp': timestamp,
-               'transcript_text': new_paragraph}
+               'transcript_text': clean_text}
     template = env.get_template('speaker.html')
     speaker_markup = template.render(**context)
 

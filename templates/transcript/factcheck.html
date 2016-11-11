@@ -1,5 +1,9 @@
 <div class="annotation" id="{{slug}}">
-    {{fact_check_text}}
+    <div class="annotations-wrapper">
+        {% for paragraph in paragraphs %}
+            <p>{{paragraph.text}}</p>
+        {% endfor %}
+    </div>
     <div class="annotation-header">
         <img class="{{annotation_label_class}}" src="{{author_img}}"></img>
         <div class="annotation-byline">
