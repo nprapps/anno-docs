@@ -148,9 +148,6 @@ def transform_fact_check(paragraphs, doc):
                 PARAGRAPH_TPL % (clean_text), "html.parser")
             fact_check_wrapper.append(new_paragraph)
 
-    logger.info(author_page)
-    logger.info(author_page == '')
-
     tpl = FACT_CHECK_TPL if author_page != '' else FACT_CHECK_TPL_NO_PAGE
 
     fact_check_markup = tpl % {
