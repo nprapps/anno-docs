@@ -10,6 +10,8 @@ Debates
 * [Add a page to the site](#add-a-page-to-the-site)
 * [Run the project](#run-the-project)
 * [Run a transcript test](#run-transcript-test)
+* [Overriding app configuration](#overriding-app-configuration)
+* [Non live events](#non-live-events)
 * [Google Apps Scripts configuration](#google-apps-scripts-configuration)
 * [Google Apps Scripts development](#google-apps-scripts-development)
 * [Google Apps Scripts Execution API](#google-apps-scripts-execution-api)
@@ -35,7 +37,7 @@ Debates
 What is this?
 -------------
 
-A live transcription application for debates with embedded fact checks and annotations.
+A live transcription application with embedded fact checks and annotations.
 For a detailed explanation of how this works, check out [this blog post](https://source.opennews.org/en-US/articles/how-npr-transcribes-and-fact-checks-debates-live/) by Tyler Fisher.
 
 Assumptions
@@ -71,7 +73,9 @@ The project contains the following folders and important files:
 * ``app.py`` -- A [Flask](http://flask.pocoo.org/) app for rendering the project locally.
 * ``app_config.py`` -- Global project configuration for scripts, deployment, etc.
 * ``crontab`` -- Cron jobs to be installed as part of the project.
+* ``doc_config.py`` -- Configuration for the exported google doc HTML parsing: Authors, Speakers, etc.
 * ``package.json`` -- Contains both server-side and client-side javascript dependencies and scripts for webpack
+* ``parse_doc.py`` -- Main parser, input: google doc as html, output: html with annotations embedded.
 * ``public_app.py`` -- A [Flask](http://flask.pocoo.org/) app for running server-side code.
 * ``render_utils.py`` -- Code supporting template rendering.
 * ``requirements.txt`` -- Python requirements.
@@ -152,6 +156,14 @@ If you want to live update a Google Doc locally, you will also need to run the d
 fab daemons.main
 ```
 
+If you use iTerm2 v3 or above (3.0.10 is the latest as of 10th Nov. 2016) you can find an apple script on the `etc` folder named ` itermv3_debates.scpt` that will help you get up and running quickly. You'll need to tweak the paths on the apple script to suit your configuration and run it.
+
+We recommend that you add it to your `.bash_profile` as an alias to make your life even easier, for example this is my `.bash_prolile` alias line for debates
+
+```
+alias debates="osascript ~/npr/aux_scripts/itermv3_debates.scpt"
+```
+
 Run Transcript Test
 -------------------
 
@@ -183,6 +195,37 @@ Then, go to the google app script in the desired enviroment:
 Select 'main.gs' on the right panel and then from the Menu select 'Run -> Reset'
 
 This will clear out the associated document and the log and create a 1 minute trigger that will pull from the Verb8tm test API endpoint.
+
+Overriding App Configuration
+----------------------------
+
+There was a lot of collaboration inside this project and during long periods of time we were all simultaneously working in different parts of the project's pipeline and required some stability on the rest of the pipeline to make some progress.
+
+This was particularly true for the google document that we would use as source of the transcript, some of us were testing for quirks on the parsing side while other wanted to test navigation between annotations.
+
+So we provided a way to override the app configuration locally. In order to do so you will need to create a file called `local_settings.py` on your project root.
+
+The properties that you can override are:
+* TRANSCRIPT_GDOC_KEY: The google doc key used as the input to our parsing process
+* GAS_LOG_KEY: The google spreadsheet that stores the logs from the google app script execution
+* S3_BASE_URL: Useful if you want to override the default port of the local server.
+
+There are oher properties that you can set up but they will be better explained over the next section.
+
+Non Live Events
+---------------
+
+Sometimes it is not a live event that you want to fact check but a straight-from-the-oven text that has just been released. This is a more static approach, but there's still a lot of value on the repo that can be used in a non-live situation, like the parsing and all the client code that generates the final embed with tracking of individual annotations, etc.
+
+In this particular case we would not use the google app script side of this repo, since we are not going to need to be pulling a transcript periodically from an API, also we may want to generate the parsing locally and just sent the results to S3 to create a static version of the application.
+
+By default, this repo is configured to be used for a live event situation, but using `local_settings.py` to override configuration we can turn it into a more static approach. Here are the properties that you can change:
+* DEPLOY_TO_SERVERS: Turn it to `False` if you plan on deploying a static app
+* DEPLOY_STATIC_FACTCHECK: Turn it to `True` so that the fabric `deploy` command will also issue the parsing of the last transcript and add it to the deploy process to S3.
+* CURRENT_DEBATE: Bucket where you want to deploy the application
+* SEAMUS_ID: In npr.org we need this to generate a share.html page that our editors can use to send our readers to specific annotations through social media.
+
+
 
 Google Apps Scripts configuration
 ---------------------------------
@@ -567,6 +610,6 @@ License and credits
 Released under the MIT open source license. See ``LICENSE`` for details.
 
 
-Additional contributors
+Contributors
 ---------
 See ``CONTRIBUTORS``

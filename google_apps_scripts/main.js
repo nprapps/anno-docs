@@ -6,8 +6,8 @@
 * created for the presidential elections debates coverage at NPR.org
 *
 * Main functions:
-* init: Will create a new document, store it a shared location and launch the update trigger
 * update: Function called each time the 1 minute trigger fires
+* reset: Will clean up the google doc and logs and create the trigger to fire update periodically
 */
 
 

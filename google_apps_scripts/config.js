@@ -1,5 +1,6 @@
+// Properties that should remain untouched when a Google App Script reset is performed
 var PROPS_WHITE_LIST = ['api_timestamp_url', 'api_srt_url', 'documentID', 'logID'];
-var LOG_SHEET_NAME = 'Log';
+
 // Number of consecutive updates with no data needed in order to
 // infer that the live streaming of the event has ended
 // used to delete the timed based trigger
@@ -19,3 +20,7 @@ var DO_NOT_PUBLISH_MSG = 'DO NOT PUBLISH BEFORE 7PM EASTERN - NO DATA WILL BE AV
 // Hot Fix Restart CaptionID
 // Set to the first text you want to receive
 var RESTART_CAPTION_ID = 1;
+
+// Google Apps Script logging sheet name
+var LOG_SHEET_NAME = 'Log';
+

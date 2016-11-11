@@ -287,7 +287,7 @@ def configure_targets(deployment_target):
             pass
         # Override GAS_LOG_KEY to point to a different google app script log
         try:
-            from local_settings import S3_BASE_URL
+            from local_settings import GAS_LOG_KEY
         except ImportError:
             pass
 
