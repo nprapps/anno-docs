@@ -87,6 +87,11 @@
         a.production:visited {
             color: red;
         }
+        .doc,
+        a.doc,
+        a.doc:visited {
+            color: dodgerblue;
+        }
         .resize {
             background-color: white;
         }
@@ -147,6 +152,9 @@
                 {% if DEPLOYMENT_TARGET != 'production' %}
                 <div class="segment">
                     <a class="btn production" href="//apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">production &raquo;</a>
+                </div>
+                <div class="segment">
+                    <a class="btn doc" href="https://docs.google.com/document/d/{{ TRANSCRIPT_GDOC_KEY }}/" target="_blank">doc &raquo;</a>
                 </div>
                 {% endif %}
             {% endif %}
