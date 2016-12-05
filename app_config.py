@@ -280,7 +280,6 @@ def configure_targets(deployment_target):
             from local_settings import S3_BASE_URL
         except ImportError:
             pass
-        # Override TRANSCRIPT_GDOC_KEY to point to a different google doc
         try:
             from local_settings import TRANSCRIPT_GDOC_KEY
         except ImportError:
@@ -291,7 +290,16 @@ def configure_targets(deployment_target):
         except ImportError:
             pass
 
+    # If we are deploying a non live fact check:
+    # Override TRANSCRIPT_GDOC_KEY to point ALL environments to google doc
+    if DEPLOY_STATIC_FACTCHECK:
+        try:
+            from local_settings import TRANSCRIPT_GDOC_KEY
+        except ImportError:
+            pass
+
     DEPLOYMENT_TARGET = deployment_target
+
 
 """
 Run automated configuration
