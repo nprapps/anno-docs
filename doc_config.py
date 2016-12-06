@@ -247,5 +247,12 @@ FACT_CHECKERS = {
         "role": "NPR Politics Editor",
         "page": "http://www.npr.org/people/348738608/amita-parashar",
         "img": "http://media.npr.org/assets/img/2016/03/30/amita_sq-c978a1ee3e3dc94283460b869468caca1917216d-s200-c85.jpg"
+    },
+    "as2": {
+        "initials": "as2",
+        "name": "Arnie Seipel",
+        "role": "NPR Politics Editor",
+        "page": "http://www.npr.org/people/348741902/arnie-seipel",
+        "img": "http://media.npr.org/assets/img/2016/02/24/arnieseipel_sq-ee8b9faed4ade7e67287c4fcbfb02b56d6cf6d34-s200-c85.jpg"
     }
 }
