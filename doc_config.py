@@ -254,5 +254,12 @@ FACT_CHECKERS = {
         "role": "NPR Politics Editor",
         "page": "http://www.npr.org/people/348741902/arnie-seipel",
         "img": "http://media.npr.org/assets/img/2016/02/24/arnieseipel_sq-ee8b9faed4ade7e67287c4fcbfb02b56d6cf6d34-s200-c85.jpg"
+    },
+    "jt": {
+        "initials": "jt",
+        "name": "Jessica Taylor",
+        "role": "NPR Politics Reporter",
+        "page": "http://www.npr.org/people/404496424/jessica-taylor",
+        "img": "http://media.npr.org/assets/img/2015/05/26/jessica_taylor-10_sq-a663d98b16d1a59dca7e2b903338ba61fa3e195a-s200-c85.jpg"
     }
 }
