@@ -113,7 +113,7 @@ const initUI = function() {
  */
 const getTranscript = function() {
     request.get(transcriptURL)
-        .set('If-Modified-Since', lastRequestTime)
+        .set('If-Modified-Since', lastRequestTime ? lastRequestTime : '')
         .end(function(err, res) {
             if (res.status === 200) {
                 lastRequestTime = new Date().toUTCString();

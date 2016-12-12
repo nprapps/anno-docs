@@ -39,7 +39,7 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = 'factcheck-trump-100days-20161110'
+CURRENT_DEBATE = 'factcheck-trump-presser-20161215'
 SEAMUS_ID = '501597652'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
