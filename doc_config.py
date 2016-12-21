@@ -261,5 +261,13 @@ FACT_CHECKERS = {
         "role": "NPR Politics Reporter",
         "page": "http://www.npr.org/people/404496424/jessica-taylor",
         "img": "http://media.npr.org/assets/img/2015/05/26/jessica_taylor-10_sq-a663d98b16d1a59dca7e2b903338ba61fa3e195a-s200-c85.jpg"
-    }
+    },
+    "df": {
+        "initials": "df",
+        "name": "Dana Farrington",
+        "role": "NPR Engagement Editor",
+        "page": "http://www.npr.org/people/348761550/dana-farrington",
+        "img": "https://pbs.twimg.com/profile_images/685136569343193088/CQBNr074.jpg", # Used Twitter because couldn't find NPR image
+    },
+
 }
