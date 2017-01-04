@@ -39,8 +39,8 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = 'factcheck-trump-presser-20161215'
-SEAMUS_ID = '501597652'  # SEAMUS PAGE ID FOR DEEP LINKING
+CURRENT_DEBATE = 'factcheck-inauguration-20170120'
+SEAMUS_ID = ''  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
     # Override SEAMUS_ID to generate the sharing list accordingly

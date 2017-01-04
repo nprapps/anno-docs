@@ -1,0 +1,48 @@
+<script>
+    /**
+    * On document load, assign click handlers to each button and try to load the
+    * user's origin and destination language preferences if previously set.
+    */
+    $(function() {
+        $('#create-metadata').click(createMetadata);
+    });
+
+    /**
+    * Runs a server-side function to insert the translated text into the document
+    * at the user's cursor or selection.
+    */
+    function createMetadata() {
+        this.disabled = true;
+        $('#error').remove();
+        google.script.run
+            .withSuccessHandler(
+              function(returnSuccess, element) {
+                element.disabled = false;
+                google.script.host.close();
+              })
+            .withFailureHandler(
+              function(msg, element) {
+                showError(msg, $('#button-bar'));
+                element.disabled = false;
+              })
+            .withUserObject(this)
+            .insertMetadata($('form.metadata')[0]);
+    }
+
+    /**
+    * Inserts a div that contains an error message after a given element.
+    *
+    * @param msg The error message to display.
+    * @param element The element after which to display the error.
+    */
+    function showError(msg, element) {
+        var div = $('<div id="error" class="error">' + msg + '</div>');
+        $(element).after(div);
+    }
+
+    $(window).load(function() {
+        $('#other').click(function() {
+            $('#input-other').toggle(this.checked);
+        });
+    });
+</script>

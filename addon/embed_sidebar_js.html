@@ -1,0 +1,111 @@
+<script>
+    /**
+    * On document load, assign click handlers to each button and try to load the
+    * user's origin and destination language preferences if previously set.
+    */
+    $(function() {
+        $('#create-shortcode').click(createShortCode);
+        $('#radio-embed-type-link').click(loadSlugs);
+    });
+
+    /**
+    * Runs a server-side function to insert the translated text into the document
+    * at the user's cursor or selection.
+    */
+    function createShortCode() {
+        this.disabled = true;
+        $('#error').remove();
+        google.script.run
+            .withSuccessHandler(
+              function(returnSuccess, element) {
+                element.disabled = false;
+                google.script.host.close();
+              })
+            .withFailureHandler(
+              function(msg, element) {
+                showError(msg, $('#button-bar'));
+                element.disabled = false;
+              })
+            .withUserObject(this)
+            .insertShortCode($('form.shortcode')[0]);
+    }
+
+    function loadSlugs() {
+        this.disabled = true;
+        $('#slugs').empty();
+        $('#error').remove();
+        google.script.run
+            .withSuccessHandler(
+              function(options, element) {
+                $('#slugs').html(options.join(''));
+                element.disabled = false;
+              })
+            .withFailureHandler(
+              function(msg, element) {
+                showError(msg, $('#button-bar'));
+                element.disabled = false;
+              })
+            .withUserObject(this)
+            .retrievePosts();
+    }
+
+    /**
+    * Inserts a div that contains an error message after a given element.
+    *
+    * @param msg The error message to display.
+    * @param element The element after which to display the error.
+    */
+    function showError(msg, element) {
+        var div = $('<div id="error" class="error">' + msg + '</div>');
+        $(element).after(div);
+    }
+
+    $(window).load(function() {
+        $('#slugs').hide();
+        $('.embed-type').click(function() {
+            $('.attr-options').hide();
+            $('#' + $(this).attr('id') + '-options').show();
+            $('#attr-options').show();
+
+            if ($("#radio-embed-type-twitter").is(":checked")) {
+              $('#url').show();
+              $('#slugs').hide();
+              $('#url').attr('placeholder', 'https://twitter.com/titonka/status/791972573580001280').val('').focus().blur();
+            }
+            else if ($("#radio-embed-type-image").is(":checked")) {
+              $('#url').show();
+              $('#slugs').hide();
+              $('#url').attr('placeholder', 'FileName.jpg').val('').focus().blur();
+            }
+            else if ($("#radio-embed-type-graphic").is(":checked")) {
+              $('#url').show();
+              $('#slugs').hide();
+              $('#url').attr('placeholder', 'results-map1.png').val('').focus().blur();
+              $('#attr-options').hide();
+            }
+            else if ($("#radio-embed-type-facebook").is(":checked")) {
+              $('#url').show();
+              $('#slugs').hide();
+              $('#url').attr('placeholder', 'https://www.facebook.com/nprmusic/videos/1358050970871580/').val('').focus().blur();
+              $('#attr-options').hide();
+            }
+            else if ($("#radio-embed-type-youtube").is(":checked")) {
+              $('#url').show();
+              $('#slugs').hide();
+              $('#url').attr('placeholder', 'https://www.youtube.com/embed/ucEAcIMkS0c').val('').focus().blur();
+            }
+            else if ($("#radio-embed-type-link").is(":checked")){
+              $('#url').hide();
+              $('#slugs').show();
+            }
+
+            if ($("#radio-embed-type-image").is(":checked") || ($("#radio-embed-type-graphic").is(":checked"))) {
+              $('#source-input').text('File Name');
+            } else if ($("#radio-embed-type-link").is(":checked")){
+              $('#source-input').text('Select a post');
+            } else {
+              $('#source-input').text('URL');
+            }
+        });
+    });
+</script>
