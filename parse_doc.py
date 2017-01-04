@@ -5,7 +5,7 @@ import copy
 from copydoc import CopyDoc
 import app_config
 import doc_config
-from shortcode import process_shortcode
+# from shortcode import process_shortcode
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
 
@@ -243,19 +243,20 @@ def process_annotation_contents(contents):
     In particular parse and generate HTML from shortcodes
     """
     logger.debug('--process_annotation_contents start--')
-
-    parsed = []
-    for tag in contents:
-        text = tag.get_text()
-        m = shortcode_regex.match(text)
-        if m:
-            parsed.append(process_shortcode(tag))
-        else:
-            # Parsed searching and replacing for inline internal links
-            parsed_tag = internal_link_regex.sub(process_inline_internal_link,
-                                                 unicode(tag))
-            logger.debug('parsed tag: %s' % parsed_tag)
-            parsed.append(parsed_tag)
+    # Comment back in to get rich media into annotation contents WIP
+    # parsed = []
+    # for tag in contents:
+        # text = tag.get_text()
+        # m = shortcode_regex.match(text)
+        # if m:
+        #     parsed.append(process_shortcode(tag))
+        # else:
+        #     # Parsed searching and replacing for inline internal links
+        #     parsed_tag = internal_link_regex.sub(process_inline_internal_link,
+        #                                          unicode(tag))
+        #     logger.debug('parsed tag: %s' % parsed_tag)
+        #     parsed.append(parsed_tag)
+    parsed = [unicode(tag) for tag in contents]
     post_contents = ''.join(parsed)
     return post_contents
 
@@ -280,7 +281,7 @@ def process_transcript_content(tag):
     return typ, context
 
 
-def parse_raw_contents(raw_contents):
+def parse_raw_contents(data, status):
     """
     parse raw contents into an array of parsed transcript & annotation objects
     """
@@ -290,8 +291,12 @@ def parse_raw_contents(raw_contents):
     # - Contents
     # Parse rest of doc content, i.e., transcript contents
     contents = []
-
-    for r in raw_contents:
+    if not status:
+        if len(data):
+            status = 'during'
+        else:
+            status = 'before'
+    for r in data:
         if r['type'] == 'annotation':
             annotation = {}
             marker_counter = 0
@@ -311,16 +316,18 @@ def parse_raw_contents(raw_contents):
             for k, v in metadata.iteritems():
                 annotation[k] = v
             annotation[u'contents'] = process_annotation_contents(raw_contents)
-            markup = transform_annotation_markup(annotation)
-            contents.append(markup)
+            annotation[u'markup'] = transform_annotation_markup(annotation)
+            logger.info("annotation: %s" % annotation)
+            contents.append(annotation)
         else:
             transcript = {'type': 'other'}
             typ, context = process_transcript_content(r['content'])
             transcript['type'] = typ
             transcript['context'] = context
-            markup = transform_transcript_markup(transcript)
-            contents.append(markup)
-    return contents
+            transcript['markup'] = transform_transcript_markup(transcript)
+            transcript['published'] = 'yes'
+            contents.append(transcript)
+    return contents, status
 
 
 def categorize_doc_content(doc):
@@ -328,44 +335,7 @@ def categorize_doc_content(doc):
     Identifies and bundles together annotations leaving the rest of the
     transcript content untouched
     """
-    result = []
-    body = doc.soup.body
-    inside_annotation = False
-    annotation_contents = []
-    for child in body.children:
-        logger.debug("child: %s" % child)
-        if is_anno_start_marker(child):
-            inside_annotation = True
-            annotation_contents = []
-        elif is_anno_end_marker(child):
-            inside_annotation = False
-            result.append({'type': 'annotation',
-                           'contents': annotation_contents})
-        else:
-            if inside_annotation:
-                annotation_contents.append(child)
-            else:
-                result.append({'type': 'transcript',
-                               'content': child})
-    return result
-
-
-def parse(doc):
-    """
-    Custom parser for the debates google doc format
-    returns boolean marking if the transcript is live or has ended
-    """
-    global slugs
-    # Counters for checking number of fact checks and speaker tags
-    parsed_document = {}
-    number_of_fact_checks = 0
-    number_of_speakers = 0
-    fact_checks = []
-    slugs = []
-    # Stores the state of the transcript
-    # before, during or after needed on the front end
     fact_check_status = None
-    logger.info('-------------start------------')
     hr = doc.soup.hr
     # If we see an h1 with that starts with END
     if hr.find("p", text=end_fact_check_regex):
@@ -388,16 +358,47 @@ def parse(doc):
                 child.extract()
         hr.unwrap()
 
-    # Categorize content of original doc into transcript and annotations
-    raw_contents = categorize_doc_content(doc)
-    contents = parse_raw_contents(raw_contents)
-    logger.info('Fact Checks: %s, Speaker Paragraphs: %s' % (
-                number_of_fact_checks,
-                number_of_speakers))
-    logger.info('Application state: %s' % fact_check_status)
+    result = []
+    body = doc.soup.body
+    inside_annotation = False
+    annotation_contents = []
+    for child in body.children:
+        logger.debug("child: %s" % child)
+        if is_anno_start_marker(child):
+            inside_annotation = True
+            annotation_contents = []
+        elif is_anno_end_marker(child):
+            inside_annotation = False
+            result.append({'type': 'annotation',
+                           'contents': annotation_contents})
+        else:
+            if inside_annotation:
+                annotation_contents.append(child)
+            else:
+                result.append({'type': 'transcript',
+                               'content': child})
+    return result, fact_check_status
 
-    parsed_document['doc'] = ''.join(contents)
-    parsed_document['fact_check_status'] = fact_check_status
-    parsed_document['fact_checks'] = fact_checks
+
+def parse(doc):
+    """
+    Custom parser for the debates google doc format
+    """
+    context = {}
+    logger.info('-------------start------------')
+    # Categorize content of original doc into transcript and annotations
+    raw_contents, status = categorize_doc_content(doc)
+    contents, status = parse_raw_contents(raw_contents, status)
+    number_of_fact_checks = len([x for x in raw_contents
+                                if x['type'] == 'annotation'])
+    number_of_transcript = len([x for x in raw_contents
+                                if x['type'] == 'transcript'])
+    logger.info('Fact Checks: %s, Transcript Paragraphs: %s' % (
+                number_of_fact_checks,
+                number_of_transcript))
+    logger.info('Application state: %s' % status)
+
+    context['contents'] = contents
+    context['status'] = status
     logger.info('-------------end------------')
-    return parsed_document
+    return context

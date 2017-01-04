@@ -3,7 +3,7 @@ awscli==1.10.66
 Fabric==1.12.0
 Flask==0.9
 Flask-Cors==3.0.2
-Jinja2==2.7.3
+Jinja2==2.8
 MarkupSafe==0.23
 PyYAML==3.11
 Werkzeug==0.8.3
