@@ -42,6 +42,15 @@ def _factcheck():
     return make_response(render_template('factcheck.html', **context))
 
 
+@app.route('/factcheck_preview.html', methods=['GET', 'OPTIONS'])
+def _preview():
+    """
+    Preview contains published and draft posts
+    """
+    context = get_factcheck_context()
+    return make_response(render_template('factcheck.html', **context))
+
+
 @app.route('/share.html', methods=['GET', 'OPTIONS'])
 def _share():
     """
@@ -68,7 +77,6 @@ def _copydoc():
 
 
 @app.route('/child.html')
-@oauth.oauth_required
 def child():
     """
     Example view demonstrating rendering a simple HTML page.
@@ -79,8 +87,18 @@ def child():
 
 
 @app.route('/')
-@oauth.oauth_required
+@app.route('/index.html')
 def index():
+    """
+    Example view demonstrating rendering a simple HTML page.
+    """
+    context = make_context()
+
+    return make_response(render_template('parent.html', **context))
+
+
+@app.route('/preview.html')
+def preview():
     """
     Example view demonstrating rendering a simple HTML page.
     """
