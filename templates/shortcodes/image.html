@@ -1,0 +1,11 @@
+<div class="embed-image" data-src="http://media.npr.org/politics/election2016/{{ url }}">
+    <div class="image-wrapper" style="padding-bottom: {{ ratio }}%;">
+        <img width="{{ width }}" height="auto" src="">
+    </div>
+    {% if caption != None and caption != '' %}
+    <p class="caption image-caption">{{ caption }}</p>
+    {% endif %}
+    {% if caption != None and caption != '' %}
+    <p class="credit image-credit">{{ credit }}</p>
+    {% endif %}
+</div>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- The CSS package above applies Google styling to buttons and other elements. -->
+    <?!= include('sidebar_style'); ?>
+  </head>
+  <body>
+    <div class="sidebar branding-below">
+      <form class="metadata">
+        <div class="block form-group">
+          <h3 for="headline">Headline<span class="required-flag">*</span></h3>
+          <input class="width-100" placeholder="Headline"
+                 type="text" name="headline" id="headline">
+        </div>
+
+        <div class="block form-group">
+          <h3 for="authors">Author(s)<span class="required-flag">*</span></h3>
+          <div class="block form-group">
+            <div class="col-one">
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="jb2" value="Jeff Brady (jb2)" />Jeff Brady
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="jb" value="John Burnett (jb)" />John Burnett
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="kc" value="Kat Chow (kc)" />Kat Chow
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="sd" value="Scott Detrow (sd)" />Scott Detrow
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="re" value="Ron Elving (re)" />Ron Elving
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="pe" value="Phil Ewing (pe)" />Phil Ewing
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="pf" value="Pam Fessler (pf)" />Pam Fessler
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="mg" value="Marilyn Geewax (mg)" />Marilyn Geewax
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="sh" value="Scott Horsley (sh)" />Scott Horsley
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="eh" value="Elise Hu (eh)" />Elise Hu
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="cj2" value="Carrie Johnson (cj2)" />Carrie Johnson
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="cj" value="Chris Joyce (cj)" />Chris Joyce
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="ak" value="Anya Kamenetz (ak)" />Anya Kamenetz
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="lk" value="Larry Kaplow (lk)" />Larry Kaplow
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="tk" value="Tamara Keith (tk)" />Tamara Keith
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="mk2" value="Michele Kelemen (mk2)" />Michele Kelemen
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="mlk" value="Mary Louise Kelly (mlk)" />Mary Louise Kelly
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="ak2" value="Amita Kelly (ak2)" />Amita Kelly
+              </label>
+            </div>
+            <div class="col-one">
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="ak3" value="Asma Khalid (ak3)" />Asma Khalid
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="ak4" value="Alison Kodjak (ak4)" />Alison Kodjak
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="dk" value="Danielle Kurtzleben (dk)" />Danielle Kurtzleben
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="rl" value="Russell Lewis (rl)" />Russell Lewis
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="sm" value="Sarah McCammon (sm)" />Sarah McCammon
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="dm" value="Domenico Montanaro (dm)" />Domenico Montanaro
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="bn" value="Brian Naylor (bn)" />Brian Naylor
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="jn" value="Joe Neel (jn)" />Joe Neel
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="ep" value="Eyder Peralta (ep)" />Eyder Peralta
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="cs" value="Claudio Sanchez (cs)" />Claudio Sanchez
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="ss" value="Sam Sanders (ss)" />Sam Sanders
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="as" value="Aarti Shahani (as)" />Aarti Shahani
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="jt" value="Jessica Taylor (jt)" />Jessica Taylor
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="ct" value="Cory Turner (ct)" />Cory Turner
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="dw" value="David Welna (dw)" />David Welna
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="ew" value="Eric Westervelt (ew)" />Eric Westervelt
+              </label>
+              <label class="checkbox width-100">
+              	<input type="checkbox" name="authorsList" id="jz" value="Jim Zarroli (jz)" />Jim Zarroli
+              </label>
+            </div>
+            <label class="checkbox width-100">
+              <input type="checkbox" id="other" value="other" />Other
+              <div id="input-other" class="block form-group">
+                <input class="width-100" placeholder="John Doe, Mark Smith" type="text" name="otherAuthors" id="other-author">
+              </div>
+            </label>
+          </div>
+
+          <div class="block form-group">
+            <h3 for="major-development">Major Development</h3>
+            <div>
+              <div class="col-one">
+                <input type="radio" name="major" id="radio-embed-type-major" value="Yes">
+                <label for="radio-embed-type-major">Yes</label>
+              </div>
+              <div class="col-one">
+                <input type="radio" name="major" id="radio-embed-type-regular" value="No" checked="checked">
+                <label for="radio-embed-type-regular">No</label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" id="button-bar">
+          <button class="blue" id="create-metadata">Create Draft Post</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="sidebar bottom">
+      <img alt="Add-on logo" class="logo" src="http://media.npr.org/chrome/news/npr-home.png">
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <?!= include('metadata_sidebar_js'); ?>
+  </body>
+</html>
