@@ -308,7 +308,7 @@ def parse_raw_contents(data, status):
                 if m:
                     marker_counter += 1
                 else:
-                    if (marker_counter <= 1):
+                    if (marker_counter == 1):
                         raw_metadata.append(tag)
                     else:
                         raw_contents.append(tag)

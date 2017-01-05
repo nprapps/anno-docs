@@ -138,7 +138,8 @@ GOOGLE APPS SCRIPTS
 PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
 GAS_LOG_KEY = 'ukfqIp4QxuvUoHqbEQIlKQFC7w' # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = '1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA' # Google app script google doc key
-SCRIPT_PROJECT_NAME = 'debate_scripts' # Google app scripts project name
+SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
+ADDON_SCRIPT_PROJECT_NAME = 'addon_factcheck_scripts' # Google app scripts project name
 
 
 """

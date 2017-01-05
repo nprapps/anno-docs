@@ -41,8 +41,12 @@
     }
 
     $(window).load(function() {
-        $('#other').click(function() {
-            $('#input-other').toggle(this.checked);
+        $('.author-input').click(function() {
+            if (this.id === 'other') {
+                $('#input-other').toggle(true);
+            } else {
+                $('#input-other').toggle(false);
+            }
         });
     });
 </script>

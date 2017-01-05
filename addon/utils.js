@@ -37,41 +37,18 @@ function _getNumProperty(props, key) {
 * @private
 * @param {Object} body Google Apps Scripts Body class
 */
-function _initMarkerAtBottom() {
+function _initMarker() {
   var doc = DocumentApp.getActiveDocument();
   var body = doc.getBody();
-  for (var i=0; i < 80; i++) {
-    body.appendParagraph('');
-  }
   var hr = body.appendHorizontalRule();
   var marker = hr.getParent();
   marker.appendText(WARNING_MSG);
 }
 
-function _insertPinnedPost() {
-  var doc = DocumentApp.getActiveDocument();
-  var body = doc.getBody();
-  body.insertParagraph(0, NEW_POST_MARKER).setBold(false).setBackgroundColor(null).setForegroundColor(null);
-  var heading = body.insertParagraph(1, INITIAL_PINNED_POST_HEADLINE).setHeading(DocumentApp.ParagraphHeading.HEADING1);
-  body.insertParagraph(2, FRONTMATTER_MARKER);
-  var slug = 'Slug: '+ 'pinned-post';
-  body.insertParagraph(3, slug);
-  var pinned = 'Pinned: Yes';
-  body.insertParagraph(4, pinned);
-  var status = 'Published Mode: Yes';
-  body.insertParagraph(5, status).setHeading(DocumentApp.ParagraphHeading.HEADING3).setBold(true).setBackgroundColor('#FFF2CC');;
-  body.insertParagraph(6, FRONTMATTER_MARKER).setBold(false).setBackgroundColor(null);
-  body.insertParagraph(7, '');
-  var placeholder = body.insertParagraph(7, PINNED_POST_PLACEHOLDER).setBold(false).setBackgroundColor(null);
-  body.insertParagraph(8, '');
-  body.insertParagraph(9, END_POST_MARKER).setBold(false).setForegroundColor('#FF0000');
-  body.insertParagraph(10, '').setBold(false).setForegroundColor(null).setBackgroundColor(null);
-}
-
 function initializeDocument() {
   // Clear out the doc
   var ui = DocumentApp.getUi();
-  var response = ui.alert('WARNING: SHOULD NEVER BE DONE DURING ELECTION NIGHT', 'This will delete the doc contents, are you sure you know what you are doing?', ui.ButtonSet.YES_NO);
+  var response = ui.alert('WARNING: SHOULD NEVER BE DONE DURING A LIVE EVENT', 'This will delete the doc contents, are you sure you know what you are doing?', ui.ButtonSet.YES_NO);
   // Process the user's response.
   if (response != ui.Button.YES) {
     return;
@@ -98,12 +75,9 @@ function initializeDocument() {
   logSpreadsheet.getSheetByName(LOG_SHEET_NAME).clearContents();
   _initializeLogging();
   PersistLog.info("Logfile cleared inside initializeDocument");
-  // Insert pinned Post
-  _insertPinnedPost();
-  PersistLog.info("Pinned Post inserted at the top of the document");
   // Insert marker at the bottom
-  _initMarkerAtBottom();
-  PersistLog.info("Document End Marker inserted at the bottom of the document");
+  _initMarker();
+  PersistLog.info("Document End Marker inserted in the document");
   // Reset slug index property
   var props = PropertiesService.getDocumentProperties();
   var slug_idx = 0;

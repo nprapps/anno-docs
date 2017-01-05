@@ -9,8 +9,7 @@
  */
 function onOpen(e) {
     DocumentApp.getUi().createAddonMenu()
-        .addItem('Add Post', 'showMetadataSidebar')
-        .addItem('Add Embed ShortCode', 'showEmbedSidebar')
+        .addItem('Add Annotation', 'showMetadataSidebar')
         .addSeparator()
         .addItem('Initialize Document', 'initializeDocument')
         .addToUi();
