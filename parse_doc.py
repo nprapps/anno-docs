@@ -225,7 +225,7 @@ def process_metadata(contents):
         m = extract_metadata_regex.match(text)
         if m:
             key = m.group(1).strip().lower()
-            if key != 'authors':
+            if key != 'author':
                 value = m.group(2).strip().lower()
                 metadata[key] = value
             else:
@@ -308,6 +308,8 @@ def parse_raw_contents(data, status):
                 if m:
                     marker_counter += 1
                 else:
+                    if not marker_counter:
+                        continue
                     if (marker_counter == 1):
                         raw_metadata.append(tag)
                     else:
