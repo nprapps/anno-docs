@@ -140,7 +140,7 @@ body.after {
     }
 }
 
-body.whitelabel {
+body.npr {
     .header-logo {
         display: none;
     }
@@ -157,6 +157,24 @@ body.whitelabel {
         height: 0;
         padding: 0;
         border-top: 4px solid @black;
+    }
+}
+
+.error-message {
+    background-color: #e61e1d;
+    padding: 1em;
+    display: none;
+
+    p {
+        .gotham();
+        font-size: 12px;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+    }
+
+    .error & {
+        display: block;;
     }
 }
 
@@ -215,6 +233,16 @@ body.whitelabel {
     .before &, .transcript-end &, .after & {
         display: none;
     }
+}
+
+// PREVIEW MESSAGE
+.preview-msg {
+    .gotham();
+    background-color: @orange;
+    padding: 10px 0;
+    color: @black;
+    margin: 0 auto;
+    text-align: center;
 }
 
 // TRANSCRIPT TYPE
@@ -303,6 +331,10 @@ a:hover, a:active { color: @link-active; }
 
 .annotation {
     .annotation-base();
+
+    &.draft {
+        background-color: @orange !important;
+    }
 
     &.unread {
         border: 2px solid @highlight;

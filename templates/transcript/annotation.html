@@ -1,5 +1,5 @@
 {% set author = authors[0] %}
-<div class="annotation" id="{{slug}}">
+<div class="annotation {%if published == 'no' %} draft{% endif %}" id="{{slug}}">
     <div class="annotations-wrapper">
         {{contents|safe}}
     </div>
