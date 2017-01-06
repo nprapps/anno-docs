@@ -136,7 +136,7 @@ GOOGLE APPS SCRIPTS
 """
 
 # PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
-# GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
+GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
 
@@ -291,10 +291,15 @@ def configure_targets(deployment_target):
             pass
 
     # If we are deploying a non live fact check:
-    # Override TRANSCRIPT_GDOC_KEY to point ALL environments to google doc
     if DEPLOY_STATIC_FACTCHECK:
+        # Override TRANSCRIPT_GDOC_KEY to point ALL environments to google doc
         try:
             from local_settings import TRANSCRIPT_GDOC_KEY
+        except ImportError:
+            pass
+        # Override GAS_LOG_KEY to point to a different google app script log
+        try:
+            from local_settings import GAS_LOG_KEY
         except ImportError:
             pass
 

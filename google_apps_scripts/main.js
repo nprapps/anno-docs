@@ -145,7 +145,7 @@ function reset() {
     body.appendParagraph('');
     // Reset body to initial state
     body.clear();
-    // body.insertParagraph(0, DO_NOT_PUBLISH_MSG);
+    body.insertParagraph(0, DO_NOT_PUBLISH_MSG);
     _initMarker(body);
 
     // Open the google drive spreadsheet log

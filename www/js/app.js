@@ -292,8 +292,8 @@ const renderHeaderContentsBefore = function(data) {
         }, h('img.header-logo', {
             src: './assets/npr-color-100.png'
         })),
-        h('h2.header-title', 'NPR Politics Live Transcript'),
-        h('p.header-info', 'The debate is scheduled to begin at 9 p.m. ET. Once the debate has started, a live transcript will appear below.'),
+        h('h2.header-title', 'NPR Live Transcript'),
+        h('p.header-info', 'Once the event has started, a live transcript will appear below.'),
     ]
 };
 
@@ -307,7 +307,7 @@ const renderHeaderContentsDuring = function(data) {
         }, h('img.header-logo', {
             src: './assets/npr-color-100.png'
         })),
-        h('h2.header-title', 'NPR Politics Live Transcript'),
+        h('h2.header-title', 'NPR Live Transcript'),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
             h('span.num-annotations', data.numAnnotations + ' Annotations')
