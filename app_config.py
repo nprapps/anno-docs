@@ -39,7 +39,7 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = 'factcheck-trump-presser-20161215'
+CURRENT_DEBATE = '20170110-sessions-confirmation-factcheck'
 SEAMUS_ID = '501597652'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
@@ -135,10 +135,10 @@ LOAD_COPY_INTERVAL = 10
 GOOGLE APPS SCRIPTS
 """
 
-PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
-GAS_LOG_KEY = 'ukfqIp4QxuvUoHqbEQIlKQFC7w' # Google app script logs spreadsheet key
-TRANSCRIPT_GDOC_KEY = '1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA' # Google app script google doc key
-SCRIPT_PROJECT_NAME = 'debate_scripts' # Google app scripts project name
+# PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
+# GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
+TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s' # Google app script google doc key
+SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
 
 
 """
@@ -242,9 +242,9 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1b1NrTa7OUXEqZ9wkL2Ps_Hal13tC39XoVkpgvb65bw4'
+        TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s'
         # PRODUCTION LOGS
-        GAS_LOG_KEY = ''
+        GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
