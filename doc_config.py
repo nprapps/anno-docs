@@ -7,6 +7,7 @@
 SPEAKERS = {
     'HILLARY CLINTON': 'speaker dem',
     'TIM KAINE': 'speaker dem',
+    'BARAK OBAMA': 'speaker dem',
     'DONALD TRUMP': 'speaker gop',
     'MIKE PENCE': 'speaker gop'
 }
