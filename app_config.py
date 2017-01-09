@@ -39,8 +39,8 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = '20170110-sessions-confirmation-factcheck'
-SEAMUS_ID = '501597652'  # SEAMUS PAGE ID FOR DEEP LINKING
+CURRENT_DEBATE = '20170110-obama-farewell-factcheck'
+SEAMUS_ID = ''  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
     # Override SEAMUS_ID to generate the sharing list accordingly
@@ -64,8 +64,8 @@ DEFAULT_MAX_AGE = 20
 RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
-PRODUCTION_SERVERS = ['54.84.224.48']
-STAGING_SERVERS = ['54.221.49.36']
+PRODUCTION_SERVERS = ['54.211.94.130']
+STAGING_SERVERS = ['54.167.46.85']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
@@ -242,7 +242,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s'
+        TRANSCRIPT_GDOC_KEY = '1_AovrwcSjEdwB2d0a0SdQnc5ssNIBdjZqNsCQznoLf8'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
