@@ -135,6 +135,7 @@ function _checkTranscriptEnd() {
   try {
     PersistLog.debug('_checkTranscriptEnd start');
     var cnt = _getNumProperty('noDataCounter');
+    var pattern = '^.*' + WARNING_TEXT + '.*$';
     // If cnt is null then no data was ever received
     // so we have not yet started the live transcript session
     if (cnt !== null) {
@@ -144,16 +145,17 @@ function _checkTranscriptEnd() {
         _removeTrigger();
         // Add end marker
         var body = doc.getBody();
-        body.appendParagraph('');
-        var marker = _detachMarkerParagraph(body);
-        if (marker) {
-          _moveMarker(body, marker, null);
-        } else {
-          var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
-          PersistLog.severe(msg);
+        if (body.findText(pattern) !== null) {
+          body.appendParagraph('');
+          var marker = _detachMarkerParagraph(body);
+          if (marker) {
+            _moveMarker(body, marker, null);
+          } else {
+            var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
+            PersistLog.severe(msg);
+          }
+          marker.replaceText(pattern, LIVE_TRANSCRIPT_END_MSG);
         }
-        var pattern = '^.*' + WARNING_TEXT + '.*$';
-        marker.replaceText(pattern, LIVE_TRANSCRIPT_END_MSG);
       } else {
         cnt += 1;
         props.setProperty('noDataCounter', cnt);

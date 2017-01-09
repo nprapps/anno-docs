@@ -7,7 +7,7 @@ var PROPS_WHITE_LIST = ['api_timestamp_url', 'api_srt_url', 'documentID', 'logID
 var IDLE_STOP_THRESHOLD = 10;
 
 //Notifications
-var NOTIFICATION_ENABLED = true;
+var NOTIFICATION_ENABLED = false;
 var NOTIFICATION_RECIPIENTS = 'nprapps@npr.org';
 
 // Warning message to go with the horizontal rule that will

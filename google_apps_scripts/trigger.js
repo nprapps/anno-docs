@@ -38,7 +38,13 @@ function _removeTrigger() {
   PersistLog.debug('_removeTrigger start');
   var triggerID = props.getProperty('triggerID');
   PersistLog.debug('triggerID %s', triggerID);
-  if (triggerID) _deleteTriggers(triggerID);
+  if (triggerID) {
+    _deleteTriggers(triggerID);
+    props.deleteProperty('triggerID');
+  }
+  else {
+    _deleteTriggers(null);
+  }
 }
 
 /**

@@ -70,7 +70,10 @@ function update() {
     content = response.getContentText('UTF-8');
     headers = response.getHeaders();
     PersistLog.debug('headers: %s', headers);
-    var newCaptionID = headers.lastCaptionID
+    var newCaptionID = headers.lastCaptionID;
+    if (newCaptionID === undefined) {
+        newCaptionID = headers.lastcaptionid;
+    }
     PersistLog.info('received captionID: %s', newCaptionID);
 
     // Parse SRT data
@@ -145,7 +148,7 @@ function reset() {
     body.appendParagraph('');
     // Reset body to initial state
     body.clear();
-    body.insertParagraph(0, DO_NOT_PUBLISH_MSG);
+    // body.insertParagraph(0, DO_NOT_PUBLISH_MSG);
     _initMarker(body);
 
     // Open the google drive spreadsheet log
