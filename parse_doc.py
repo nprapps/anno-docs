@@ -22,7 +22,7 @@ end_fact_check_regex = re.compile(ur'^\s*[Ee][Nn][Dd]\s*$',
 
 fact_check_regex = re.compile(ur'^\s*NPR\s*:', re.UNICODE)
 continuation_regex = re.compile(ur'^\s*CONT\s*:', re.UNICODE)
-speaker_regex = re.compile(ur'^[A-Z\s.-]+(\s\[.*\])?:', re.UNICODE)
+speaker_regex = re.compile(ur'^[A-Z0-9\s.-]+(\s\[.*\])?:', re.UNICODE)
 soundbite_regex = re.compile(ur'^\s*:', re.UNICODE)
 
 extract_fact_metadata_regex = re.compile(
@@ -31,7 +31,7 @@ extract_fact_metadata_regex = re.compile(
 extract_cont_metadata_regex = re.compile(
     ur'^\s*(<.*?>)?CONT\s*:\s*(.*)', re.UNICODE)
 extract_speaker_metadata_regex = re.compile(
-    ur'^\s*(<.*?>)?([A-Z\s.-]+)\s*(?:\[(.*)\]\s*)?:\s*(.*)', re.UNICODE)
+    ur'^\s*(<.*?>)?([A-Z0-9\s.-]+)\s*(?:\[(.*)\]\s*)?:\s*(.*)', re.UNICODE)
 extract_soundbite_metadata_regex = re.compile(
     ur'^\s*(?:<.*?>)?\s*:\[\((.*)\)\]', re.UNICODE)
 
