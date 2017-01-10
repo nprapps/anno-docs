@@ -103,9 +103,22 @@ function _appendNewTranscripts(texts, newParagraph) {
     }
 
     var p = null;
+    var text = null;
+    var soundbite_detected = false;
     for (var i = 0; i < texts.length; i++) {
+      if (texts[i].trim() === ':[(SOUNDBITE)]') {
+        soundbite_detected = true;
+        continue;
+      }
+      else if (soundbite_detected) {
+        soundbite_detected = false;
+        text = texts[i].replace(/^.+?:/, '');
+      }
+      else {
+        text = texts[i];
+      }
       body.appendParagraph('');
-      p = body.appendParagraph(texts[i]);
+      p = body.appendParagraph(text);
     }
     var idx = body.getChildIndex(p);
     var marker = _detachMarkerParagraph(body);
