@@ -242,13 +242,6 @@ FACT_CHECKERS = {
         "page": "http://www.npr.org/people/2101289/nina-totenberg",
         "img": "http://media.npr.org/assets/img/2016/10/31/20160915_nina_totenberg-30-retouched_sq-b392c67217a68a7c32bb2a3b2a30a2524a713797-s200-c85.jpg"
     },
-    "ak3": {
-        "initials": "ak3",
-        "name": "Amita Kelly",
-        "role": "NPR Politics Editor",
-        "page": "http://www.npr.org/people/348738608/amita-parashar",
-        "img": "http://media.npr.org/assets/img/2016/03/30/amita_sq-c978a1ee3e3dc94283460b869468caca1917216d-s200-c85.jpg"
-    },
     "as2": {
         "initials": "as2",
         "name": "Arnie Seipel",
@@ -268,7 +261,7 @@ FACT_CHECKERS = {
         "name": "Dana Farrington",
         "role": "NPR Engagement Editor",
         "page": "http://www.npr.org/people/348761550/dana-farrington",
-        "img": "https://pbs.twimg.com/profile_images/685136569343193088/CQBNr074.jpg", # Used Twitter because couldn't find NPR image
+        "img": ""
     },
 
 }
