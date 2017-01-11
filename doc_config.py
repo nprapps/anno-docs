@@ -304,5 +304,12 @@ FACT_CHECKERS = {
         "role": "Reporter, Business Desk",
         "page": "http://www.npr.org/people/130330851/sonari-glinton",
         "img": "http://media.npr.org/assets/img/2012/01/03/sonariglinton_29_sq-f36cbe557b29bfd1a881feabd836ad1af431cdbc-s200-c85.jpg"
+    },
+    "yn": {
+        "initials": "yn",
+        "name": "Yuki Noguchi",
+        "role": "Correspondent, Business Desk",
+        "page": "http://www.npr.org/people/96022165/yuki-noguchi",
+        "img": "http://media.npr.org/assets/img/2014/03/18/noguchi_4_sq-a529dd06c9bdcc061d054e32d18b52bc466bbb1b-s200-c85.jpg"
     }
 }
