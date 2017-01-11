@@ -289,7 +289,7 @@ FACT_CHECKERS = {
         "name": "John Ydstie",
         "role": "Correspondent/Host",
         "page": "http://www.npr.org/people/2101404/john-ydstie",
-        "img": "http://media.npr.org/assets/img/2011/12/30/johnydstie_13_npr-b44064fddef25a88ec60e0ff37c2cbd2eaad2e9d-s200-c85.jpg"
+        "img": "http://media.npr.org/assets/img/2011/12/30/johnydstie_13_sq-b44064fddef25a88ec60e0ff37c2cbd2eaad2e9d-s200-c85.jpg"
     },
     "ub": {
         "initials": "jy",
