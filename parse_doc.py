@@ -26,7 +26,7 @@ speaker_regex = re.compile(ur'^[A-Z0-9\s.-]+(\s\[.*\])?:', re.UNICODE)
 soundbite_regex = re.compile(ur'^\s*:', re.UNICODE)
 
 extract_fact_metadata_regex = re.compile(
-    ur'^\s*(<.*?>)?NPR\s*:\s*(([A-Za-z0-9]{2,3})-[A-Za-z0-9-]+):?\W(.*)',
+    ur'^\s*(<.*?>)?NPR\s*:\s*(([A-Za-z0-9]{2,3})-[A-Za-z0-9-]+):?(\W.*)',
     re.UNICODE)
 extract_cont_metadata_regex = re.compile(
     ur'^\s*(<.*?>)?CONT\s*:\s*(.*)', re.UNICODE)
