@@ -62,7 +62,7 @@ FACT_CHECKERS = {
     "tk": {
         "initials": "tk",
         "name": "Tamara Keith",
-        "role": "NPR White House Correspondent/Covers Clinton",
+        "role": "NPR White House Correspondent",
         "page": "http://www.npr.org/people/122805042/tamara-keith",
         "img": "http://media.npr.org/assets/img/2015/10/14/tkp-1_sq-f03e437803f37ec0f7f205531d4ff5d040413aa3-s400-c85.jpg",
     },
@@ -269,5 +269,11 @@ FACT_CHECKERS = {
         "page": "http://www.npr.org/people/348761550/dana-farrington",
         "img": "https://pbs.twimg.com/profile_images/685136569343193088/CQBNr074.jpg", # Used Twitter because couldn't find NPR image
     },
-
+    "gb": {
+        "initials": "gb",
+        "name": "Geoff Brumfiel",
+        "role": "NPR Science Editor",
+        "page": "http://www.npr.org/people/279612138/geoff-brumfiel",
+        "img": ""
+    }
 }
