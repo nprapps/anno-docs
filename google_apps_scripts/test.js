@@ -111,10 +111,7 @@ function testAppendNewTranscript() {
   var documentID = props.getProperty('documentID');
   doc = DocumentApp.openById(documentID);
 
-  testTexts = [
-    "ROBERT SPIEGEL:First paragraph",
-    ":[(SOUNDBITE)]",
-    //":[(APPLAUSE)]",
-    "ROBERT SPIEGEL: Second paragraph with another colon: to test greediness"];
+  testTexts = ["ROBERT SPIEGEL:First paragraph",":[(SOUNDBITE)]","ROBERT SPIEGEL: Second paragraph with another colon: to test greediness",":[(SOUNDBITE)]"];
+  //testTexts = [":[(SOUNDBITE)]"];
   _appendNewTranscripts(testTexts, true);
 }

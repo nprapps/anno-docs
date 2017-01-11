@@ -120,13 +120,15 @@ function _appendNewTranscripts(texts, newParagraph) {
       body.appendParagraph('');
       p = body.appendParagraph(text);
     }
-    var idx = body.getChildIndex(p);
-    var marker = _detachMarkerParagraph(body);
-    if (marker) {
-      _moveMarker(body, marker, idx);
-    } else {
-      var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
-      PersistLog.severe(msg);
+    if (p !== null) {
+      var idx = body.getChildIndex(p);
+      var marker = _detachMarkerParagraph(body);
+      if (marker) {
+        _moveMarker(body, marker, idx);
+      } else {
+        var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
+        PersistLog.severe(msg);
+      }
     }
   } catch (e) {
     e = (typeof e === 'string') ? new Error(e): e;
