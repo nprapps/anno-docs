@@ -70,7 +70,10 @@ function update() {
     content = response.getContentText('UTF-8');
     headers = response.getHeaders();
     PersistLog.debug('headers: %s', headers);
-    var newCaptionID = headers.lastCaptionID
+    var newCaptionID = headers.lastCaptionID;
+    if (newCaptionID === undefined) {
+        newCaptionID = headers.lastcaptionid;
+    }
     PersistLog.info('received captionID: %s', newCaptionID);
 
     // Parse SRT data

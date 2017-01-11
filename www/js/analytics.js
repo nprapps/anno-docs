@@ -26,7 +26,7 @@ window.ANALYTICS = (function () {
         var startUrl = location.host + location.pathname;
 
         var parentUrl = new URL(decodeURIComponent(getParameterByName('parentUrl')));
-        
+
         var gaLocation = startUrl + '?parentUrl=' + parentUrl.hostname
         var gaPath = location.pathname.substring(1) + '?parentUrl=' + parentUrl.hostname;
 
@@ -56,7 +56,7 @@ window.ANALYTICS = (function () {
     var trackEvent = function(eventName, label, value) {
         var eventData = {
             'hitType': 'event',
-            'eventCategory': APP_CONFIG.PROJECT_SLUG,
+            'eventCategory': APP_CONFIG.CURRENT_DEBATE,
             'eventAction': eventName
         }
 

@@ -103,17 +103,32 @@ function _appendNewTranscripts(texts, newParagraph) {
     }
 
     var p = null;
+    var text = null;
+    var soundbite_detected = false;
     for (var i = 0; i < texts.length; i++) {
+      if (texts[i].trim() === ':[(SOUNDBITE)]') {
+        soundbite_detected = true;
+        continue;
+      }
+      else if (soundbite_detected) {
+        soundbite_detected = false;
+        text = texts[i].replace(/^.+?:/, '');
+      }
+      else {
+        text = texts[i];
+      }
       body.appendParagraph('');
-      p = body.appendParagraph(texts[i]);
+      p = body.appendParagraph(text);
     }
-    var idx = body.getChildIndex(p);
-    var marker = _detachMarkerParagraph(body);
-    if (marker) {
-      _moveMarker(body, marker, idx);
-    } else {
-      var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
-      PersistLog.severe(msg);
+    if (p !== null) {
+      var idx = body.getChildIndex(p);
+      var marker = _detachMarkerParagraph(body);
+      if (marker) {
+        _moveMarker(body, marker, idx);
+      } else {
+        var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
+        PersistLog.severe(msg);
+      }
     }
   } catch (e) {
     e = (typeof e === 'string') ? new Error(e): e;
@@ -135,6 +150,7 @@ function _checkTranscriptEnd() {
   try {
     PersistLog.debug('_checkTranscriptEnd start');
     var cnt = _getNumProperty('noDataCounter');
+    var pattern = '^.*' + WARNING_TEXT + '.*$';
     // If cnt is null then no data was ever received
     // so we have not yet started the live transcript session
     if (cnt !== null) {
@@ -144,16 +160,17 @@ function _checkTranscriptEnd() {
         _removeTrigger();
         // Add end marker
         var body = doc.getBody();
-        body.appendParagraph('');
-        var marker = _detachMarkerParagraph(body);
-        if (marker) {
-          _moveMarker(body, marker, null);
-        } else {
-          var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
-          PersistLog.severe(msg);
+        if (body.findText(pattern) !== null) {
+          body.appendParagraph('');
+          var marker = _detachMarkerParagraph(body);
+          if (marker) {
+            _moveMarker(body, marker, null);
+          } else {
+            var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
+            PersistLog.severe(msg);
+          }
+          marker.replaceText(pattern, LIVE_TRANSCRIPT_END_MSG);
         }
-        var pattern = '^.*' + WARNING_TEXT + '.*$';
-        marker.replaceText(pattern, LIVE_TRANSCRIPT_END_MSG);
       } else {
         cnt += 1;
         props.setProperty('noDataCounter', cnt);

@@ -100,3 +100,18 @@ function testLogging() {
   PersistLog.useSpreadsheet(logID, LOG_SHEET_NAME);
   PersistLog.info("hello");
 }
+
+/*
+ * Test AppendNewTranscript
+ * Test SOUNDBITE hotfix use cases
+ */
+function testAppendNewTranscript() {
+  // We are getting all the properties from the script globally
+  var props = PropertiesService.getScriptProperties();
+  var documentID = props.getProperty('documentID');
+  doc = DocumentApp.openById(documentID);
+
+  testTexts = ["ROBERT SPIEGEL:First paragraph",":[(SOUNDBITE)]","ROBERT SPIEGEL: Second paragraph with another colon: to test greediness",":[(SOUNDBITE)]"];
+  //testTexts = [":[(SOUNDBITE)]"];
+  _appendNewTranscripts(testTexts, true);
+}

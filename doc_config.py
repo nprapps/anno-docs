@@ -7,6 +7,7 @@
 SPEAKERS = {
     'HILLARY CLINTON': 'speaker dem',
     'TIM KAINE': 'speaker dem',
+    'BARAK OBAMA': 'speaker dem',
     'DONALD TRUMP': 'speaker gop',
     'MIKE PENCE': 'speaker gop'
 }
@@ -241,13 +242,6 @@ FACT_CHECKERS = {
         "page": "http://www.npr.org/people/2101289/nina-totenberg",
         "img": "http://media.npr.org/assets/img/2016/10/31/20160915_nina_totenberg-30-retouched_sq-b392c67217a68a7c32bb2a3b2a30a2524a713797-s200-c85.jpg"
     },
-    "ak3": {
-        "initials": "ak3",
-        "name": "Amita Kelly",
-        "role": "NPR Politics Editor",
-        "page": "http://www.npr.org/people/348738608/amita-parashar",
-        "img": "http://media.npr.org/assets/img/2016/03/30/amita_sq-c978a1ee3e3dc94283460b869468caca1917216d-s200-c85.jpg"
-    },
     "as2": {
         "initials": "as2",
         "name": "Arnie Seipel",
@@ -275,5 +269,12 @@ FACT_CHECKERS = {
         "role": "NPR Science Editor",
         "page": "http://www.npr.org/people/279612138/geoff-brumfiel",
         "img": ""
+    },
+    "gd": {
+        "initials": "gd",
+        "name": "Gene Demby",
+        "role": "Lead Blogger, Code Switch",
+        "page": "http://www.npr.org/people/182264497/gene-demby",
+        "img": "http://media.npr.org/assets/img/2013/09/26/o9yuhavxhx7qsro_w8ijrahcosqcvdcnp4taxlwcyze-1-_sq-d59053f6e28c3ca0e2dadb982c58c4587224f817-s200-c85.jpg"
     }
 }

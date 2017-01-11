@@ -39,8 +39,8 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = 'factcheck-trump-presser-20161215'
-SEAMUS_ID = '501597652'  # SEAMUS PAGE ID FOR DEEP LINKING
+CURRENT_DEBATE = '20170111-trump-press-conference-factcheck'
+SEAMUS_ID = '509137239'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
     # Override SEAMUS_ID to generate the sharing list accordingly
@@ -64,8 +64,8 @@ DEFAULT_MAX_AGE = 20
 RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
-PRODUCTION_SERVERS = ['54.84.224.48']
-STAGING_SERVERS = ['54.221.49.36']
+PRODUCTION_SERVERS = ['54.211.94.130']
+STAGING_SERVERS = ['54.167.46.85']
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
@@ -135,10 +135,10 @@ LOAD_COPY_INTERVAL = 10
 GOOGLE APPS SCRIPTS
 """
 
-PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
-GAS_LOG_KEY = 'ukfqIp4QxuvUoHqbEQIlKQFC7w' # Google app script logs spreadsheet key
-TRANSCRIPT_GDOC_KEY = '1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA' # Google app script google doc key
-SCRIPT_PROJECT_NAME = 'debate_scripts' # Google app scripts project name
+# PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
+GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
+TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s' # Google app script google doc key
+SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
 
 
 """
@@ -242,9 +242,9 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1b1NrTa7OUXEqZ9wkL2Ps_Hal13tC39XoVkpgvb65bw4'
+        TRANSCRIPT_GDOC_KEY = '1SKrNKKirfbePGgPZCUJHUHr1LXZCVCitA9jNvBsKZEU'
         # PRODUCTION LOGS
-        GAS_LOG_KEY = ''
+        GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
@@ -272,7 +272,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1yIAJWnZGKvgxXRXMObUHeRleWA1mBsgrQhSdwOm7EFc'
+        TRANSCRIPT_GDOC_KEY = '1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app
@@ -291,10 +291,15 @@ def configure_targets(deployment_target):
             pass
 
     # If we are deploying a non live fact check:
-    # Override TRANSCRIPT_GDOC_KEY to point ALL environments to google doc
     if DEPLOY_STATIC_FACTCHECK:
+        # Override TRANSCRIPT_GDOC_KEY to point ALL environments to google doc
         try:
             from local_settings import TRANSCRIPT_GDOC_KEY
+        except ImportError:
+            pass
+        # Override GAS_LOG_KEY to point to a different google app script log
+        try:
+            from local_settings import GAS_LOG_KEY
         except ImportError:
             pass
 
