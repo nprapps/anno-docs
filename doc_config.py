@@ -268,6 +268,6 @@ FACT_CHECKERS = {
         "name": "Gene Demby",
         "role": "Lead Blogger, Code Switch",
         "page": "http://www.npr.org/people/182264497/gene-demby",
-        "img": "http://media.npr.org/assets/img/2013/09/26/o9yuhavxhx7qsro_w8ijrahcosqcvdcnp4taxlwcyze-1-_vert-d59053f6e28c3ca0e2dadb982c58c4587224f817-s200-c85.jpg"
+        "img": "http://media.npr.org/assets/img/2013/09/26/o9yuhavxhx7qsro_w8ijrahcosqcvdcnp4taxlwcyze-1-_sq-d59053f6e28c3ca0e2dadb982c58c4587224f817-s200-c85.jpg"
     }
 }
