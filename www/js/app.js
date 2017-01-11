@@ -200,7 +200,6 @@ const buildTranscriptvDOM = function(transcript) {
         document.body.classList.remove('transcript-end');
         clearInterval(transcriptInterval);
     }
-
     const children = transcript.children;
     const childrenArray = Array.prototype.slice.call(children);
     return h('div', {
@@ -210,19 +209,24 @@ const buildTranscriptvDOM = function(transcript) {
     ]);
 
     function renderChild(child) {
-        let element = null;
-        if (child.tagName === 'DIV') {
-            if (child.classList.contains('annotation')){
-                element = renderAnnotation(child);
-            } else if (child.classList.contains('speaker_wrapper')) {
-                element = renderSpeaker(child);
+        try {
+            let element = null;
+            if (child.tagName === 'DIV') {
+                if (child.classList.contains('annotation')){
+                    element = renderAnnotation(child);
+                } else if (child.classList.contains('speaker_wrapper')) {
+                    element = renderSpeaker(child);
+                } else {
+                    element = virtualize(child);
+                }
             } else {
                 element = virtualize(child);
             }
-        } else {
-            element = virtualize(child);
+            return element;
+        } catch (e) {
+            console.error(e);
         }
-        return element;
+
     }
 
     function renderSpeaker(child) {
