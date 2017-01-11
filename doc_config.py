@@ -276,5 +276,40 @@ FACT_CHECKERS = {
         "role": "Lead Blogger, Code Switch",
         "page": "http://www.npr.org/people/182264497/gene-demby",
         "img": "http://media.npr.org/assets/img/2013/09/26/o9yuhavxhx7qsro_w8ijrahcosqcvdcnp4taxlwcyze-1-_sq-d59053f6e28c3ca0e2dadb982c58c4587224f817-s200-c85.jpg"
+    },
+    "sh2": {
+        "initials": "sh2",
+        "name": "Shirley Henry",
+        "role": "Deputy Washington Editor",
+        "page": "http://www.npr.org/people/360133570/shirley-henry",
+        "img": "http://media.npr.org/assets/img/2016/05/02/shirley-henry_sq-4b7385717b0d028e9fe3a0e5d22bd993252ec4b7-s200-c85.jpg"
+    },
+    "jy": {
+        "initials": "jy",
+        "name": "John Ydstie",
+        "role": "Correspondent/Host",
+        "page": "http://www.npr.org/people/2101404/john-ydstie",
+        "img": "http://media.npr.org/assets/img/2011/12/30/johnydstie_13_sq-b44064fddef25a88ec60e0ff37c2cbd2eaad2e9d-s200-c85.jpg"
+    },
+    "ub": {
+        "initials": "jy",
+        "name": "Uri Berliner",
+        "role": "Senior Editor",
+        "page": "http://www.npr.org/people/2101611/uri-berliner",
+        "img": "http://media.npr.org/assets/img/2012/01/03/uriberliner_40_sq-656ec847a46e3c710bea1488bf6b716fb58c27d0-s200-c85.jpg"
+    },
+    "sg": {
+        "initials": "sg",
+        "name": "Sonari Glinton",
+        "role": "Reporter, Business Desk",
+        "page": "http://www.npr.org/people/130330851/sonari-glinton",
+        "img": "http://media.npr.org/assets/img/2012/01/03/sonariglinton_29_sq-f36cbe557b29bfd1a881feabd836ad1af431cdbc-s200-c85.jpg"
+    },
+    "yn": {
+        "initials": "yn",
+        "name": "Yuki Noguchi",
+        "role": "Correspondent, Business Desk",
+        "page": "http://www.npr.org/people/96022165/yuki-noguchi",
+        "img": "http://media.npr.org/assets/img/2014/03/18/noguchi_4_sq-a529dd06c9bdcc061d054e32d18b52bc466bbb1b-s200-c85.jpg"
     }
 }
