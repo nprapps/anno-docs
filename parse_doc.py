@@ -73,7 +73,6 @@ def transform_fact_check(paragraphs, doc):
                     clean_text = m.group(1) + m.group(4)
                 else:
                     clean_text = m.group(4)
-
                 # Grab info from dictionary
                 try:
                     author_name = doc_config.FACT_CHECKERS[author]['name']
@@ -95,7 +94,7 @@ def transform_fact_check(paragraphs, doc):
                 logger.error("ERROR: Unexpected metadata format %s" %
                              combined_contents)
                 return None
-            clean_paragraphs.append({'text': clean_text})
+            clean_paragraphs.append({'text': clean_text.strip()})
 
     context = {'slug': slug,
                'annotation_label_class': annotation_label_class,
