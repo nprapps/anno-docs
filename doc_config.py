@@ -328,7 +328,7 @@ FACT_CHECKERS = {
     },
     "rg": {
         "initials": "rg",
-        "name": "Richard Gonzalez",
+        "name": "Richard Gonzales",
         "page": "http://www.npr.org/templates/story/story.php?storyId=2100569",
         "role": "NPR National Desk Correspondent",
         "img": "http://media.npr.org/about/people/bios/biophotos/rgonzales_sq-be09a45f22645a84234f4c0cb693389291e04d47-s200-c85.jpg",
