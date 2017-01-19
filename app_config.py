@@ -39,7 +39,7 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = '20170111-trump-press-conference-factcheck'
+CURRENT_DEBATE = '20170120-trump-inauguration-factcheck'
 SEAMUS_ID = '509703302'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
@@ -242,7 +242,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1SKrNKKirfbePGgPZCUJHUHr1LXZCVCitA9jNvBsKZEU'
+        TRANSCRIPT_GDOC_KEY = '1LoFyNe9asQmqdTQmxNqGEZ92pmTsamOTz8qTZi3ZlZ4'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
