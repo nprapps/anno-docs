@@ -334,7 +334,7 @@ FACT_CHECKERS = {
         "img": "http://media.npr.org/about/people/bios/biophotos/rgonzales_sq-be09a45f22645a84234f4c0cb693389291e04d47-s200-c85.jpg",
     },
     "sd": {
-        "initals": "sd"
+        "initals": "sd",
         "name": "Selena Simmons-Duffin",
         "page": "http://www.npr.org/people/349308023/selena-simmons-duffin",
         "role": "Producer, All Things Considered",
@@ -347,7 +347,7 @@ FACT_CHECKERS = {
         "role": "NPR Religion & Belief Correspondent",
         "img": ""
     },
-    "ds" {
+    "ds": {
         "initials": "ds",
         "name": "David Schaper",
         "page": "http://www.npr.org/people/2101136/david-schaper",
