@@ -317,14 +317,14 @@ FACT_CHECKERS = {
         "name": "Greg Myre",
         "page": "http://www.npr.org/people/348766539/greg-myre",
         "role": "NPR International Editor",
-        "img": "http://media.npr.org/assets/img/2016/04/06/greg-myre_sq-b11da05070a76016872f70f197e51b2b01b17b14-s200-c85.jpg",
+        "img": "http://media.npr.org/assets/img/2016/04/06/greg-myre_sq-b11da05070a76016872f70f197e51b2b01b17b14-s200-c85.jpg"
     },
     "df2": {
         "initials": "df2",
         "name": "David Folkenflik",
         "page": "http://www.npr.org/people/4459112/david-folkenflik",
         "role": "NPR Media Correspondent, Business Desk",
-        "img": "http://media.npr.org/assets/img/2016/03/04/davidfolkenflik_2016_vert-f1fe471633c390e62374c31d3643bcdbc25c2a88-s200-c85.jpg",
+        "img": "http://media.npr.org/assets/img/2016/03/04/davidfolkenflik_2016_vert-f1fe471633c390e62374c31d3643bcdbc25c2a88-s200-c85.jpg"
     },
     "rg": {
         "initials": "rg",
@@ -332,5 +332,19 @@ FACT_CHECKERS = {
         "page": "http://www.npr.org/templates/story/story.php?storyId=2100569",
         "role": "NPR National Desk Correspondent",
         "img": "http://media.npr.org/about/people/bios/biophotos/rgonzales_sq-be09a45f22645a84234f4c0cb693389291e04d47-s200-c85.jpg",
+    },
+    "sd": {
+        "initals": "sd"
+        "name": "Selena Simmons-Duffin",
+        "page": "http://www.npr.org/people/349308023/selena-simmons-duffin",
+        "role": "Producer, All Things Considered",
+        "img": ""
+    },
+    "tg": {
+        "initals": "tg",
+        "name": "Tom Gjelten",
+        "page": "http://www.npr.org/people/2100536/tom-gjelten",
+        "role": "NPR Religion & Belief Correspondent",
+        "img": ""
     }
 }
