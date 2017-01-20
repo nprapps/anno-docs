@@ -346,5 +346,12 @@ FACT_CHECKERS = {
         "page": "http://www.npr.org/people/2100536/tom-gjelten",
         "role": "NPR Religion & Belief Correspondent",
         "img": ""
+    },
+    "ds" {
+        "initials": "ds",
+        "name": "David Schaper",
+        "page": "http://www.npr.org/people/2101136/david-schaper",
+        "role": "NPR Transportation Correspondent",
+        "img": ""
     }
 }
