@@ -259,7 +259,7 @@ FACT_CHECKERS = {
     "df": {
         "initials": "df",
         "name": "Dana Farrington",
-        "role": "NPR Engagement Editor",
+        "role": "NPR Politics Digital Editor",
         "page": "http://www.npr.org/people/348761550/dana-farrington",
         "img": "https://pbs.twimg.com/profile_images/685136569343193088/CQBNr074.jpg" # Used Twitter because couldn't find NPR image
     },
@@ -353,5 +353,19 @@ FACT_CHECKERS = {
         "page": "http://www.npr.org/people/2101136/david-schaper",
         "role": "NPR Transportation Correspondent",
         "img": ""
-    }
+    },
+    "fl": {
+        "initials": "fl",
+        "name": "Frank Langfitt",
+        "role": "NPR International Correspondent, London",
+        "page": "http://www.npr.org/people/4569077/frank-langfitt",
+        "img": "http://media.npr.org/about/people/bios/biophotos/flangfitt_sq.jpg",
+    },
+    "kb": {
+        "initials": "kb",
+        "name": "Kevin Beesley",
+        "role": "NPR Senior Editor, International Desk",
+        "page": "",
+        "img": "",
+    },
 }
