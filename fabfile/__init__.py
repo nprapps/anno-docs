@@ -34,10 +34,6 @@ if app_config.DEPLOY_TO_SERVERS:
 if app_config.DEPLOY_CRONTAB:
     import cron_jobs
 
-# Bootstrap can only be run once, then it's disabled
-if app_config.PROJECT_SLUG == '$NEW_PROJECT_SLUG':
-    import bootstrap
-
 """
 Base configuration
 """

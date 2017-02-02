@@ -51,7 +51,8 @@ def authenticate():
 
         if not result.error:
             save_credentials(result.user.credentials)
-            get_document(app_config.COPY_GOOGLE_DOC_KEY, app_config.COPY_PATH)
+            get_doc(app_config.TRANSCRIPT_GDOC_KEY,
+                    app_config.TRANSCRIPT_HTML_PATH)
 
         return render_template('oauth/authenticate.html', **context)
 
@@ -65,11 +66,12 @@ def oauth_required(f):
     def decorated_function(*args, **kwargs):
         from flask import request
         credentials = get_credentials()
-        if app_config.COPY_GOOGLE_DOC_KEY and (not credentials or not credentials.valid):
+        if app_config.TRANSCRIPT_GDOC_KEY and (not credentials or not credentials.valid):
             return redirect(url_for('_oauth.oauth_alert'))
         else:
             if request.args.get('refresh'):
-                get_document(app_config.COPY_GOOGLE_DOC_KEY, app_config.COPY_PATH)
+                get_doc(app_config.TRANSCRIPT_GDOC_KEY,
+                        app_config.TRANSCRIPT_HTML_PATH)
             return f(*args, **kwargs)
     return decorated_function
 

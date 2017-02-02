@@ -182,12 +182,6 @@ def make_context(asset_depth=0):
     If 1 then at /foo/, etc.
     """
     context = flatten_app_config()
-
-    try:
-        context['COPY'] = copytext.Copy(app_config.COPY_PATH)
-    except copytext.CopyException:
-        pass
-
     context['JS'] = JavascriptIncluder(asset_depth=asset_depth)
     context['CSS'] = CSSIncluder(asset_depth=asset_depth)
 

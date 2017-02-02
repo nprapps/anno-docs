@@ -15,6 +15,7 @@ import parse_doc
 import static
 
 from copydoc import CopyDoc
+import copytext
 from flask import Flask, make_response, render_template
 from flask_cors import CORS, cross_origin
 from render_utils import flatten_app_config, make_context

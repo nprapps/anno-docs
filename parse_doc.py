@@ -1,10 +1,7 @@
 # _*_ coding:utf-8 _*_
 import logging
 import re
-import copy
-from copydoc import CopyDoc
 import app_config
-import doc_config
 # from shortcode import process_shortcode
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
@@ -39,8 +36,6 @@ shortcode_regex = re.compile(ur'^\s*\[%\s*.*\s*%\]\s*$', re.UNICODE)
 internal_link_regex = re.compile(ur'(\[% internal_link\s+.*?\s*%\])',
                                  re.UNICODE)
 
-author_initials_regex = re.compile(ur'^.*\((\w{2,3})\)\s*$', re.UNICODE)
-
 speaker_regex = re.compile(ur'^[A-Z\s.-]+(\s\[.*\])?:', re.UNICODE)
 soundbite_regex = re.compile(ur'^\s*:', re.UNICODE)
 
@@ -48,6 +43,8 @@ extract_speaker_metadata_regex = re.compile(
     ur'^\s*(<.*?>)?([A-Z\s.-]+)\s*(?:\[(.*)\]\s*)?:\s*(.*)', re.UNICODE)
 extract_soundbite_metadata_regex = re.compile(
     ur'^\s*(?:<.*?>)?\s*:\[\((.*)\)\]', re.UNICODE)
+
+FACT_CHECKERS = {}
 
 
 def is_anno_start_marker(tag):
@@ -130,7 +127,7 @@ def process_speaker_transcript(contents):
     if m:
         speaker = m.group(2).strip()
         try:
-            speaker_class = doc_config.SPEAKERS[speaker]
+            speaker_class = app_config.SPEAKERS[speaker]
         except KeyError:
             logger.debug('did not find speaker: %s' % speaker)
             speaker_class = 'speaker'
@@ -180,43 +177,6 @@ def process_inline_internal_link(m):
     return parsed_inline_shortcode
 
 
-def parse_author_metadata(raw_authors):
-    """
-    Custom parsing of metadata keys and values
-    """
-    authors = []
-    bits = raw_authors.split(',')
-    for bit in bits:
-        author = {}
-        m = author_initials_regex.match(bit)
-        if m:
-            initials = m.group(1)
-            try:
-                author['name'] = doc_config.FACT_CHECKERS[initials]['name']
-                author['page'] = doc_config.FACT_CHECKERS[initials]['page']
-                author['role'] = doc_config.FACT_CHECKERS[initials]['role']
-                author['img'] = doc_config.FACT_CHECKERS[initials]['img']
-            except KeyError:
-                logger.warning('did not find author in dictionary %s' % author)
-                continue
-            authors.append(author)
-        else:
-            logger.debug("Author not in dictionary: %s" % raw_authors)
-            author['name'] = bit
-            author['page'] = ''
-            author['role'] = 'NPR Staff'
-            author['img'] = None
-            authors.append(author)
-    if not len(authors):
-        # Add a default author to avoid erroing out
-        author['name'] = 'NPR Staff'
-        author['page'] = 'http://www.npr.org/'
-        author['role'] = 'NPR Staff'
-        author['img'] = None
-        authors.append(author)
-    return authors
-
-
 def process_metadata(contents):
     logger.debug('--process_metadata start--')
     metadata = {}
@@ -225,12 +185,10 @@ def process_metadata(contents):
         m = extract_metadata_regex.match(text)
         if m:
             key = m.group(1).strip().lower()
-            if key != 'author':
-                value = m.group(2).strip().lower()
-                metadata[key] = value
-            else:
-                value = m.group(2).strip()
-                metadata['authors'] = parse_author_metadata(value)
+            value = m.group(2).strip()
+            if key == 'published':
+                value = value.lower()
+            metadata[key] = value
         else:
             logger.error('Could not parse metadata. Text: %s' % text)
     logger.debug("metadata: %s" % metadata)
@@ -338,26 +296,27 @@ def categorize_doc_content(doc):
     """
     fact_check_status = None
     hr = doc.soup.hr
-    # If we see an h1 with that starts with END
-    if hr.find("p", text=end_fact_check_regex):
-        fact_check_status = 'after'
-        # Get rid of everything after the Horizontal Rule
-        hr.extract()
-    elif hr.find("p", text=end_transcript_regex):
-        fact_check_status = 'transcript-end'
-        # Get rid of everything after the Horizontal Rule
-        hr.extract()
-    else:
-        # Get rid of the marker but keep the last paragraph
-        for child in hr.children:
-            if (child.string):
-                after_hr_text = child.string
-            else:
-                after_hr_text = child.get_text()
-            m = do_not_write_regex.match(after_hr_text)
-            if m:
-                child.extract()
-        hr.unwrap()
+    if hr:
+        # If we see an h1 with that starts with END
+        if hr.find("p", text=end_fact_check_regex):
+            fact_check_status = 'after'
+            # Get rid of everything after the Horizontal Rule
+            hr.extract()
+        elif hr.find("p", text=end_transcript_regex):
+            fact_check_status = 'transcript-end'
+            # Get rid of everything after the Horizontal Rule
+            hr.extract()
+        else:
+            # Get rid of the marker but keep the last paragraph
+            for child in hr.children:
+                if (child.string):
+                    after_hr_text = child.string
+                else:
+                    after_hr_text = child.get_text()
+                m = do_not_write_regex.match(after_hr_text)
+                if m:
+                    child.extract()
+            hr.unwrap()
 
     result = []
     body = doc.soup.body

@@ -1,17 +1,20 @@
-{% set author = authors[0] %}
 <div class="annotation {%if published == 'no' %} draft{% endif %}" id="{{slug}}">
     <div class="annotations-wrapper">
         {{contents|safe}}
     </div>
     <div class="annotation-header">
-        <img class="annotation-label" src="{{author.img}}"></img>
+    {% if image %}
+        <img class="annotation-label" src="{{image}}"></img>
+    {% endif %}
         <div class="annotation-byline">
-            {% if author.page != '' %}
-                <a class="byline-name" href="{{author.page}}">{{author.name}}</a>
-            {% else %}
-                <span class="byline-name">{{author.name}}</span>
-            {% endif %}
-            <span class="byline-role">{{author.role}}</span>
+    {% if page %}
+                <a class="byline-name" href="{{page}}">{{author}}</a>
+    {% else %}
+                <span class="byline-name">{{author}}</span>
+    {% endif %}
+    {% if role %}
+            <span class="byline-role">{{role}}</span>
+    {% endif %}
         </div>
     </div>
     <div class="annotation-nav">

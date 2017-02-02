@@ -123,10 +123,10 @@ TEST AUTOINIT LOADER
 AUTOINIT_LOADER = False
 
 """
-COPY EDITING
+AUTHORS DICTIONARY
 """
-COPY_GOOGLE_DOC_KEY = '1z7TVK16JyhZRzk5ep-Uq5SH4lPTWmjCecvJ5vCp6lS0'
-COPY_PATH = 'data/copy.xlsx'
+AUTHORS_GOOGLE_DOC_KEY = '18dzZhuqnoz2e2Y7TBfYYAuhgK8SRwPEPpEGL1Sl9Rng'
+AUTHORS_PATH = 'data/authors.xlsx'
 
 TRANSCRIPT_HTML_PATH = 'data/transcript.html'
 LOAD_COPY_INTERVAL = 10
@@ -139,8 +139,6 @@ PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
 GAS_LOG_KEY = 'ukfqIp4QxuvUoHqbEQIlKQFC7w' # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = '1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
-ADDON_SCRIPT_PROJECT_NAME = 'addon_factcheck_scripts' # Google app scripts project name
-
 
 """
 SHARING
@@ -196,7 +194,12 @@ LOG_FORMAT = '%(levelname)s:%(name)s:%(asctime)s: %(message)s'
 """
 Utilities
 """
-
+SPEAKERS = {
+    'HILLARY CLINTON': 'speaker dem',
+    'TIM KAINE': 'speaker dem',
+    'DONALD TRUMP': 'speaker gop',
+    'MIKE PENCE': 'speaker gop'
+}
 
 def get_secrets():
     """
