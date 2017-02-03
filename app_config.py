@@ -139,6 +139,7 @@ GOOGLE APPS SCRIPTS
 GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
+CSPAN = False
 
 
 """
@@ -228,6 +229,7 @@ def configure_targets(deployment_target):
     global ASSETS_MAX_AGE
     global TRANSCRIPT_GDOC_KEY
     global GAS_LOG_KEY
+    global CSPAN
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
@@ -287,6 +289,11 @@ def configure_targets(deployment_target):
         # Override GAS_LOG_KEY to point to a different google app script log
         try:
             from local_settings import GAS_LOG_KEY
+        except ImportError:
+            pass
+        # Override CSPAN if we need to
+        try:
+            from local_settings import CSPAN
         except ImportError:
             pass
 

@@ -23,13 +23,90 @@ var doc;
 // We are getting all the properties from the script globally
 var props = PropertiesService.getScriptProperties();
 
+
 /**
 * Updates the google drive document with the new transcript data received through the SRT stream
 * called by the time based trigger launch in init
 * (defaults to 1 minute which is the minimum allowed by google)
 * via: https://developers.google.com/apps-script/guides/triggers/installable#time-driven_triggers
 */
-function update() {
+function updateCSPAN() {
+  var response = null;
+  var content = null;
+  try {
+    // Open the google drive document
+    var documentID = props.getProperty('documentID');
+    doc = DocumentApp.openById(documentID);
+    _initializeLogging();
+    PersistLog.info("update process start");
+    // get last processed lastCaption
+    var lastCaptionID = _getNumProperty('lastCaptionID');
+    PersistLog.debug('lastCaptionID: %s', lastCaptionID);
+
+    // Get data from stream
+    response = _getCSPANTranscriptStream(lastCaptionID);
+    // Get the content from the response
+    json_response = JSON.parse(response.getContentText("UTF-8"));
+    content = json_response.captions
+    var newCaptionID = json_response.now;
+    if (newCaptionID === undefined) {
+        newCaptionID = lastCaptionID;
+    }
+    PersistLog.info('received captionID: %s', newCaptionID);
+
+    if (content.length === 0) {
+      // No new data received
+      _checkTranscriptEnd();
+      PersistLog.info('update process end: %s total lines, no new transcript texts found', parsed.length);
+      return;
+    }
+
+    // New data received reset no data counter
+    props.setProperty('noDataCounter', 0);
+
+    // Format the received texts to count for line breaks and such
+    var formattedParagraphs = _formatCSPANText(content);
+    PersistLog.debug('New Formatted Paragraphs: %s', formattedParagraphs.length);
+
+    // Check if the first chunk of new text starts with a new paragraph
+    var pattern = /^\s*(>>|\[)/;
+    var newParagraph = pattern.test(content);
+    PersistLog.debug('Starts with newParagraph?: %s', newParagraph);
+
+    // Write to google drive document
+    // If this is the first text that we are seeing coming in then
+    // it should count as a new paragraphs
+    if (lastCaptionID === null) {
+        newParagraph = true;
+    }
+    _appendNewTranscripts(formattedParagraphs, newParagraph);
+
+    // Store the lastCaptionID we got from the header
+    if (newCaptionID !== null) {
+        PersistLog.debug('Setting lastCaptionID property: %s', newCaptionID);
+        props.setProperty('lastCaptionID', newCaptionID);
+    }
+    PersistLog.info('update process end: %s new transcript characters found.', content.length);
+  } catch(e) {
+    // Notify admins of the failure and propagate
+    e = (typeof e === 'string') ? new Error(e): e;
+    var msg =  Utilities.formatString('%s: %s (line %s, file %s). Stack: %s .', e.name || '',
+                                      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
+    PersistLog.severe(msg);
+    // Send email
+    if (NOTIFICATION_ENABLED) MailApp.sendEmail(NOTIFICATION_RECIPIENTS,"Error: Report", msg);
+    // Propagate
+    throw e;
+  }
+}
+
+/**
+* Updates the google drive document with the new transcript data received through the SRT stream
+* called by the time based trigger launch in init
+* (defaults to 1 minute which is the minimum allowed by google)
+* via: https://developers.google.com/apps-script/guides/triggers/installable#time-driven_triggers
+*/
+function updateVerb8tm() {
   var response = null;
   var header = null;
   var content = null;
@@ -40,7 +117,6 @@ function update() {
     doc = DocumentApp.openById(documentID);
     _initializeLogging();
     PersistLog.info("update process start");
-
     // get startTime from propeties
     startTime = _getNumProperty('startTime');
     if (startTime === null) {
@@ -122,6 +198,22 @@ function update() {
 }
 
 /**
+* Updates the google drive document with the new transcript data received through the SRT stream
+* called by the time based trigger launch in init
+* (defaults to 1 minute which is the minimum allowed by google)
+* via: https://developers.google.com/apps-script/guides/triggers/installable#time-driven_triggers
+*/
+function update() {
+    var cspan = false;
+    cspan = _getBoolProperty('cspan');
+    if (cspan) {
+        updateCSPAN();
+    } else {
+        updateVerb8tm();
+    }
+}
+
+/**
 * Reset the google drive document and project properties to its initial state
 * it assumes a document is already created and its id stored as a property
 * Note: Useful when you want to restart the process without creating a new document
@@ -129,6 +221,7 @@ function update() {
 function reset() {
   try {
     _initializeLogging();
+    PersistLog.info("reset process start");
     var data = props.getProperties();
     // Reset project properties to its initial state
     // Remove all properties except white listed
@@ -159,6 +252,7 @@ function reset() {
 
     // Create a 1 minute time based trigger
     createTrigger(1);
+    PersistLog.info("reset process done");
   } catch(e) {
     // Notify admins of the failure and propagate
     e = (typeof e === 'string') ? new Error(e): e;
@@ -259,10 +353,14 @@ function restart() {
 * Setup the google drive document ID and log ID
 * as script properties.
 */
-function setup(api_srt_url, api_timestamp_url, documentID, logID) {
+function setup(api_srt_url, api_timestamp_url, api_cspan_url,
+               cspan, documentID, logID) {
     // Setup api endpoint urls
+    var props = PropertiesService.getScriptProperties();
     props.setProperty('api_srt_url', api_srt_url);
     props.setProperty('api_timestamp_url', api_timestamp_url);
+    props.setProperty('api_cspan_url', api_cspan_url);
+    props.setProperty('cspan', cspan);
     // Setup documentID and logID
     props.setProperty('documentID', documentID);
     props.setProperty('logID', logID);

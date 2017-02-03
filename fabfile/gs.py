@@ -528,6 +528,12 @@ def execute_setup(script_name=None, doc_id=None, log_id=None):
                                   app_config.PROJECT_SLUG)
     verb8tm_timestamp_url = secrets.get('VERB8TM_TIMESTAMP_API',
                                         app_config.PROJECT_SLUG)
+    cspan_url = secrets.get('CSPAN_API',
+                            app_config.PROJECT_SLUG)
+
+    cspan = 'False'
+    if app_config.CSPAN:
+        cspan = str(app_config.CSPAN)
 
     # Get the script id from the script name and deployment target
     # prioritize passed in parameters
@@ -547,6 +553,8 @@ def execute_setup(script_name=None, doc_id=None, log_id=None):
         'function': 'setup',
         'parameters': [verb8tm_srt_url,
                        verb8tm_timestamp_url,
+                       cspan_url,
+                       cspan,
                        app_config.TRANSCRIPT_GDOC_KEY,
                        app_config.GAS_LOG_KEY]
     }

@@ -7,6 +7,7 @@
 * @param {String} key property key to retrieve
 */
 function _getNumProperty(key) {
+  var props = PropertiesService.getScriptProperties();
   var p = props.getProperty(key);
   PersistLog.debug('Property %s: Value: %s', key, p);
   if (p !== null) {
@@ -17,6 +18,29 @@ function _getNumProperty(key) {
     }
   }
   return p;
+}
+
+/**
+* Google app script properties are stored as strings
+* via: https://developers.google.com/apps-script/guides/properties#data_format
+* This function returns a boolean version of the property stored
+*
+* @private
+* @param {String} key property key to retrieve
+*/
+function _getBoolProperty(key) {
+  var props = PropertiesService.getScriptProperties();
+  var p = props.getProperty(key);
+  PersistLog.debug('Property %s: Value: %s', key, p);
+  var bool_p = false;
+  if (p !== null) {
+    try {
+        bool_p = (p.toLowerCase() == 'true');
+    } catch(e) {
+        PersistLog.warning(e);
+    }
+  }
+  return bool_p;
 }
 
 /**
@@ -43,6 +67,7 @@ function _getRandomInteger(min, max) {
 */
 function _initializeLogging() {
   // Get the logging in place
+  var props = PropertiesService.getScriptProperties();
   var logID = props.getProperty('logID');
   //Setup logging to spreadsheet
   var logCreated = PersistLog.useSpreadsheet(logID, LOG_SHEET_NAME);

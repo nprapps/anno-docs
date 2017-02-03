@@ -43,6 +43,50 @@ function _getTranscriptStream(lastCaptionID) {
 }
 
 /**
+* Fetches the transcript stream, parses it and appends it to the body
+* of the document
+* comparing with "endTime" which is a property stored at script level
+* via https://developers.google.com/apps-script/guides/properties
+*
+* @private
+* @param {Object[]} items Array of SRT objects
+* @returns {String[]} Array of new SRT texts received on the stream
+*/
+function _getCSPANTranscriptStream(lastCaptionID) {
+  PersistLog.debug('_getCSPANTranscriptStream start');
+  var api_cspan_url = props.getProperty('api_cspan_url');
+  // Transcript stream url
+  if (!api_cspan_url) {
+    var msg = "did not find api_cspan_url in script properties"
+    PersistLog.severe(msg);
+    throw new Error(msg);
+  }
+  var transcript_url;
+  if (lastCaptionID !== null) {
+    transcript_url = api_cspan_url + '?since=' + lastCaptionID;
+  } else {
+    transcript_url = api_cspan_url + '?since=0';
+  }
+  try {
+    PersistLog.debug('transcript_url: %s', transcript_url);
+    var response = UrlFetchApp.fetch(transcript_url,{muteHttpExceptions: true});
+  } catch(e) {
+    e = (typeof e === 'string') ? new Error(e): e;
+    var msg =  Utilities.formatString('Exception ocurred while invoking UrlFetchApp for %s', transcript_url);
+    PersistLog.severe(msg);
+    throw e;
+  }
+  var responseCode = response.getResponseCode();
+
+  if (responseCode !== 200 && responseCode !== 204) {
+    var msg =  Utilities.formatString('Request failed to %s. Expected 200 or 204, got %s', transcript_url, responseCode);
+    PersistLog.severe(msg);
+    throw new Error(msg);
+  }
+  return response;
+}
+
+/**
 * Fetches the transcript start time to set a timestamp to each speaker
 * combined with the offset in milliseconds on the start caption
 *
@@ -182,6 +226,30 @@ function _checkTranscriptEnd() {
     PersistLog.severe(msg);
     throw e;
   }
+}
+
+/**
+* Check if a given paragraph under the Horizontal Rule is
+* becoming too long to force a new paragraph
+*
+* @private
+*/
+function _isParagraphUnderLineTooLong() {
+    // Open the google drive document
+    var result = false;
+    var searchType = DocumentApp.ElementType.PARAGRAPH;
+    var body = doc.getBody();
+    var searchHR = body.findElement(DocumentApp.ElementType.HORIZONTAL_RULE);
+    if (searchHR) {
+        var searchResult = body.findElement(searchType, searchHR);
+        if (searchResult) {
+            var par = searchResult.getElement().asParagraph();
+            if (par.getText().length > LONG_PARAGRAPH_THRESHOLD) {
+                result = true;
+            }
+        }
+    }
+    return result;
 }
 
 /**

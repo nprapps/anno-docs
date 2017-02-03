@@ -128,3 +128,43 @@ function _formatDocTexts(parsed, startTime) {
     return formattedParagraphs;
 };
 
+function _formatCSPANText(blob) {
+    PersistLog.debug('_formatDocTexts start');
+    var formattedTexts = [];
+    // Transform soundbites to follow the same SRT format
+    // [APPLAUSE] -> :[(APPLAUSE)] and a new paragraph break
+    blob = blob.replace(/(\[(.*?)\])\s*/g,"\n\n:[($1)]\n\n");
+    // \n\n Seems to convey a change of speaker on CSPAN openedCaptions
+    blob = blob.replace(/\n\n/g, '>>');
+    // blob = blob.replace(/\[LB\]/g, '\n');
+    var formattedParagraphs = blob.split('>>');
+    // Ignore the empty initial in case it starts with a new paragraph
+    if (!formattedParagraphs[0].length) formattedParagraphs.shift();
+    PersistLog.debug('formattedParagraphs: %s length: %s',
+                     formattedParagraphs, formattedParagraphs.length);
+
+    formattedParagraphs = formattedParagraphs.filter(String);
+    for (var i = 0; i < formattedParagraphs.length; i += 1) {
+        PersistLog.debug('Paragraph %s: %s', i+1, formattedParagraphs[i]);
+        formattedParagraphs[i] = formattedParagraphs[i].trim();
+        // Make speakers uppercase to mimic SRT format
+        formattedParagraphs[i] = formattedParagraphs[i].replace(/([A-Za-z0-9.-]{1,30}:)/, function(v) { return v.toUpperCase(); });
+    }
+    // If there's only one paragraph in a given chunk
+    // and the paragraph under the Horizontal rule is too long
+    // Find the first period and add an artificial paragraph so that
+    // the factcheckers can start annotating.
+    if (formattedParagraphs.length == 1) {
+        if (_isParagraphUnderLineTooLong()) {
+            var bits = formattedParagraphs[0].split(/(\w{3,}\.)/);
+            if (bits.length > 1) {
+                PersistLog.info('tweaked long paragraph: %s', formattedParagraphs[0]);
+                formattedParagraphs[0] = bits.shift();
+                formattedParagraphs[0] += bits.shift();
+                formattedParagraphs.push(bits.join('').trim());
+            }
+        }
+    }
+    return formattedParagraphs;
+};
+
