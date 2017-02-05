@@ -12,7 +12,7 @@ const s = require('underscore.string')
 const parseCsv = require('csv-parse/lib/sync')
 
 // Load proper noun dictionary
-const words = parseCsv(fs.readFileSync('words.csv'))
+const words = parseCsv(fs.readFileSync('data/cspan-words.csv'))
 
 // Where we stash our stuff
 var cache = []

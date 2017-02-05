@@ -9,16 +9,17 @@
     "cspan-start": "node cspan/index.js"
   },
   "dependencies": {
+    "csv-parse": "^1.1.9",
+    "forever": "^0.15.3",
     "moment": "^2.15.0",
     "moment-timezone": "^0.5.5",
+    "socket.io": "^1.7.2",
     "superagent": "^2.2.0",
     "superagent-no-cache": "^0.1.0",
+    "underscore.string": "^3.3.4",
     "url-parse": "^1.1.3",
     "vdom-virtualize": "^2.0.0",
-    "virtual-dom": "^2.1.1",
-    "csv-parse": "^1.1.9",
-    "socket.io": "^1.7.2",
-    "underscore.string": "^3.3.4"
+    "virtual-dom": "^2.1.1"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
