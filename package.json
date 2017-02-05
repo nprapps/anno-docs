@@ -5,8 +5,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --progress --watch --devtool source-map",
     "build": "webpack -p --colors --progress --config 'webpack.production.config.js'",
-    "preinstall": "npm install -g concurrently",
-    "cspan-start": "node cspan/index.js"
+    "preinstall": "npm install -g concurrently"
   },
   "dependencies": {
     "csv-parse": "^1.1.9",
