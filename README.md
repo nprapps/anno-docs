@@ -357,7 +357,7 @@ After that, we just need to fire up the node server
 
 ```
 fab [ENVRIRORNMENT] servers.cspan_start
-``
+```
 
 *IMPORTANT Note: The cspan stream will not stop automatically so we need to be careful and stop the cspan server manually once the desired broadcast has ended*
 
