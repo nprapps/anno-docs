@@ -17,7 +17,7 @@ function updateCSPAN() {
 
         // Get data from stream
         try {
-            response = _getAPIData(url, 'lastCaptionID', lastCaptionID);
+            response = _getAPIData(url, 'since', lastCaptionID);
         } catch(e) {
             e = (typeof e === 'string') ? new Error(e): e;
             var msg =  Utilities.formatString('Exception ocurred while invoking UrlFetchApp for %s. Is the server stopped on purpose?', url);
