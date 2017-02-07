@@ -17,6 +17,22 @@ function updateCSPAN() {
 
         // Get data from stream
         response = _getAPIData(url, 'since', lastCaptionID);
+
+        var responseCode = response.getResponseCode();
+        if (responseCode === 404) {
+            // Server stopped has the transcription ended?
+            _checkTranscriptEnd();
+            PersistLog.info('update process end: no new transcript texts found');
+            return;
+        }
+        else if (responseCode !== 200 && responseCode !== 204) {
+            var msg =  Utilities.formatString('Request failed to %s. Expected 200 or 204, got %s', url, responseCode);
+            PersistLog.severe(msg);
+            throw new Error(msg);
+        }
+
+        // New data received reset no data counter
+        props.setProperty('noDataCounter', 0);
         // Get the content from the response
         var json_response = JSON.parse(response.getContentText("UTF-8"));
         content = json_response.captions

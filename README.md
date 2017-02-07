@@ -9,12 +9,13 @@ Debates
 * [Save media assets](#save-media-assets)
 * [Add a page to the site](#add-a-page-to-the-site)
 * [Run the project](#run-the-project)
-* [Run a transcript test](#run-transcript-test)
+* [Run a Verb8tm transcript test](#run-verb8tm-transcript-test)
 * [Overriding app configuration](#overriding-app-configuration)
 * [Non live events](#non-live-events)
 * [Google Apps Scripts configuration](#google-apps-scripts-configuration)
 * [Google Apps Scripts development](#google-apps-scripts-development)
 * [Google Apps Scripts Execution API](#google-apps-scripts-execution-api)
+* [Run a CSPAN transcript test](#run-cspan-transcript-test)
 * [Google Document Permissions](#google-document-permissions)
 * [COPY configuration](#copy-configuration)
 * [COPY editing](#copy-editing)
@@ -40,6 +41,8 @@ What is this?
 A live transcription application with embedded fact checks and annotations.
 For a detailed explanation of how this works, check out [this blog post](https://source.opennews.org/en-US/articles/how-npr-transcribes-and-fact-checks-debates-live/) by Tyler Fisher.
 
+_Note: On February 2017 we have added the ability to use CSPAN through [openedcaptions.com](openedcaptions.com) by default this repo uses Verb8tm service as the transcript source, if you want to use CSPAN instead there's some configuration changes needed. take a look at the [CSPAN](#run-cspan-transcript-test) section.
+
 Assumptions
 -----------
 
@@ -58,6 +61,7 @@ What's in here?
 The project contains the following folders and important files:
 
 * ``confs`` -- Server configuration files for nginx and uwsgi. Edit the templates then ``fab <ENV> servers.render_confs``, don't edit anything in ``confs/rendered`` directly.
+* ``cspan``-- Cspan intermediate cache system for [openedcaptions.com](https://openedcaptions.com/) developed by [vox team](https://github.com/voxmedia/c-span_opened_captions_server)
 * ``data`` -- Data files, such as those used to generate HTML.
 * ``fabfile`` -- [Fabric](http://docs.fabfile.org/en/latest/) commands for automating setup, deployment, data processing, etc.
 * ``google_apps_script`` -- Folder that contains code for uploaded Google Apps Script.
@@ -164,8 +168,8 @@ We recommend that you add it to your `.bash_profile` as an alias to make your li
 alias debates="osascript ~/npr/aux_scripts/itermv3_debates.scpt"
 ```
 
-Run Transcript Test
--------------------
+Run Verb8tm Transcript Test
+---------------------------
 
 In order to run a transcript test from start you need to restart Verb8tm test API
 
@@ -224,8 +228,6 @@ By default, this repo is configured to be used for a live event situation, but u
 * `DEPLOY_STATIC_FACTCHECK`: Turn it to `True` so that the fabric `deploy` command will also issue the parsing of the last transcript and add it to the deploy process to S3.
 * `CURRENT_DEBATE`: Bucket where you want to deploy the application
 * `SEAMUS_ID`: In npr.org we need this to generate a share.html page that our editors can use to send our readers to specific annotations through social media.
-
-
 
 Google Apps Scripts configuration
 ---------------------------------
@@ -311,6 +313,59 @@ fab development gs.execute_setup
 ```
 
 We use our codebase stored on github as the master for the Google Apps Scripts code. We have created a series of Fabric commands to ease the workflow of updating the actual code run inside google drive.
+
+Run CSPAN Transcript Test
+-------------------------
+
+By default the repo is configured to use Verb8tm as a transcript service, but you can change that by adding a configuration override option switching `cspan` to 'True' (as a string)
+
+Once you have done that you will need to upload the setup change to your google drive script by running:
+
+```
+fab [ENVIRONMENT] gs.execute_setup
+```
+
+### Development
+
+In development there's no server to serve as a API endpoint for the CSPAN transcript so we can use [ngrok] to tunnel our localhost instance to a public accesible URL.
+
+First you'll need to install ngrok globally on your system
+```
+npm install -g ngrok
+```
+
+Then from the root of the project run:
+```
+node cpsan/index.js
+```
+
+Finally connect ngrok to that local node server by running
+```
+ngrok http 5000
+```
+
+That last command will start a ngrok server and output a public url that we need to communicate to our google app script on drive.
+
+```
+fab development gs.execute_setup:cspan_server="http://[SEED].ngrok.io"
+```
+
+### Staging && production
+
+In staging and production we do have servers that have a public facing url that we can directly use for our CSPAN live transcript so we just need to fire up the node server
+
+```
+fab [ENVRIRORNMENT] servers.cspan_start
+``
+
+*IMPORTANT Note: The cspan stream will not stop automatically so we need to be careful and stop the cspan server manually once the desired broadcast has ended*
+
+In order to stop the CSPAN stream we need to run
+```
+fab [ENVIRONMENT] servers.cspan_stop
+```
+
+There's a mechanism in place on the google app script side that will automatically stop after a configurable number of calls with no new data.
 
 Google Document Permissions
 ---------------------------

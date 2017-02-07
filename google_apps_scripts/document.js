@@ -82,6 +82,52 @@ function _isParagraphUnderLineTooLong() {
 }
 
 /**
+* Gets executed after receiving no data on the stream
+* checks if we have reached the threshold of consecutive no data events
+* and stops the live update by removing the time based triggers
+*
+* @private
+* @param {String[]} items Array of SRT texts
+*/
+function _checkTranscriptEnd() {
+    try {
+        PersistLog.debug('_checkTranscriptEnd start');
+        var cnt = _getNumProperty('noDataCounter');
+        var pattern = '^.*' + WARNING_TEXT + '.*$';
+        // If cnt is null then no data was ever received
+        // so we have not yet started the live transcript session
+        if (cnt !== null) {
+            if (cnt >= (IDLE_STOP_THRESHOLD - 1)) {
+                // Stop live updates
+                PersistLog.debug('Remove all triggers: looks like the live transcript session has ended');
+                _removeTrigger();
+                // Add end marker
+                var body = doc.getBody();
+                if (body.findText(pattern) !== null) {
+                    body.appendParagraph('');
+                    var marker = _detachMarkerParagraph(body);
+                    if (marker) {
+                        _moveMarker(body, marker, null);
+                    } else {
+                        var msg =  Utilities.formatString('No Horizontal Rule Paragraph found');
+                        PersistLog.severe(msg);
+                    }
+                     marker.replaceText(pattern, LIVE_TRANSCRIPT_END_MSG);
+                }
+            } else {
+                cnt += 1;
+                props.setProperty('noDataCounter', cnt);
+            }
+        }
+    } catch (e) {
+        e = (typeof e === 'string') ? new Error(e): e;
+        var msg =  Utilities.formatString('Exception ocurred while checking if live transcript has ended');
+        PersistLog.severe(msg);
+        throw e;
+    }
+}
+
+/**
 * Detach the marker to guide fact checkers on where not to write to avoid conflicts
 * with the time based updates, scheduled to be each minute
 *

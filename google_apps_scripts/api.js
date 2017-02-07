@@ -29,13 +29,6 @@ function _getAPIData(url, param, lastData) {
         PersistLog.severe(msg);
         throw e;
     }
-    var responseCode = response.getResponseCode();
-
-    if (responseCode !== 200 && responseCode !== 204) {
-        var msg =  Utilities.formatString('Request failed to %s. Expected 200 or 204, got %s', api_url, responseCode);
-        PersistLog.severe(msg);
-        throw new Error(msg);
-    }
     return response;
 }
 

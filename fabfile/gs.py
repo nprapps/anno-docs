@@ -322,23 +322,23 @@ def download(name=None, dest='google_apps_scripts'):
 
 
 @task
-def upsert(script_name=None, src='google_apps_scripts'):
+def upsert(name=None, src='google_apps_scripts'):
     """
     Upload project files to drive,
     pass the id of the project and a source path
     """
     require('settings', provided_by=['production', 'staging', 'development'])
 
-    if not script_name:
-        script_name = '%s_%s' % (app_config.DEPLOYMENT_TARGET,
-                                 app_config.SCRIPT_PROJECT_NAME)
+    if not name:
+        name = '%s_%s' % (app_config.DEPLOYMENT_TARGET,
+                          app_config.SCRIPT_PROJECT_NAME)
 
-    id = get_gas_project_id(script_name)
+    id = get_gas_project_id(name)
 
     if not id:
         exit()
 
-    existing_files = get_project_files(script_name)
+    existing_files = get_project_files(name)
 
     files_to_upload = [f for f in glob.glob('%s/*' % src)
                        if f.split('.')[-1] in EXTS.keys()]
@@ -515,7 +515,7 @@ def update_metadata(id, name, src_folder_id, dest_folder_id):
 
 
 @task
-def execute_setup(script_name=None, doc_id=None, log_id=None):
+def execute_setup(name=None, doc_id=None, log_id=None, cspan_server=None):
     """
     execute script setup: params script_id, document_id, log_id
     """
@@ -528,20 +528,31 @@ def execute_setup(script_name=None, doc_id=None, log_id=None):
                                   app_config.PROJECT_SLUG)
     verb8tm_timestamp_url = secrets.get('VERB8TM_TIMESTAMP_API',
                                         app_config.PROJECT_SLUG)
-    cspan_url = secrets.get('CSPAN_API',
-                            app_config.PROJECT_SLUG)
 
     cspan = 'False'
     if app_config.CSPAN:
         cspan = str(app_config.CSPAN)
 
+    ec2_public_dns_tpl = 'http://ec2-%s.compute-1.amazonaws.com:5000/'
+    if cspan_server:
+        pass
+    else:
+        if len(app_config.SERVERS):
+            ip = app_config.SERVERS[0]
+            ip = ip.replace('.', '-')
+            cspan_server = ec2_public_dns_tpl % (ip)
+        else:
+            logger.error("no servers found, please specify a cspan_server")
+            exit()
+
+
     # Get the script id from the script name and deployment target
     # prioritize passed in parameters
-    if not script_name:
-        script_name = '%s_%s' % (app_config.DEPLOYMENT_TARGET,
-                                 app_config.SCRIPT_PROJECT_NAME)
+    if not name:
+        name = '%s_%s' % (app_config.DEPLOYMENT_TARGET,
+                          app_config.SCRIPT_PROJECT_NAME)
 
-    script_id = get_gas_project_id(script_name)
+    script_id = get_gas_project_id(name)
 
     URL_PREFIX = 'https://script.googleapis.com/v1/scripts/'
 
@@ -553,7 +564,7 @@ def execute_setup(script_name=None, doc_id=None, log_id=None):
         'function': 'setup',
         'parameters': [verb8tm_srt_url,
                        verb8tm_timestamp_url,
-                       cspan_url,
+                       cspan_server,
                        cspan,
                        app_config.TRANSCRIPT_GDOC_KEY,
                        app_config.GAS_LOG_KEY]
