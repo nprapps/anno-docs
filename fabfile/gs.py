@@ -515,22 +515,28 @@ def update_metadata(id, name, src_folder_id, dest_folder_id):
 
 
 @task
-def execute_setup(name=None, doc_id=None, log_id=None, cspan_server=None):
+def execute_setup(name=None, doc_id=None, log_id=None,
+                  cspan=None, cspan_server=None):
     """
-    execute script setup: params script_id, document_id, log_id
+    execute script setup
+    params:
+    name - script name
+    document_id - associated google doc
+    log_id - associated google logs spreadsheet
+    cspan - False to use Verb8tm, True to use CSPAN
+    cspan_server - url that will serve the CSPAN captions
     """
 
     require('settings', provided_by=['production', 'staging', 'development'])
-
     # Get secrets
     secrets = app_config.get_secrets()
     verb8tm_srt_url = secrets.get('VERB8TM_SRT_API',
                                   app_config.PROJECT_SLUG)
     verb8tm_timestamp_url = secrets.get('VERB8TM_TIMESTAMP_API',
                                         app_config.PROJECT_SLUG)
-
-    cspan = 'False'
-    if app_config.CSPAN:
+    if cspan:
+        pass
+    else:
         cspan = str(app_config.CSPAN)
 
     ec2_public_dns_tpl = 'http://ec2-%s.compute-1.amazonaws.com:5000/'
