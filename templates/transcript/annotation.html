@@ -1,0 +1,23 @@
+<div class="annotation {%if published == 'no' %} draft{% endif %}" id="{{slug}}">
+    <div class="annotations-wrapper">
+        {{contents|safe}}
+    </div>
+    <div class="annotation-header">
+    {% if image %}
+        <img class="annotation-label" src="{{image}}"></img>
+    {% endif %}
+        <div class="annotation-byline">
+    {% if page %}
+                <a class="byline-name" href="{{page}}">{{author}}</a>
+    {% else %}
+                <span class="byline-name">{{author}}</span>
+    {% endif %}
+    {% if role %}
+            <span class="byline-role">{{role}}</span>
+    {% endif %}
+        </div>
+    </div>
+    <div class="annotation-nav">
+        <a href="#" class="previousNav"><span class="triangleIcon">&#9650;</span> <span class="navText">Previous annotation</span></a><a href="#" class="nextNav" ><span class="navText">Next annotation</span> <span class="triangleIcon">&#9660;</span></a>
+    </div>
+</div>

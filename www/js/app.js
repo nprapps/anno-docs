@@ -11,6 +11,7 @@ import moment from 'moment-timezone';
 
 // Global vars
 let pymChild = null;
+let parentUrl = null;
 let transcriptURL = null;
 let transcriptvDOM = null;
 let transcriptDOM = null;
@@ -55,7 +56,7 @@ const onWindowLoaded = function() {
 
     pymChild.sendMessage('test-visibility-tracker', 'test');
     pymChild.sendMessage('get-viewport-height', '');
-    setBodyClass();
+    parseParentURL();
     initUI();
     transcriptURL = buildTranscriptURL();
     getTranscript();
@@ -73,6 +74,16 @@ const setBodyClass = function() {
     } else if (domain == 'npr.org' || url.hostname == 'localhost' ||
                url.hostname == '127.0.0.1') {
         document.body.classList.add('whitelabel');
+    }
+}
+
+const parseParentURL = function() {
+    parentUrl = new URL(pymChild.parentUrl, location, true);
+    const domain = parentUrl.hostname.split('.').slice(-2).join('.');
+    if (domain == 'npr.org' ||
+        parentUrl.hostname == 'localhost' ||
+        parentUrl.hostname == '127.0.0.1') {
+        document.body.classList.add('npr');
     }
 }
 
@@ -368,6 +379,9 @@ const renderFootervDOM = function(data) {
  */
 const buildTranscriptURL = function() {
     let transcript_page = '/factcheck.html';
+    if (/\/preview\.html/.test(parentUrl.pathname)) {
+        transcript_page = '/factcheck_preview.html';
+    }
     return APP_CONFIG.S3_BASE_URL + transcript_page;
 }
 

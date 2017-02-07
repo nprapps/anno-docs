@@ -50,6 +50,8 @@ confs/rendered/*
 data/gdoc*.csv
 data/copy.xls
 data/copy.xlsx
+data/authors.xls
+data/authors.xlsx
 data/*.html
 www/assets/*
 !www/assets/assetsignore
