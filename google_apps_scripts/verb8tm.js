@@ -36,7 +36,14 @@ function updateVerb8tm() {
         var lastCaptionID = _getNumProperty('lastCaptionID');
         PersistLog.debug('lastCaptionID: %s', lastCaptionID);
         // Get data from stream
-        response = _getAPIData(url, 'lastCaptionID', lastCaptionID);
+        try {
+            response = _getAPIData(url, 'lastCaptionID', lastCaptionID);
+        } catch(e) {
+            e = (typeof e === 'string') ? new Error(e): e;
+            var msg =  Utilities.formatString('Exception ocurred while invoking UrlFetchApp for %s', url);
+            PersistLog.severe(msg);
+            throw e;
+        }
 
         var responseCode = response.getResponseCode();
         if (responseCode !== 200 && responseCode !== 204) {

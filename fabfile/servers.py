@@ -291,7 +291,7 @@ def cspan_start():
     Start cspan server
     """
     require('settings', provided_by=['production', 'staging'])
-    run('cd %s; ./node_modules/forever/bin/forever start -s -al %s/cspan.log cspan/index.js' % (app_config.SERVER_REPOSITORY_PATH, app_config.SERVER_LOG_PATH))
+    run('cd %s; ./node_modules/forever/bin/forever start -al %s/cspan.log cspan/index.js' % (app_config.SERVER_REPOSITORY_PATH, app_config.SERVER_LOG_PATH))
 
 
 @task

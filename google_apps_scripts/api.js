@@ -24,9 +24,6 @@ function _getAPIData(url, param, lastData) {
         PersistLog.debug('api_url: %s', api_url);
         var response = UrlFetchApp.fetch(api_url,{muteHttpExceptions: true});
     } catch(e) {
-        e = (typeof e === 'string') ? new Error(e): e;
-        var msg =  Utilities.formatString('Exception ocurred while invoking UrlFetchApp for %s', api_url);
-        PersistLog.severe(msg);
         throw e;
     }
     return response;

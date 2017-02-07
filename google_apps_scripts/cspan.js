@@ -16,7 +16,17 @@ function updateCSPAN() {
         PersistLog.debug('lastCaptionID: %s', lastCaptionID);
 
         // Get data from stream
-        response = _getAPIData(url, 'since', lastCaptionID);
+        try {
+            response = _getAPIData(url, 'lastCaptionID', lastCaptionID);
+        } catch(e) {
+            e = (typeof e === 'string') ? new Error(e): e;
+            var msg =  Utilities.formatString('Exception ocurred while invoking UrlFetchApp for %s. Is the server stopped on purpose?', url);
+            PersistLog.warning(msg);
+            // Server stopped has the transcription ended?
+            _checkTranscriptEnd();
+            PersistLog.info('update process end: no new transcript texts found');
+            return;
+        }
 
         var responseCode = response.getResponseCode();
         if (responseCode === 404) {
@@ -96,7 +106,7 @@ function _formatCSPANTranscript(blob) {
         PersistLog.debug('Paragraph %s: %s', i+1, formattedParagraphs[i]);
         formattedParagraphs[i] = formattedParagraphs[i].trim();
         // Make speakers uppercase to mimic SRT format
-        formattedParagraphs[i] = formattedParagraphs[i].replace(/([A-Za-z0-9.-]{1,30}:)/, function(v) { return v.toUpperCase(); });
+        formattedParagraphs[i] = formattedParagraphs[i].replace(/^([ A-Za-z0-9.-]{2,30}?:)/, function(v) { return v.toUpperCase(); });
     }
     // If there's only one paragraph in a given chunk
     // and the paragraph under the Horizontal rule is too long
