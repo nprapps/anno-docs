@@ -136,7 +136,7 @@ GOOGLE APPS SCRIPTS
 """
 
 PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
-GAS_LOG_KEY = 'ukfqIp4QxuvUoHqbEQIlKQFC7w' # Google app script logs spreadsheet key
+GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = '1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
 
@@ -248,7 +248,7 @@ def configure_targets(deployment_target):
         # PRODUCTION DOCUMENT
         TRANSCRIPT_GDOC_KEY = '1b1NrTa7OUXEqZ9wkL2Ps_Hal13tC39XoVkpgvb65bw4'
         # PRODUCTION LOGS
-        GAS_LOG_KEY = ''
+        GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
