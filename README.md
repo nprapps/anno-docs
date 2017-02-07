@@ -317,13 +317,7 @@ We use our codebase stored on github as the master for the Google Apps Scripts c
 Run CSPAN Transcript Test
 -------------------------
 
-By default the repo is configured to use Verb8tm as a transcript service, but you can change that by adding a configuration override option switching `cspan` to 'True' (as a string)
-
-Once you have done that you will need to upload the setup change to your google drive script by running:
-
-```
-fab [ENVIRONMENT] gs.execute_setup
-```
+By default the repo is configured to use Verb8tm as a transcript service, but you can change that by executing a setup passing `cspan` to `True`
 
 ### Development
 
@@ -347,12 +341,19 @@ ngrok http 5000
 That last command will start a ngrok server and output a public url that we need to communicate to our google app script on drive.
 
 ```
-fab development gs.execute_setup:cspan_server="http://[SEED].ngrok.io"
+fab development gs.execute_setup:cspan=True,cspan_server="http://[SEED].ngrok.io"
 ```
 
 ### Staging && production
 
-In staging and production we do have servers that have a public facing url that we can directly use for our CSPAN live transcript so we just need to fire up the node server
+In staging and production we do have servers that have a public facing url that we can directly use for our CSPAN live transcript.
+
+First we need to set cspan transcription on our google app script
+```
+fab [ENVIRONMENT] gs.execute_setup:cspan=True
+```
+
+After that, we just need to fire up the node server
 
 ```
 fab [ENVRIRORNMENT] servers.cspan_start
