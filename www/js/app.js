@@ -306,11 +306,11 @@ const renderHeaderContentsBefore = function(data) {
  */
 const renderHeaderContentsDuring = function(data) {
     return [
-        h('a', {
+        /*h('a', {
             href: 'http://npr.org'
         }, h('img.header-logo', {
             src: './assets/npr-color-100.png'
-        })),
+        })),*/
         h('h2.header-title', 'NPR Live Transcript'),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
@@ -324,11 +324,11 @@ const renderHeaderContentsDuring = function(data) {
  */
 const renderHeaderContentsAfter = function(data) {
     return [
-        h('a', {
+        /*h('a', {
             href: 'http://npr.org'
         }, h('img.header-logo', {
             src: './assets/npr-color-100.png'
-        }))
+        }))*/
     ]
 };
 
