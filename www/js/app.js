@@ -291,11 +291,11 @@ const renderHeadervDOM = function(data) {
  */
 const renderHeaderContentsBefore = function(data) {
     return [
-        h('a', {
+        /*h('a', {
             href: 'http://npr.org'
         }, h('img.header-logo', {
             src: './assets/npr-color-100.png'
-        })),
+        })),*/
         h('h2.header-title', 'NPR Live Transcript'),
         h('p.header-info', 'Once the event has started, a live transcript will appear below.'),
     ]
