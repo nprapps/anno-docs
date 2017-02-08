@@ -145,13 +145,13 @@
 
                 {% if DEPLOYMENT_TARGET != 'staging' %}
                 <div class="segment">
-                    <a class="btn staging" href="//stage-apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">staging &raquo;</a>
+                    <a class="btn staging" href="{{ S3_BASE_URL }}/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">staging &raquo;</a>
                 </div>
                 {% endif %}
 
                 {% if DEPLOYMENT_TARGET != 'production' %}
                 <div class="segment">
-                    <a class="btn production" href="//apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">production &raquo;</a>
+                    <a class="btn production" href="{{ S3_BASE_URL }}{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">production &raquo;</a>
                 </div>
                 <div class="segment">
                     <a class="btn doc" href="https://docs.google.com/document/d/{{ TRANSCRIPT_GDOC_KEY }}/" target="_blank">doc &raquo;</a>
@@ -221,7 +221,7 @@
                 jQuery(function () { // Wait for page load
                     var pymParent = new pym.Parent(
                         el.id,
-                        '//apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html',
+                        '{{ S3_BASE_URL }}/child.html',
                         {
                             id: 'transcript-embed'
                         }
@@ -248,7 +248,7 @@
 
 <!-- textarea contents -->
     <textarea readonly="readonly" rows="10" cols="50">
-<p data-pym-src="//{{ PRODUCTION_S3_BUCKET }}/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html">Loading...</p><script src="//pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
+<p data-pym-src="{{ S3_BASE_URL }}/child.html">Loading...</p><script src="//pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
     </textarea>
 <!-- end textarea contents -->
     </div>

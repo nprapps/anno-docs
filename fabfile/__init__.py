@@ -184,7 +184,6 @@ def deploy(remote='origin', reload=False):
         if app_config.DEPLOY_SERVICES:
             servers.deploy_confs()
 
-    update()
     render.render_all()
 
     # Clear files that should never be deployed
