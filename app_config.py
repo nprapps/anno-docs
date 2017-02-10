@@ -247,7 +247,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1LZuK4-BnpQTLu6FdT52Tl6NpXUyAWd7iW50CL3__-wo'
+        TRANSCRIPT_GDOC_KEY = '1svk8W8vGbv8-fNdkAh1x5RthPL6ybsUBnjmlngBU4dg'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
@@ -263,7 +263,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1SIdTMAjRhJkQVeUeBAxflSVidYIXPfpQIXDTpJEHvT4'
+        TRANSCRIPT_GDOC_KEY = '1-6pX--EXWrbRSUUlL2c0muFlpYoSisQjBli1QWb_d6w'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
