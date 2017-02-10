@@ -208,5 +208,5 @@ def parse_factcheck():
 @task
 def render_factcheck():
     parsed_factcheck = parse_factcheck()
-    generate_views(['_factcheck', '_share'],
+    generate_views(['_factcheck', '_preview', '_share'],
                    parsed_factcheck)
