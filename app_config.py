@@ -125,11 +125,13 @@ AUTOINIT_LOADER = False
 """
 AUTHORS DICTIONARY
 """
-AUTHORS_GOOGLE_DOC_KEY = '18dzZhuqnoz2e2Y7TBfYYAuhgK8SRwPEPpEGL1Sl9Rng'
+AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
 AUTHORS_PATH = 'data/authors.xlsx'
 
 TRANSCRIPT_HTML_PATH = 'data/transcript.html'
 LOAD_COPY_INTERVAL = 10
+# Number of cycles needed to refresh the author excel file
+REFRESH_AUTHOR_CYCLES = 6
 
 """
 GOOGLE APPS SCRIPTS

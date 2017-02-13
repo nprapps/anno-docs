@@ -2,6 +2,7 @@
 import logging
 import re
 import app_config
+import xlrd
 # from shortcode import process_shortcode
 from jinja2 import Environment, FileSystemLoader
 from bs4 import BeautifulSoup
@@ -43,8 +44,11 @@ extract_speaker_metadata_regex = re.compile(
     ur'^\s*(<.*?>)?([A-Z0-9\s.-]+)\s*(?:\[(.*)\]\s*)?:\s*(.*)', re.UNICODE)
 extract_soundbite_metadata_regex = re.compile(
     ur'^\s*(?:<.*?>)?\s*:\[\((.*)\)\]', re.UNICODE)
+extract_author_metadata_regex = re.compile(
+    ur'^.*\((.+)\)\s*$', re.UNICODE)
 
-FACT_CHECKERS = {}
+
+authors = {}
 
 
 def is_anno_start_marker(tag):
@@ -194,6 +198,38 @@ def process_metadata(contents):
     return metadata
 
 
+def add_author_metadata(metadata):
+    """
+    extract author data from dict and add to metadata
+    """
+
+    # Set default
+    author_name = 'NPR Staff'
+    author_role = 'NPR'
+    author_page = 'http://www.npr.org/'
+    author_img = None
+
+    m = extract_author_metadata_regex.match(metadata['author'])
+    if m:
+        key = m.group(1)
+        # Grab info from dictionary
+        try:
+            author_name = authors[key]['name']
+            author_role = authors[key]['role']
+            author_page = authors[key]['page']
+            author_img = authors[key]['img']
+        except KeyError:
+            logger.warning('did not find author in dictionary %s' % key)
+    else:
+        logger.warning("Could not parse author data %s. Using default" % (
+                       metadata['author']))
+    # Push data into metadata
+    metadata['author'] = author_name
+    metadata['role'] = author_role
+    metadata['page'] = author_page
+    metadata['image'] = author_img
+
+
 def process_annotation_contents(contents):
     """
     Process post copy content
@@ -272,6 +308,7 @@ def parse_raw_contents(data, status):
                     else:
                         raw_contents.append(tag)
             metadata = process_metadata(raw_metadata)
+            add_author_metadata(metadata)
             for k, v in metadata.iteritems():
                 annotation[k] = v
             annotation[u'contents'] = process_annotation_contents(raw_contents)
@@ -339,12 +376,51 @@ def categorize_doc_content(doc):
     return result, fact_check_status
 
 
+def getAuthorsData():
+    """
+    Transforms the authors excel file
+    into a format like this
+    "dm": {
+        "initials": "dm",
+        "name": "Domenico Montanaro",
+        "role": "NPR Political Editor & Digital Audience",
+        "page": "http://www.npr.org/people/xxxx",
+        "img": "http://media.npr.org/assets/img/yyy.jpg"
+    }
+    """
+    global authors
+    try:
+        book = xlrd.open_workbook(app_config.AUTHORS_PATH)
+        sheet = book.sheet_by_index(0)
+        header = True
+        for row in sheet.get_rows():
+            # Ignore header row
+            if header:
+                header = False
+                continue
+            initials = row[0].value
+            if initials in authors:
+                logger.warning("Duplicate initials on authors dict: %s" % (
+                               initials))
+            else:
+                author = {}
+                author['initials'] = row[0].value
+                author['name'] = row[1].value
+                author['role'] = row[2].value
+                author['page'] = row[3].value
+                author['img'] = row[4].value
+                authors[initials] = author
+    except Exception, e:
+        logger.error("Could not process the authors excel file: %s" % (e))
+
+
 def parse(doc):
     """
     Custom parser for the debates google doc format
     """
     context = {}
     logger.info('-------------start------------')
+    getAuthorsData()
     # Categorize content of original doc into transcript and annotations
     raw_contents, status = categorize_doc_content(doc)
     contents, status = parse_raw_contents(raw_contents, status)

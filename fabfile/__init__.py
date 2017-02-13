@@ -207,6 +207,9 @@ def deploy(remote='origin', reload=False):
         }
     )
 
+    # add factcast for the authors dictionary
+    servers.fabcast('text.update')
+
     # DEPLOY STATIC FACTCHECK FROM LOCAL ENVIRONMENT
     if app_config.DEPLOY_STATIC_FACTCHECK:
         execute('deploy_factcheck')
