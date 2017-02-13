@@ -204,9 +204,9 @@ def add_author_metadata(metadata):
     """
 
     # Set default
-    author_name = 'NPR Staff'
-    author_role = 'NPR'
-    author_page = 'http://www.npr.org/'
+    author_name = metadata['author']
+    author_role = None
+    author_page = None
     author_img = None
 
     m = extract_author_metadata_regex.match(metadata['author'])
@@ -221,8 +221,8 @@ def add_author_metadata(metadata):
         except KeyError:
             logger.warning('did not find author in dictionary %s' % key)
     else:
-        logger.warning("Could not parse author data %s. Using default" % (
-                       metadata['author']))
+        logger.warning("Could not parse author data initials: %s" % (
+                       author_name))
     # Push data into metadata
     metadata['author'] = author_name
     metadata['role'] = author_role
