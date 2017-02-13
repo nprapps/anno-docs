@@ -39,8 +39,8 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = '20170210-test-cspan-addon'
-SEAMUS_ID = ''  # SEAMUS PAGE ID FOR DEEP LINKING
+CURRENT_DEBATE = '20170215-trump-netanyahu'
+SEAMUS_ID = '514986341'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
     # Override SEAMUS_ID to generate the sharing list accordingly
@@ -248,8 +248,10 @@ def configure_targets(deployment_target):
         LOG_LEVEL = logging.INFO
         DEBUG = False
         ASSETS_MAX_AGE = 86400
-        # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
+        # PRODUCTION DOCUMENT
+        TRANSCRIPT_GDOC_KEY = '1fdLy2rm3zPWxU3ZAgw4ABCsFOFNUg3TT5FXJt5GpV9o'
+        # PRODUCTION TEST DOCUMENT
+        # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
@@ -279,7 +281,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1Fn3zEsGuvp0ot0Kamlc7_XR48QzoY4fSyRpO6BV1XsA'
+        TRANSCRIPT_GDOC_KEY = '19J7LB38ePACZnvs3PrFA0jcV_x1kRRgXlAIMPaS6zD4'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app
