@@ -220,6 +220,7 @@ def add_author_metadata(metadata):
             author_img = authors[key]['img']
         except KeyError:
             logger.warning('did not find author in dictionary %s' % key)
+            author_name = author_name.split('(')[0].strip()
     else:
         logger.warning("Could not parse author data initials: %s" % (
                        author_name))
@@ -389,6 +390,9 @@ def getAuthorsData():
     }
     """
     global authors
+    first_load = False
+    if not authors:
+        first_load = True
     try:
         book = xlrd.open_workbook(app_config.AUTHORS_PATH)
         sheet = book.sheet_by_index(0)
@@ -399,17 +403,17 @@ def getAuthorsData():
                 header = False
                 continue
             initials = row[0].value
-            if initials in authors:
+            if initials in authors and first_load:
                 logger.warning("Duplicate initials on authors dict: %s" % (
                                initials))
-            else:
-                author = {}
-                author['initials'] = row[0].value
-                author['name'] = row[1].value
-                author['role'] = row[2].value
-                author['page'] = row[3].value
-                author['img'] = row[4].value
-                authors[initials] = author
+                continue
+            author = {}
+            author['initials'] = row[0].value
+            author['name'] = row[1].value
+            author['role'] = row[2].value
+            author['page'] = row[3].value
+            author['img'] = row[4].value
+            authors[initials] = author
     except Exception, e:
         logger.error("Could not process the authors excel file: %s" % (e))
 
