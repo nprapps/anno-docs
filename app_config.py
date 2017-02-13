@@ -39,8 +39,8 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = '20170120-trump-inauguration-factcheck'
-SEAMUS_ID = '510629447'  # SEAMUS PAGE ID FOR DEEP LINKING
+CURRENT_DEBATE = '20170210-test-cspan-addon'
+SEAMUS_ID = ''  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
     # Override SEAMUS_ID to generate the sharing list accordingly
@@ -123,25 +123,25 @@ TEST AUTOINIT LOADER
 AUTOINIT_LOADER = False
 
 """
-COPY EDITING
+AUTHORS DICTIONARY
 """
-COPY_GOOGLE_DOC_KEY = '1z7TVK16JyhZRzk5ep-Uq5SH4lPTWmjCecvJ5vCp6lS0'
-COPY_PATH = 'data/copy.xlsx'
+AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
+AUTHORS_PATH = 'data/authors.xlsx'
 
 TRANSCRIPT_HTML_PATH = 'data/transcript.html'
 LOAD_COPY_INTERVAL = 10
+# Number of cycles needed to refresh the author excel file
+REFRESH_AUTHOR_CYCLES = 6
 
 """
 GOOGLE APPS SCRIPTS
 """
 
-# PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
+PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
 GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
 CSPAN = False
-
-
 """
 SHARING
 """
@@ -196,7 +196,12 @@ LOG_FORMAT = '%(levelname)s:%(name)s:%(asctime)s: %(message)s'
 """
 Utilities
 """
-
+SPEAKERS = {
+    'HILLARY CLINTON': 'speaker dem',
+    'TIM KAINE': 'speaker dem',
+    'DONALD TRUMP': 'speaker gop',
+    'MIKE PENCE': 'speaker gop'
+}
 
 def get_secrets():
     """
@@ -244,7 +249,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1LZuK4-BnpQTLu6FdT52Tl6NpXUyAWd7iW50CL3__-wo'
+        TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
@@ -260,7 +265,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1SIdTMAjRhJkQVeUeBAxflSVidYIXPfpQIXDTpJEHvT4'
+        TRANSCRIPT_GDOC_KEY = '1IJot3xfpcIS-RmqeGrkkQ8xQtmvxlnhMFb6LmL2_OvE'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:

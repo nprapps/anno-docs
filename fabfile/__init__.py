@@ -17,8 +17,8 @@ import assets
 import daemons
 import data
 import flat
-import issues
 import gs
+import issues
 import render
 import text
 import utils
@@ -33,10 +33,6 @@ if app_config.DEPLOY_TO_SERVERS:
 
 if app_config.DEPLOY_CRONTAB:
     import cron_jobs
-
-# Bootstrap can only be run once, then it's disabled
-if app_config.PROJECT_SLUG == '$NEW_PROJECT_SLUG':
-    import bootstrap
 
 """
 Base configuration
@@ -210,6 +206,9 @@ def deploy(remote='origin', reload=False):
             'Cache-Control': 'max-age=%i' % app_config.ASSETS_MAX_AGE
         }
     )
+
+    # add factcast for the authors dictionary
+    servers.fabcast('text.update')
 
     # DEPLOY STATIC FACTCHECK FROM LOCAL ENVIRONMENT
     if app_config.DEPLOY_STATIC_FACTCHECK:

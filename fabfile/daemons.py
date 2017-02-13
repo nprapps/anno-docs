@@ -32,6 +32,7 @@ def main(run_once=False):
     Main loop
     """
     copy_start = 0
+    cycle = 0
 
     if not app_config.LOAD_COPY_INTERVAL:
         logger.error('did not find LOAD_COPY_INTERVAL in app_config')
@@ -40,9 +41,14 @@ def main(run_once=False):
     while True:
         now = time()
         if (now - copy_start) > app_config.LOAD_COPY_INTERVAL:
+            cycle += 1
             copy_start = now
             logger.info('Update transcript')
             execute('text.get_transcript')
             if app_config.DEPLOYMENT_TARGET:
                 execute('deploy_factcheck')
+            if (cycle % app_config.REFRESH_AUTHOR_CYCLES == 0):
+                logger.info('Update authors file')
+                cycle = 0
+                execute('text.update')
         sleep(1)

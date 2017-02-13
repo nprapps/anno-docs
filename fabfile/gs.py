@@ -402,7 +402,6 @@ def upsert(name=None, src='google_apps_scripts'):
                 exit()
         logger.error('Error (%s).' % resp.status)
 
-
 @task
 def create(name=None, folderid=None, folder=None, src='google_apps_scripts'):
     """

@@ -101,7 +101,6 @@ def render_all():
     less()
     jst()
     app_config_js()
-    copytext_js()
 
     local('npm run build')
 
@@ -171,7 +170,7 @@ def render_copydoc():
         f.write(response.data.decode('utf-8'))
 
 
-def generate_views(views, parsed_liveblog):
+def generate_views(views, parsed_factcheck):
     from flask import url_for, g
 
     view_paths = []
@@ -184,7 +183,7 @@ def generate_views(views, parsed_liveblog):
         logger.info("%s, %s" % (view_name, path))
         with _fake_context(path):
             # add parsed liveblog to g
-            g.parsed_liveblog = parsed_liveblog
+            g.parsed_factcheck = parsed_factcheck
             logger.info(path)
             view = app.__dict__[view_name]
             response = view()
@@ -208,5 +207,5 @@ def parse_factcheck():
 @task
 def render_factcheck():
     parsed_factcheck = parse_factcheck()
-    generate_views(['_factcheck', '_share'],
+    generate_views(['_factcheck', '_preview', '_share'],
                    parsed_factcheck)
