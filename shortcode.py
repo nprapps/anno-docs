@@ -13,7 +13,7 @@ from jinja2 import Environment, FileSystemLoader
 # from pymongo import MongoClient
 
 TWITTER_OEMBED_URL = 'https://api.twitter.com/1.1/statuses/oembed.json'
-IMAGE_URL_TEMPLATE = 'http://media.npr.org/politics/election2016/%s'
+IMAGE_URL_TEMPLATE = 'https://media.npr.org/politics/election2016/%s'
 IMAGE_TYPES = ['image', 'graphic']
 SHORTCODE_DICT = {
     'tweet': {
