@@ -4,4 +4,9 @@
 <div class="header-wrapper"></div>
 <div class="transcript-wrapper"></div>
 <div class="footer-wrapper"></div>
+{% if CSPAN %}
+<div class="transcription-notice">
+    <hr><p><em>Powered by OpenedCaptions</em></p>
+</div>
+{% endif %}
 {% endblock %}
