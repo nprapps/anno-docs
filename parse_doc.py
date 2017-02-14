@@ -314,6 +314,7 @@ def parse_raw_contents(data, status):
                 annotation[k] = v
             annotation[u'contents'] = process_annotation_contents(raw_contents)
             annotation[u'markup'] = transform_annotation_markup(annotation)
+            annotation[u'type'] = "annotation"
             contents.append(annotation)
         else:
             transcript = {'type': 'other'}

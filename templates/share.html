@@ -1,3 +1,4 @@
+{% set filtered_contents = contents|selectattr("published", "equalto", "yes")|selectattr("type", "equalto", "annotation") %}
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -30,9 +31,10 @@
   </head>
   <body>
 
-  {% for check in fact_checks %}
+
+  {% for content in filtered_contents %}
     <div class="outerCheck">
-      {{check|safe}}
+      {{content.markup|safe}}
     </div>
   {% endfor %}
 
