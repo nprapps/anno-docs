@@ -180,6 +180,9 @@ def deploy(remote='origin', reload=False):
         if app_config.DEPLOY_SERVICES:
             servers.deploy_confs()
 
+        # add factcast for the authors dictionary
+        servers.fabcast('text.update')
+
     update()
     render.render_all()
 
@@ -206,9 +209,6 @@ def deploy(remote='origin', reload=False):
             'Cache-Control': 'max-age=%i' % app_config.ASSETS_MAX_AGE
         }
     )
-
-    # add factcast for the authors dictionary
-    servers.fabcast('text.update')
 
     # DEPLOY STATIC FACTCHECK FROM LOCAL ENVIRONMENT
     if app_config.DEPLOY_STATIC_FACTCHECK:
