@@ -53,6 +53,7 @@ data/copy.xlsx
 data/authors.xls
 data/authors.xlsx
 data/*.html
+data/cspan.txt
 www/assets/*
 !www/assets/assetsignore
 www/live-data/*
