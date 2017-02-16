@@ -141,7 +141,7 @@ PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
 GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
-CSPAN = True
+CSPAN = False
 """
 SHARING
 """
