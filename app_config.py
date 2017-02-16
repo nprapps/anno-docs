@@ -39,8 +39,8 @@ ASSETS_SLUG = 'debates'
 
 # DEPLOY SETUP CONFIG
 DEBATE_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_DEBATE = '20170215-trump-netanyahu'
-SEAMUS_ID = '514986341'  # SEAMUS PAGE ID FOR DEEP LINKING
+CURRENT_DEBATE = '20170216-trump-press-conference'
+SEAMUS_ID = '515608127'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_DEBATE
     # Override SEAMUS_ID to generate the sharing list accordingly
@@ -249,7 +249,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1fdLy2rm3zPWxU3ZAgw4ABCsFOFNUg3TT5FXJt5GpV9o'
+        TRANSCRIPT_GDOC_KEY = '1ZJEiHxqDZl3uIbXn2dhH6YyL0DtDMbtG7o6wxMG9Mqk'
         # PRODUCTION TEST DOCUMENT
         # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
