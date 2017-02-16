@@ -6,6 +6,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="shortcut icon" href="https://media.npr.org/favicon.ico" />
 
     {% block extra_head %}
     {% endblock extra_head %}
@@ -145,13 +146,13 @@
 
                 {% if DEPLOYMENT_TARGET != 'staging' %}
                 <div class="segment">
-                    <a class="btn staging" href="//stage-apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">staging &raquo;</a>
+                    <a class="btn staging" href="https://s3.amazonaws.com/stage-apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/index.html" target="_blank">staging &raquo;</a>
                 </div>
                 {% endif %}
 
                 {% if DEPLOYMENT_TARGET != 'production' %}
                 <div class="segment">
-                    <a class="btn production" href="//apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">production &raquo;</a>
+                    <a class="btn production" href="https://apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/" target="_blank">production &raquo;</a>
                 </div>
                 <div class="segment">
                     <a class="btn doc" href="https://docs.google.com/document/d/{{ TRANSCRIPT_GDOC_KEY }}/" target="_blank">doc &raquo;</a>
@@ -217,16 +218,16 @@
             // add randomness to id to support for multiple graphic instances in one story
             var el = document.getElementById("responsive-embed-{{ CURRENT_DEBATE }}");
             el.id = el.id + "-" + Math.random().toString(36).substr(2,5);
-            jQuery.getScript("//pym.nprapps.org/pym.v1.min.js").done(function () {
+            jQuery.getScript("https://pym.nprapps.org/pym.v1.min.js").done(function () {
                 jQuery(function () { // Wait for page load
                     var pymParent = new pym.Parent(
                         el.id,
-                        '//apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html',
+                        'https://apps.npr.org/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html',
                         {
                             id: 'transcript-embed'
                         }
                     );
-                    jQuery.getScript("//carebot.nprapps.org/child-tracker.v1.min.js").done(function () {
+                    jQuery.getScript("https://carebot.nprapps.org/child-tracker.v1.min.js").done(function () {
                         pymParent.trackers = {};
                         pymParent.onMessage('test-visibility-tracker', onTestVisibilityTracker);
                         pymParent.onMessage('remove-tracker', onRemoveTracker);
@@ -248,7 +249,7 @@
 
 <!-- textarea contents -->
     <textarea readonly="readonly" rows="10" cols="50">
-<p data-pym-src="//{{ PRODUCTION_S3_BUCKET }}/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html">Loading...</p><script src="//pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
+<p data-pym-src="https://{{ PRODUCTION_S3_BUCKET }}/{{ DEBATE_DIRECTORY_PREFIX }}{{ CURRENT_DEBATE }}/child.html">Loading...</p><script src="https://pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
     </textarea>
 <!-- end textarea contents -->
     </div>
@@ -294,10 +295,10 @@
         }
     </script>
 {% if AUTOINIT_LOADER %}
-    <script src="//pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
+    <script src="https://pym.nprapps.org/child-tracker-loader.v1.min.js" type="text/javascript"></script>
 {% else %}
-    <script src="//pym.nprapps.org/pym.v1.min.js" type="text/javascript"></script>
-    <script src="//carebot.nprapps.org/child-tracker.v1.min.js"></script>
+    <script src="https://pym.nprapps.org/pym.v1.min.js" type="text/javascript"></script>
+    <script src="https://carebot.nprapps.org/child-tracker.v1.min.js"></script>
     <script>
         var sendOnScreen = function(id) {
             if (this.el.getElementsByTagName('iframe').length !== 0) {

@@ -238,7 +238,7 @@ def configure_targets(deployment_target):
 
     if deployment_target == 'production':
         S3_BUCKET = PRODUCTION_S3_BUCKET
-        S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
+        S3_BASE_URL = 'https://%s/%s%s' % (S3_BUCKET,
                                      DEBATE_DIRECTORY_PREFIX,
                                      CURRENT_DEBATE)
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
@@ -256,12 +256,12 @@ def configure_targets(deployment_target):
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
-        S3_BASE_URL = '//%s/%s%s' % (S3_BUCKET,
+        S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (S3_BUCKET,
                                      DEBATE_DIRECTORY_PREFIX,
                                      CURRENT_DEBATE)
         S3_DEPLOY_URL = 's3://%s/%s' % (S3_BUCKET, PROJECT_SLUG)
         SERVERS = STAGING_SERVERS
-        SERVER_BASE_URL = '//%s/%s' % (SERVERS[0], PROJECT_SLUG)
+        SERVER_BASE_URL = 'https://%s/%s' % (SERVERS[0], PROJECT_SLUG)
         SERVER_LOG_PATH = '/var/log/%s' % PROJECT_FILENAME
         LOG_LEVEL = logging.INFO
         DEBUG = True
