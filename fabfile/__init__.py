@@ -345,11 +345,14 @@ def check_timestamp():
 
     bucket = utils.get_bucket(app_config.S3_BUCKET)
     k = Key(bucket)
-    k.key = '%s/live-data/timestamp.json' % app_config.PROJECT_SLUG
+    k.key = '%s%s/live-data/timestamp.json' % (
+        app_config.DEBATE_DIRECTORY_PREFIX,
+        app_config.CURRENT_DEBATE)
     if k.exists():
         return True
     else:
         return False
+
 
 @task
 def reset_browsers():
@@ -371,7 +374,8 @@ def reset_browsers():
     flat.deploy_folder(
         app_config.S3_BUCKET,
         'www/live-data',
-        '%s/live-data' % app_config.PROJECT_SLUG,
+        '%s%s/live-data' % (app_config.DEBATE_DIRECTORY_PREFIX,
+                            app_config.CURRENT_DEBATE),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
         }
