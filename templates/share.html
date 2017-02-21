@@ -1,89 +1,161 @@
 {% set filtered_contents = contents|selectattr("published", "equalto", "yes")|selectattr("type", "equalto", "annotation") %}
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-    {% if DEPLOYMENT_TARGET %}
-    <link rel="stylesheet" href="css/rendered/app.min.css">
-    {% else %}
-    <link rel="stylesheet" href="less/app.less">
-    {% endif %}
-    <style>
-      body{
-        padding: 40px;
-      }
-      .annotation{
-        margin-bottom: .5em;
-      }
-      .outerCheck{
-        margin-bottom: 2em;
-      }
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+        {% if DEPLOYMENT_TARGET %}
+        <link rel="stylesheet" href="css/rendered/app.min.css">
+        {% else %}
+        <link rel="stylesheet" href="less/app.less">
+        {% endif %}
+        <style>
+            body{
+                padding: 40px;
+            }
 
-      p {
-        margin-bottom: .5em;
-      }
+            .shareLink{
+                margin-top: 2em;
+            }
 
-      input {
-        width: 80%;
-      }
-    </style>
-  </head>
+            .annotation{
+                margin-bottom: .5em;
+            }
+
+            .outerCheck{
+                margin-bottom: 2em;
+            }
+
+            #output {
+                margin-top: 30px;
+            }
+
+            #input {
+                font-size: 18px;
+            }
+
+            .input-item {
+                display: block;
+            }
+
+            .input-item {
+                font-size: 16px;
+            }
+
+            input.input-item {
+                font-size: 14px;
+            }
+
+            .required-flag {
+                color: red;
+            }
+
+            #error {
+                margin-top: 15px;
+                color: red;
+            }
+
+            p {
+                margin-bottom: .5em;
+            }
+
+            input {
+                width: 80%;
+                margin-bottom: 5px;
+            }
+        </style>
+    </head>
   <body>
+        <div id="input">
+            <label class="bold input-item" for="url">Enter the factcheck url<span class="required-flag">*</span></label>
+            <input class="input-item" placeholder="http://www.npr.org/2017/01/31/512439121/trumps-executive-order-on-immigration-annotated" type="text" name="url" id="url">
+            <label class="input-item" for="campaigns">Enter optional twitter campaigns</label>
+            <input class="input-item" placeholder="npr,politics" type="text" name="campaigns" id="campaigns">
+            <button class="input-item" id="submit" type="button">Generate sharing page</button>
+        </div>
+        <div id="output">
+        {% for content in filtered_contents %}
+            <div class="outerCheck">{{content.markup|safe}}</div>
+        {% endfor %}
+        </div>
+        <script src="{{ S3_BASE_URL }}/js/lib/jquery.js"></script>
+        <script type="text/javascript">
+            var theId = null;
+            var div = null;
+            function createShareLinks(url, campaignsRaw){
+                campaigns = [];
+                // Parse campaigns
+                if (campaignsRaw) {
+                    campaigns = campaignsRaw.split(',');
+                }
+                // Add NPR specific campaign params
+                if (url.indexOf('npr.org/') !== -1) {
+                    npr_share = '&utm_term=nprnews&utm_content=202604';
+                }
+                else {
+                    npr_share = '';
+                }
 
+                allDivs = document.getElementsByClassName('outerCheck')
+                allChecks = document.getElementsByClassName('annotation');
+                for (var i = 0; i < allChecks.length; i++){
+                    div = allDivs[i];
+                    thisCheck = allChecks[i];
+                    theId = thisCheck.getAttribute('id');
+                    theURL = url + '#' + theId;
 
-  {% for content in filtered_contents %}
-    <div class="outerCheck">
-      {{content.markup|safe}}
-    </div>
-  {% endfor %}
+                    var p = document.createElement('p');
+                    p.setAttribute('class', 'shareLink share-assets');
+                    var checkLink = document.createElement('a');
+                    checkLink.setAttribute('href', theURL);
+                    checkLink.setAttribute('target', "_blank");
+                    checkLink.innerHTML = theURL;
+                    p.appendChild(checkLink);
+                    div.appendChild(p);
 
-  <script type="text/javascript">
-    var theId = null;
-    var div = null;
+                    for (var j=0; j < campaigns.length; j++) {
+                        theURL = url + '&utm_source=twitter.com&utm_medium=social' + npr_share + '&utm_campaign=' + campaigns[j].trim() + '#' + theId;
+                        var p = document.createElement('p');
+                        p.setAttribute('class', 'share-assets');
+                        var span = document.createElement('span');
+                        span.innerHTML = campaigns[j].trim().toUpperCase() + " Twitter: ";
+                        p.appendChild(span);
+                        var input = document.createElement('input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('value', theURL);
+                        p.appendChild(input);
+                        div.appendChild(p);
+                    }
+                }
+                $('#output').show();
+            };
 
-    function createShareLink(){
-      allDivs = document.getElementsByClassName('outerCheck')
-      allChecks = document.getElementsByClassName('annotation');
-      for (var i = 0; i < allChecks.length; i++){
-        div = allDivs[i];
-        thisCheck = allChecks[i];
-        theId = thisCheck.getAttribute('id');
-        theURL = 'https://www.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}#' + theId;
-        var p = document.createElement('p');
-        p.setAttribute('class', 'shareLink');
-        var checkLink = document.createElement('a');
-        checkLink.setAttribute('href', theURL);
-        checkLink.setAttribute('target', "_blank");
-        checkLink.innerHTML = theURL;
-        p.appendChild(checkLink);
-        div.appendChild(p);
+            function showError(msg, element) {
+                $('#error').remove();
+                var div = $('<div id="error" class="error">' + msg + '</div>');
+                $(element).after(div);
+            };
 
-        theURL = 'https://www.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}&utm_source=twitter.com&utm_medium=social&utm_campaign=npr&utm_term=nprnews&utm_content=202604#' + theId;
-        var p = document.createElement('p');
-        var span = document.createElement('span');
-        span.innerHTML = "NPR Twitter: ";
-        p.appendChild(span);
-        var input = document.createElement('input');
-        input.setAttribute('type', 'text');
-        input.setAttribute('value', theURL);
-        p.appendChild(input);
-        div.appendChild(p);
+            function validate() {
+                if (!$('#url').val() || (!/^https?:\/\//i.test($('#url').val()))) {
+                    showError("A valid url is needed", $('#input'));
+                    $('#output').hide();
+                    return;
+                }
+                $('#error').remove();
+                $('.share-assets').remove()
+                var url = $('#url').val();
+                var campaigns = $('#campaigns').val();
+                if (!campaigns) {
+                    campaigns = null
+                }
+                createShareLinks(url, campaigns);
+            };
 
-        theURL = 'https://www.npr.org/templates/story/story.php?storyId={{SEAMUS_ID}}&utm_source=twitter.com&utm_medium=social&utm_campaign=politics&utm_term=nprnews&utm_content=202604#' + theId;
-        var p = document.createElement('p');
-        var span = document.createElement('span');
-        span.innerHTML = "Politics Twitter: ";
-        p.appendChild(span);
-        var input = document.createElement('input');
-        input.setAttribute('type', 'text');
-        input.setAttribute('value', theURL);
-        p.appendChild(input);
-        div.appendChild(p);
-      }
-    };
-      window.onload = createShareLink();
-
-    </script>
-  </body>
-  </html>
+            $(function() {
+                $('#output').hide();
+                $('#submit').click(validate);
+            });
+        </script>
+    </body>
+</html>
