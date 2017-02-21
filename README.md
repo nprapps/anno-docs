@@ -1,4 +1,4 @@
-Debates
+Anno-docs
 ========================
 
 * [What is this?](#what-is-this)
@@ -101,8 +101,8 @@ curl https://npmjs.org/install.sh | sh
 Then bootstrap the project:
 
 ```
-cd debates
-mkvirtualenv debates
+cd anno-docs
+mkvirtualenv anno-docs
 pip install -r requirements.txt
 npm install
 fab update
@@ -148,7 +148,7 @@ Run the project
 A flask app is used to run the project locally. It will automatically recompile templates and assets on demand.
 
 ```
-workon $PROJECT_SLUG
+workon anno-docs
 fab app
 ```
 

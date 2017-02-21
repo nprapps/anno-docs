@@ -192,8 +192,8 @@ def deploy(remote='origin', reload=False):
     flat.deploy_folder(
         app_config.S3_BUCKET,
         'www',
-        '%s%s' % (app_config.DEBATE_DIRECTORY_PREFIX,
-                  app_config.CURRENT_DEBATE),
+        '%s%s' % (app_config.FACTCHECKS_DIRECTORY_PREFIX,
+                  app_config.CURRENT_FACTCHECK),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
         },
@@ -203,8 +203,8 @@ def deploy(remote='origin', reload=False):
     flat.deploy_folder(
         app_config.S3_BUCKET,
         'www/assets',
-        '%s%s/assets' % (app_config.DEBATE_DIRECTORY_PREFIX,
-                         app_config.CURRENT_DEBATE),
+        '%s%s/assets' % (app_config.FACTCHECKS_DIRECTORY_PREFIX,
+                         app_config.CURRENT_FACTCHECK),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.ASSETS_MAX_AGE
         }
@@ -227,8 +227,8 @@ def deploy_factcheck():
     flat.deploy_folder(
         app_config.S3_BUCKET,
         '.factcheck',
-        '%s%s' % (app_config.DEBATE_DIRECTORY_PREFIX,
-                  app_config.CURRENT_DEBATE),
+        '%s%s' % (app_config.FACTCHECKS_DIRECTORY_PREFIX,
+                  app_config.CURRENT_FACTCHECK),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
         }
@@ -269,7 +269,7 @@ def deploy_transcript_backup():
     flat.deploy_folder(
         app_config.ARCHIVE_S3_BUCKET,
         '.copydoc',
-        'debates/%s-%s' % (now, app_config.CURRENT_DEBATE),
+        'factchecks/%s-%s' % (now, app_config.CURRENT_FACTCHECK),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
         }
@@ -346,8 +346,8 @@ def check_timestamp():
     bucket = utils.get_bucket(app_config.S3_BUCKET)
     k = Key(bucket)
     k.key = '%s%s/live-data/timestamp.json' % (
-        app_config.DEBATE_DIRECTORY_PREFIX,
-        app_config.CURRENT_DEBATE)
+        app_config.FACTCHECKS_DIRECTORY_PREFIX,
+        app_config.CURRENT_FACTCHECK)
     if k.exists():
         return True
     else:
@@ -374,8 +374,8 @@ def reset_browsers():
     flat.deploy_folder(
         app_config.S3_BUCKET,
         'www/live-data',
-        '%s%s/live-data' % (app_config.DEBATE_DIRECTORY_PREFIX,
-                            app_config.CURRENT_DEBATE),
+        '%s%s/live-data' % (app_config.FACTCHECKS_DIRECTORY_PREFIX,
+                            app_config.CURRENT_FACTCHECK),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
         }
@@ -401,7 +401,9 @@ def shiva_the_destroyer():
     )
 
     with settings(warn_only=True):
-        flat.delete_folder(app_config.S3_BUCKET, app_config.PROJECT_SLUG)
+        flat.delete_folder(app_config.S3_BUCKET, '%s%s' % (
+            app_config.FACTCHECKS_DIRECTORY_PREFIX,
+            app_config.CURRENT_FACTCHECK))
 
         if app_config.DEPLOY_TO_SERVERS:
             servers.delete_project()
