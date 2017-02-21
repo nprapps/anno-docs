@@ -39,8 +39,8 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20170216-trump-press-conference'
-SEAMUS_ID = '515608127'  # SEAMUS PAGE ID FOR DEEP LINKING
+CURRENT_FACTCHECK = '20170221-trump-travelban'
+SEAMUS_ID = '516437410'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
     from local_settings import CURRENT_FACTCHECK
     # Override SEAMUS_ID to generate the sharing list accordingly
@@ -250,7 +250,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1ZJEiHxqDZl3uIbXn2dhH6YyL0DtDMbtG7o6wxMG9Mqk'
+        TRANSCRIPT_GDOC_KEY = '11HrzjCLupczk2WRL5kaeO_hR5P2HrDQY8vAty6PiznU'
         # PRODUCTION TEST DOCUMENT
         # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
