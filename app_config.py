@@ -24,7 +24,7 @@ NAMES
 PROJECT_SLUG = 'anno-docs'
 
 # Project name to be used in file paths
-PROJECT_FILENAME = 'anno-docs'
+PROJECT_FILENAME = 'anno_docs'
 
 # The name of the repository containing the source
 REPOSITORY_NAME = 'anno-docs'
@@ -210,8 +210,8 @@ def get_secrets():
     secrets_dict = {}
 
     for k, v in os.environ.items():
-        if k.startswith(PROJECT_SLUG):
-            k = k[len(PROJECT_SLUG) + 1:]
+        if k.startswith(PROJECT_FILENAME):
+            k = k[len(PROJECT_FILENAME) + 1:]
             secrets_dict[k] = v
 
     return secrets_dict
