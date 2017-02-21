@@ -93,6 +93,7 @@ def install_requirements():
 
     run('%(SERVER_VIRTUALENV_PATH)s/bin/pip install -U -r %(SERVER_REPOSITORY_PATH)s/requirements.txt' % app_config.__dict__)
     sudo('cd %(SERVER_REPOSITORY_PATH)s; npm install' % app_config.__dict__)
+    sudo('chown ubuntu:ubuntu %(SERVER_REPOSITORY_PATH)s/node-modules' % app_config.__dict__)
 
 @task
 def setup_logs():
