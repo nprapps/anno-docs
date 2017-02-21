@@ -150,12 +150,46 @@
                 if (!campaigns) {
                     campaigns = null
                 }
+                // Store data on localStorage
+                if (storageAvailable('localStorage')) {
+                    localStorage.setItem("share-url", url);
+                    if (campaigns) {
+                        localStorage.setItem("share-campaigns", campaigns);
+                    } else {
+                        localStorage.removeItem("share-campaigns");
+                    }
+                }
                 createShareLinks(url, campaigns);
             };
+
+            function storageAvailable(type) {
+                try {
+                    var storage = window[type],
+                        x = '__storage_test__';
+                    storage.setItem(x, x);
+                    storage.removeItem(x);
+                    return true;
+                }
+                catch(e) {
+                    return false;
+                }
+            }
 
             $(function() {
                 $('#output').hide();
                 $('#submit').click(validate);
+                // Get data from localStorage
+                if (storageAvailable('localStorage')) {
+                    var campaigns = localStorage.getItem("share-campaigns");
+                    if (campaigns) {
+                        $("#campaigns").val(campaigns);
+                    }
+                    var url = localStorage.getItem("share-url");
+                    if (url) {
+                        $("#url").val(url);
+                        createShareLinks(url, campaigns);
+                    }
+                }
             });
         </script>
     </body>
