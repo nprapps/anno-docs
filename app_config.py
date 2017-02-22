@@ -40,11 +40,9 @@ ASSETS_SLUG = 'anno-docs'
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
 CURRENT_FACTCHECK = '20170221-trump-travelban'
-SEAMUS_ID = '516437410'  # SEAMUS PAGE ID FOR DEEP LINKING
 try:
+    # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
-    # Override SEAMUS_ID to generate the sharing list accordingly
-    from local_settings import SEAMUS_ID
 except ImportError:
     pass
 
