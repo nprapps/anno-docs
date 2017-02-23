@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 # _*_ coding:utf-8 _*_
 import logging
 import re
@@ -5,7 +6,6 @@ import app_config
 import xlrd
 # from shortcode import process_shortcode
 from jinja2 import Environment, FileSystemLoader
-from bs4 import BeautifulSoup
 
 env = Environment(loader=FileSystemLoader('templates/transcript'))
 
@@ -13,7 +13,7 @@ logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
 logger.setLevel(app_config.LOG_LEVEL)
 
-# REGULAR EXPRESSIONS
+# REGULAR EXPRESSIONS
 end_transcript_regex = re.compile(ur'.*LIVE\sTRANSCRIPT\sHAS\sENDED.*',
                                   re.UNICODE)
 do_not_write_regex = re.compile(ur'.*DO\s*NOT\s*WRITE\s*BELOW\s*THIS\s*LINE.*',
@@ -62,6 +62,7 @@ def is_anno_start_marker(tag):
     else:
         return False
 
+
 def is_anno_end_marker(tag):
     """
     Checks for the beginning of a new post
@@ -72,24 +73,6 @@ def is_anno_end_marker(tag):
         return True
     else:
         return False
-
-
-def transform_other_text(paragraph):
-    """
-    parses speaker paragraphs.
-    transforming into the desired output markup
-    """
-    combined_contents = ''
-    for content in paragraph.contents:
-        combined_contents += unicode(content)
-
-    clean_text = combined_contents
-    context = {'text': clean_text}
-    template = env.get_template('other.html')
-    other_markup = template.render(**context)
-    other_markup = replace_strong_tags(other_markup)
-    markup = BeautifulSoup(other_markup, "html.parser")
-    return markup
 
 
 def replace_strong_tags(markup):
@@ -173,13 +156,6 @@ def process_other_transcript(contents):
     return context
 
 
-def process_inline_internal_link(m):
-    raw_shortcode = m.group(1)
-    fake_p = BeautifulSoup('<p>%s</p>' % (raw_shortcode), "html.parser")
-    parsed_inline_shortcode = process_shortcode(fake_p)
-    return parsed_inline_shortcode
-
-
 def process_metadata(contents):
     logger.debug('--process_metadata start--')
     metadata = {}
@@ -237,19 +213,6 @@ def process_annotation_contents(contents):
     In particular parse and generate HTML from shortcodes
     """
     logger.debug('--process_annotation_contents start--')
-    # Comment back in to get rich media into annotation contents WIP
-    # parsed = []
-    # for tag in contents:
-        # text = tag.get_text()
-        # m = shortcode_regex.match(text)
-        # if m:
-        #     parsed.append(process_shortcode(tag))
-        # else:
-        #     # Parsed searching and replacing for inline internal links
-        #     parsed_tag = internal_link_regex.sub(process_inline_internal_link,
-        #                                          unicode(tag))
-        #     logger.debug('parsed tag: %s' % parsed_tag)
-        #     parsed.append(parsed_tag)
     parsed = [unicode(tag) for tag in contents]
     post_contents = ''.join(parsed)
     return post_contents
