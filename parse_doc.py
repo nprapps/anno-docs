@@ -32,11 +32,6 @@ frontmatter_marker_regex = re.compile(ur'^\s*-{3}\s*$',
 extract_metadata_regex = re.compile(ur'^(.*?):(.*)$',
                                     re.UNICODE)
 
-shortcode_regex = re.compile(ur'^\s*\[%\s*.*\s*%\]\s*$', re.UNICODE)
-
-internal_link_regex = re.compile(ur'(\[% internal_link\s+.*?\s*%\])',
-                                 re.UNICODE)
-
 speaker_regex = re.compile(ur'^[A-Z\s.-]+(\s\[.*\])?:', re.UNICODE)
 soundbite_regex = re.compile(ur'^\s*:', re.UNICODE)
 
