@@ -54,7 +54,9 @@ function updateVerb8tm() {
         // Get the content from the response
         content = response.getContentText('UTF-8');
         headers = response.getHeaders();
-        PersistLog.debug('headers: %s', headers);
+        for (key in headers) {
+            PersistLog.debug("key: %s, value: %s", key, headers[key])
+        }
         var newCaptionID = headers.lastCaptionID;
         if (newCaptionID === undefined) {
             newCaptionID = headers.lastcaptionid;
