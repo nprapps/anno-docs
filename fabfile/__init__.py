@@ -296,6 +296,7 @@ def _test_api_init(freq=2627):
     secrets = app_config.get_secrets()
     url = secrets.get('VERB8TM_SRT_TEST_API',
                       app_config.PROJECT_SLUG)
+    logger.info(url)
     header = 'Content-Type: application/json'
     payload = '{"command":"init","millisecondCaptionDelay":"%s"}' % (freq)
     command = 'curl -H "%s" -X POST -d \'%s\' %s' % (header, payload, url)
