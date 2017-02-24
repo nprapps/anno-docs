@@ -3,7 +3,6 @@
 import logging
 import re
 import app_config
-import csv
 import xlrd
 from jinja2 import Environment, FileSystemLoader
 
@@ -41,9 +40,6 @@ extract_soundbite_metadata_regex = re.compile(
     ur'^\s*(?:<.*?>)?\s*:\[\((.*)\)\]', re.UNICODE)
 extract_author_metadata_regex = re.compile(
     ur'^.*\((.+)\)\s*$', re.UNICODE)
-
-
-authors = {}
 
 
 def is_anno_start_marker(tag):
@@ -169,7 +165,7 @@ def process_metadata(contents):
     return metadata
 
 
-def add_author_metadata(metadata):
+def add_author_metadata(metadata, authors):
     """
     extract author data from dict and add to metadata
     """
@@ -233,7 +229,7 @@ def process_transcript_content(tag):
     return typ, context
 
 
-def parse_raw_contents(data, status):
+def parse_raw_contents(data, status, authors):
     """
     parse raw contents into an array of parsed transcript & annotation objects
     """
@@ -267,7 +263,7 @@ def parse_raw_contents(data, status):
                     else:
                         raw_contents.append(tag)
             metadata = process_metadata(raw_metadata)
-            add_author_metadata(metadata)
+            add_author_metadata(metadata, authors)
             for k, v in metadata.iteritems():
                 annotation[k] = v
             annotation[u'contents'] = process_annotation_contents(raw_contents)
@@ -336,19 +332,6 @@ def categorize_doc_content(doc):
     return result, fact_check_status
 
 
-def transformAuthors(authors_data):
-    """
-    transform authors received csv data to final authors dict
-    """
-    global authors
-    cr = csv.DictReader(authors_data.split('\n'))
-    for row in cr:
-        if row['initials'] in authors:
-            logger.warning("Duplicate initials on authors dict: %s" % (
-                row['initials']))
-        authors[row['initials']] = row
-
-
 def getAuthorsData():
     """
     Transforms the authors excel file
@@ -361,21 +344,18 @@ def getAuthorsData():
         "img": "http://media.npr.org/assets/img/yyy.jpg"
     }
     """
-    global authors
-    first_load = False
-    if not authors:
-        first_load = True
+    authors = {}
     try:
         book = xlrd.open_workbook(app_config.AUTHORS_PATH)
         sheet = book.sheet_by_index(0)
         header = True
         for row in sheet.get_rows():
-            # Ignore header row
+            # Ignore header row
             if header:
                 header = False
                 continue
             initials = row[0].value
-            if initials in authors and first_load:
+            if initials in authors:
                 logger.warning("Duplicate initials on authors dict: %s" % (
                                initials))
                 continue
@@ -388,21 +368,21 @@ def getAuthorsData():
             authors[initials] = author
     except Exception, e:
         logger.error("Could not process the authors excel file: %s" % (e))
+    finally:
+        return authors
 
 
-def parse(doc, authors_data=None):
+def parse(doc, authors=None):
     """
     Custom parser for the debates google doc format
     """
     context = {}
     logger.info('-------------start------------')
-    if not authors_data:
-        getAuthorsData()
-    else:
-        transformAuthors(authors_data)
-    # Categorize content of original doc into transcript and annotations
+    if not authors:
+        authors = getAuthorsData()
+    # Categorize content of original doc into transcript and annotations
     raw_contents, status = categorize_doc_content(doc)
-    contents, status = parse_raw_contents(raw_contents, status)
+    contents, status = parse_raw_contents(raw_contents, status, authors)
     number_of_fact_checks = len([x for x in raw_contents
                                 if x['type'] == 'annotation'])
     number_of_transcript = len([x for x in raw_contents
