@@ -3,8 +3,8 @@
 import logging
 import re
 import app_config
+import csv
 import xlrd
-# from shortcode import process_shortcode
 from jinja2 import Environment, FileSystemLoader
 
 env = Environment(loader=FileSystemLoader('templates/transcript'))
@@ -336,6 +336,19 @@ def categorize_doc_content(doc):
     return result, fact_check_status
 
 
+def transformAuthors(authors_data):
+    """
+    transform authors received csv data to final authors dict
+    """
+    global authors
+    cr = csv.DictReader(authors_data.split('\n'))
+    for row in cr:
+        if row['initials'] in authors:
+            logger.warning("Duplicate initials on authors dict: %s" % (
+                row['initials']))
+        authors[row['initials']] = row
+
+
 def getAuthorsData():
     """
     Transforms the authors excel file
@@ -377,13 +390,16 @@ def getAuthorsData():
         logger.error("Could not process the authors excel file: %s" % (e))
 
 
-def parse(doc):
+def parse(doc, authors_data=None):
     """
     Custom parser for the debates google doc format
     """
     context = {}
     logger.info('-------------start------------')
-    getAuthorsData()
+    if not authors_data:
+        getAuthorsData()
+    else:
+        transformAuthors(authors_data)
     # Categorize content of original doc into transcript and annotations
     raw_contents, status = categorize_doc_content(doc)
     contents, status = parse_raw_contents(raw_contents, status)
