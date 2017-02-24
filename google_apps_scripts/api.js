@@ -48,7 +48,7 @@ function _getVerb8tmStartTime() {
         var response = UrlFetchApp.fetch(api_timestamp_url, {muteHttpExceptions: true});
     } catch(e) {
         e = (typeof e === 'string') ? new Error(e): e;
-        var msg =  Utilities.formatString('Exception ocurred while invoking UrlFetchApp for %s', transcript_url);
+        var msg =  Utilities.formatString('Exception ocurred while invoking UrlFetchApp for %s', api_timestamp_url);
         PersistLog.severe(msg);
         throw e;
     }
@@ -59,7 +59,7 @@ function _getVerb8tmStartTime() {
         return null;
     }
     else if (responseCode !== 200 && responseCode !== 204) {
-        var msg =  Utilities.formatString('Request failed to %s. Expected 200 or 204, got %s', transcript_url, responseCode);
+        var msg =  Utilities.formatString('Request failed to %s. Expected 200 or 204, got %s', api_timestamp_url, responseCode);
         PersistLog.severe(msg);
         throw new Error(msg);
     }
