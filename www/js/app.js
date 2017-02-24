@@ -375,14 +375,14 @@ const renderFootervDOM = function(data) {
 };
 
 /*
- * Build correct transcript URL based on hostname
+ * Build correct transcript URL
  */
 const buildTranscriptURL = function() {
-    let transcript_page = '/factcheck.html';
+    let transcript_page = 'factcheck.html';
     if (/\/preview\.html/.test(parentUrl.pathname)) {
-        transcript_page = '/factcheck_preview.html';
+        transcript_page = 'factcheck_preview.html';
     }
-    return APP_CONFIG.S3_BASE_URL + transcript_page;
+    return transcript_page;
 }
 
 const onViewHeight = function(height){
