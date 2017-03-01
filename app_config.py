@@ -49,23 +49,23 @@ except ImportError:
 """
 DEPLOYMENT
 """
-AWS_S3_REGION = 'us-east-1'
+AWS_S3_REGION = 'us-west-2'
 
-PRODUCTION_S3_BUCKET = 'apps.npr.org'
+PRODUCTION_S3_BUCKET = 'apps-west.npr.org'
 
 STAGING_S3_BUCKET = 'stage-apps.npr.org'
 
-ASSETS_S3_BUCKET = 'assets.apps.npr.org'
+ASSETS_S3_BUCKET = 'assets-west.apps.npr.org'
 
-ARCHIVE_S3_BUCKET = 'election-backup.apps.npr.org'
+ARCHIVE_S3_BUCKET = 'backup-west.apps.npr.org'
 
 DEFAULT_MAX_AGE = 20
 
 RELOAD_TRIGGER = False
 RELOAD_CHECK_INTERVAL = 60
 
-PRODUCTION_SERVERS = ['34.200.31.147']
-STAGING_SERVERS = ['34.198.159.219']
+PRODUCTION_SERVERS = ['54.213.52.61']
+STAGING_SERVERS = []
 
 # Should code be deployed to the web/cron servers?
 DEPLOY_TO_SERVERS = True
