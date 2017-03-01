@@ -41,11 +41,20 @@ function updateCSPAN() {
             throw new Error(msg);
         }
 
-        // New data received reset no data counter
-        props.setProperty('noDataCounter', 0);
         // Get the content from the response
         var json_response = JSON.parse(response.getContentText("UTF-8"));
         content = json_response.captions
+
+        if (content.length === 0) {
+            // No new data received
+            _checkTranscriptEnd();
+            PersistLog.info('update process end: no new transcript characters found.');
+            return;
+        }
+
+        // New data received reset no data counter
+        props.setProperty('noDataCounter', 0);
+
         var newCaptionID = json_response.now;
         if (newCaptionID === undefined) {
             newCaptionID = lastCaptionID;
@@ -91,7 +100,7 @@ function _formatCSPANTranscript(blob) {
     var formattedTexts = [];
     // Transform soundbites to follow the same SRT format
     // [APPLAUSE] -> :[(APPLAUSE)] and a new paragraph break
-    blob = blob.replace(/(\[(.*?)\])\s*/g,"\n\n:[($1)]\n\n");
+    blob = blob.replace(/\[(.*?)\]\s*/g,"\n\n:[($1)]\n\n");
     // \n\n Seems to convey a change of speaker on CSPAN openedCaptions
     blob = blob.replace(/\n\n/g, '>>');
     // blob = blob.replace(/\[LB\]/g, '\n');
