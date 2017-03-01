@@ -538,8 +538,8 @@ def execute_setup(name=None, doc_id=None, log_id=None,
     else:
         cspan = str(app_config.CSPAN)
 
-    if app_config.AWS_REGION and app_config.AWS_REGION != 'us-east-1':
-        ec2_public_dns_tpl = 'http://ec2-%s.'+ app_config.AWS_REGION +'.compute.amazonaws.com:%s/'
+    if app_config.AWS_S3_REGION and app_config.AWS_S3_REGION != 'us-east-1':
+        ec2_public_dns_tpl = 'http://ec2-%s.'+ app_config.AWS_S3_REGION +'.compute.amazonaws.com:%s/'
     else:
         ec2_public_dns_tpl = 'http://ec2-%s.compute-1.amazonaws.com:%s/'
 

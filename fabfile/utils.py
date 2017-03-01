@@ -42,9 +42,9 @@ def get_bucket(bucket_name):
     """
 
     if '.' in bucket_name:
-        if app_config.AWS_REGION and app_config.AWS_REGION != 'us-east-1':
+        if app_config.AWS_S3_REGION and app_config.AWS_S3_REGION != 'us-east-1':
             s3 = boto.s3.connect_to_region(
-                app_config.AWS_REGION,
+                app_config.AWS_S3_REGION,
                 calling_format=OrdinaryCallingFormat())
         else:
             s3 = boto.connect_s3(calling_format=OrdinaryCallingFormat())

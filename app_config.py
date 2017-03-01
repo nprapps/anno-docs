@@ -49,7 +49,7 @@ except ImportError:
 """
 DEPLOYMENT
 """
-AWS_REGION = 'us-east-1'
+AWS_S3_REGION = 'us-east-1'
 
 PRODUCTION_S3_BUCKET = 'apps.npr.org'
 
