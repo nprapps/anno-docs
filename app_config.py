@@ -21,10 +21,10 @@ NAMES
 """
 # Project name to be used in urls
 # Use dashes, not underscores!
-PROJECT_SLUG = 'anno-docs'
+PROJECT_SLUG = 'anno-docs-mirror'
 
 # Project name to be used in file paths
-PROJECT_FILENAME = 'anno_docs'
+PROJECT_FILENAME = 'anno_docs_mirror'
 
 # The name of the repository containing the source
 REPOSITORY_NAME = 'anno-docs'
