@@ -42,11 +42,16 @@ def get_bucket(bucket_name):
     """
 
     if '.' in bucket_name:
-        s3 = boto.connect_s3(calling_format=OrdinaryCallingFormat())
+        if app_config.AWS_REGION and app_config.AWS_REGION != 'us-east-1':
+            s3 = boto.s3.connect_to_region(
+                app_config.AWS_REGION,
+                calling_format=OrdinaryCallingFormat())
+        else:
+            s3 = boto.connect_s3(calling_format=OrdinaryCallingFormat())
     else:
         s3 = boto.connect_s3()
-
     return s3.get_bucket(bucket_name)
+
 
 @task
 def install_font(force='true'):

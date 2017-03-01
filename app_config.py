@@ -49,6 +49,8 @@ except ImportError:
 """
 DEPLOYMENT
 """
+AWS_REGION = 'us-east-1'
+
 PRODUCTION_S3_BUCKET = 'apps.npr.org'
 
 STAGING_S3_BUCKET = 'stage-apps.npr.org'

@@ -515,7 +515,7 @@ def update_metadata(id, name, src_folder_id, dest_folder_id):
 
 @task
 def execute_setup(name=None, doc_id=None, log_id=None,
-                  cspan=None, cspan_server=None):
+                  cspan=None, cspan_server=None, port=5000):
     """
     execute script setup
     params:
@@ -538,14 +538,18 @@ def execute_setup(name=None, doc_id=None, log_id=None,
     else:
         cspan = str(app_config.CSPAN)
 
-    ec2_public_dns_tpl = 'http://ec2-%s.compute-1.amazonaws.com:5000/'
+    if app_config.AWS_REGION and app_config.AWS_REGION != 'us-east-1':
+        ec2_public_dns_tpl = 'http://ec2-%s.'+ app_config.AWS_REGION +'.compute.amazonaws.com:%s/'
+    else:
+        ec2_public_dns_tpl = 'http://ec2-%s.compute-1.amazonaws.com:%s/'
+
     if cspan_server:
         pass
     else:
         if len(app_config.SERVERS):
             ip = app_config.SERVERS[0]
             ip = ip.replace('.', '-')
-            cspan_server = ec2_public_dns_tpl % (ip)
+            cspan_server = ec2_public_dns_tpl % (ip, port)
         else:
             logger.error("no servers found, please specify a cspan_server")
             exit()
@@ -564,6 +568,9 @@ def execute_setup(name=None, doc_id=None, log_id=None,
     # url
     url = '%s%s:run' % (URL_PREFIX, script_id)
 
+    logger.info('document: %s' % app_config.TRANSCRIPT_GDOC_KEY)
+    logger.info('cspan: %s' % cspan)
+    logger.info('cspan_server: %s' % cspan_server)
     # Compose payload we pass documentID and logID to setup script properties
     payload = {
         'function': 'setup',
@@ -586,9 +593,10 @@ def execute_setup(name=None, doc_id=None, log_id=None,
     resp = send_api_request(kwargs)
 
     if resp.status == 200:
+        logger.info('status: %s' % resp.status)
         return True
     else:
-        print resp.status
+        logger.error('status: %s' % resp.status)
         exit()
     return False
 
