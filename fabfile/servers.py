@@ -302,7 +302,7 @@ def cspan_start(port=5000, transcript=None, flags=None, skip=False):
     if flags:
         args += ' -f=%s' % flags
     if skip:
-        args += ' -s' % skip
+        args += ' -s'
     require('settings', provided_by=['production', 'staging', 'development'])
     if app_config.DEPLOYMENT_TARGET != 'development':
         forever_rel_path = '../node_modules/forever/bin/forever'
