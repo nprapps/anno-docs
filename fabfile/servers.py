@@ -6,16 +6,20 @@ Commands work with servers. (Hiss, boo.)
 
 import copy
 import logging
+import os
 
-from fabric.api import local, put, settings, require, run, sudo, task
+from fabric.api import local, put, settings, require, run, sudo, task, lcd
 from fabric.state import env
 from jinja2 import Template
+from utils import prep_bool_arg
 
 import app_config
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
 logger.setLevel(app_config.LOG_LEVEL)
+
+cwd = os.path.dirname(__file__)
 
 """
 Setup
@@ -287,12 +291,30 @@ def restart_service(service):
 
 
 @task
-def cspan_start():
+def cspan_start(port=5000, transcript=None, flags=None, skip=False):
     """
     Start cspan server
     """
-    require('settings', provided_by=['production', 'staging'])
-    run('cd %s; ./node_modules/forever/bin/forever start -al %s/cspan.log cspan/index.js' % (app_config.SERVER_REPOSITORY_PATH, app_config.SERVER_LOG_PATH))
+    skip = prep_bool_arg(skip)
+    args = '-p=%s' % port
+    if transcript:
+        args += ' -t=%s' % transcript
+    if flags:
+        args += ' -f=%s' % flags
+    if skip:
+        args += ' -s' % skip
+    require('settings', provided_by=['production', 'staging', 'development'])
+    if app_config.DEPLOYMENT_TARGET != 'development':
+        forever_rel_path = '../node_modules/forever/bin/forever'
+        run('cd %s/cspan; %s start -al %s/cspan.log index.js %s' % (
+            app_config.SERVER_REPOSITORY_PATH,
+            forever_rel_path,
+            app_config.SERVER_LOG_PATH,
+            args))
+    else:
+        INPUT_PATH = os.path.join(cwd, '../cspan')
+        with lcd(INPUT_PATH):
+            local('node index.js %s' % args)
 
 
 @task
@@ -300,8 +322,16 @@ def cspan_stop():
     """
     Stop cspan server
     """
-    require('settings', provided_by=['production', 'staging'])
-    run('cd %s; ./node_modules/forever/bin/forever stop cspan/index.js' % (app_config.SERVER_REPOSITORY_PATH))
+    require('settings', provided_by=['production', 'staging', 'development'])
+    if app_config.DEPLOYMENT_TARGET != 'development':
+        forever_rel_path = '../node_modules/forever/bin/forever'
+        run('cd %s/cspan; %s stop index.js' % (
+            app_config.SERVER_REPOSITORY_PATH,
+            forever_rel_path))
+    else:
+        INPUT_PATH = os.path.join(cwd, '../cspan')
+        with lcd(INPUT_PATH):
+            local('killall node')
 
 
 """

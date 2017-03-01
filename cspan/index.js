@@ -30,7 +30,7 @@ if (argv.help) {
 
 
 // Load proper noun dictionary
-const words = parseCsv(fs.readFileSync('data/cspan-words.csv'))
+const words = parseCsv(fs.readFileSync('words.csv'))
 
 // Where we stash our stuff
 var cache = []
