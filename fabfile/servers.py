@@ -306,13 +306,14 @@ def cspan_start(port=5000, transcript=None, flags=None, skip=False):
     require('settings', provided_by=['production', 'staging', 'development'])
     if app_config.DEPLOYMENT_TARGET != 'development':
         forever_rel_path = '../node_modules/forever/bin/forever'
-        pidFile = 'index-%s.pid'
-        run('cd %s/cspan; %s start -p %s/cspan/forever --pidFile %s -al %s/cspan.log index.js %s' % (
+        pidFile = 'index-%s.pid' % port
+        logFile = 'cspan-%s.log' % port
+        run('cd %s/cspan; %s start --pidFile %s -al %s/%s index.js %s' % (
             app_config.SERVER_REPOSITORY_PATH,
             forever_rel_path,
-            app_config.SERVER_REPOSITORY_PATH,
             pidFile,
             app_config.SERVER_LOG_PATH,
+            logFile,
             args))
     else:
         INPUT_PATH = os.path.join(cwd, '../cspan')
@@ -321,16 +322,18 @@ def cspan_start(port=5000, transcript=None, flags=None, skip=False):
 
 
 @task
-def cspan_stop():
+def cspan_stop(port=5000):
     """
     Stop cspan server
     """
     require('settings', provided_by=['production', 'staging', 'development'])
     if app_config.DEPLOYMENT_TARGET != 'development':
         forever_rel_path = '../node_modules/forever/bin/forever'
-        run('cd %s/cspan; %s stop index.js' % (
+        pidFile = 'index-%s.pid' % port
+        run('cd %s/cspan; %s stop --pidFile %s index.js' % (
             app_config.SERVER_REPOSITORY_PATH,
-            forever_rel_path))
+            forever_rel_path,
+            pidFile))
     else:
         INPUT_PATH = os.path.join(cwd, '../cspan')
         with lcd(INPUT_PATH):
