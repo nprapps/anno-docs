@@ -306,9 +306,12 @@ def cspan_start(port=5000, transcript=None, flags=None, skip=False):
     require('settings', provided_by=['production', 'staging', 'development'])
     if app_config.DEPLOYMENT_TARGET != 'development':
         forever_rel_path = '../node_modules/forever/bin/forever'
-        run('cd %s/cspan; %s start -al %s/cspan.log index.js %s' % (
+        pidFile = 'index-%s.pid'
+        run('cd %s/cspan; %s start -p %s/cspan/forever --pidFile %s -al %s/cspan.log index.js %s' % (
             app_config.SERVER_REPOSITORY_PATH,
             forever_rel_path,
+            app_config.SERVER_REPOSITORY_PATH,
+            pidFile,
             app_config.SERVER_LOG_PATH,
             args))
     else:
