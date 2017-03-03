@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-
+# _*_ coding:utf-8 _*_
 """
 Commands work with servers. (Hiss, boo.)
 """
@@ -8,7 +8,8 @@ import copy
 import logging
 import os
 
-from fabric.api import local, put, settings, require, run, sudo, task, lcd
+from fabric.api import local, put, settings, require
+from fabric.api import run, sudo, task, lcd, quiet
 from fabric.state import env
 from jinja2 import Template
 from utils import prep_bool_arg
@@ -330,10 +331,34 @@ def cspan_stop(port=5000):
     if app_config.DEPLOYMENT_TARGET != 'development':
         forever_rel_path = '../node_modules/forever/bin/forever'
         pidFile = 'index-%s.pid' % port
-        run('cd %s/cspan; %s stop --pidFile %s index.js' % (
+        with quiet():
+            pid = run('cat ~/.forever/pids/%s' % pidFile)
+        if pid.succeeded:
+            run('cd %s/cspan; %s stop %s' % (
+                app_config.SERVER_REPOSITORY_PATH,
+                forever_rel_path,
+                pid))
+        else:
+            logger.error('pidFile for port %s not found. Try cspan_stopall' % (
+                port))
+            exit(1)
+    else:
+        INPUT_PATH = os.path.join(cwd, '../cspan')
+        with lcd(INPUT_PATH):
+            local('killall node')
+
+
+@task
+def cspan_stopall():
+    """
+    Stop cspan server
+    """
+    require('settings', provided_by=['production', 'staging', 'development'])
+    if app_config.DEPLOYMENT_TARGET != 'development':
+        forever_rel_path = '../node_modules/forever/bin/forever'
+        run('cd %s/cspan; %s stopall' % (
             app_config.SERVER_REPOSITORY_PATH,
-            forever_rel_path,
-            pidFile))
+            forever_rel_path))
     else:
         INPUT_PATH = os.path.join(cwd, '../cspan')
         with lcd(INPUT_PATH):
