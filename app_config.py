@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20170228-trump-address-congress'
+CURRENT_FACTCHECK = '20170306-travelban-eo'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -250,7 +250,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1ctTHN9pr7QfnYjTzU5H_MVWmceVLgoHohsRW37TVYrA'
+        TRANSCRIPT_GDOC_KEY = '1cU5eR4OMHCXYTYWp8J4YEsVp1Q5wV31sy1jZuGDYSG0'
         # PRODUCTION TEST DOCUMENT
         # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
