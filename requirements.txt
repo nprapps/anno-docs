@@ -33,3 +33,4 @@ smartypants==1.8.6
 ssh==1.7.14
 termcolor==1.1.0
 wsgiref==0.1.2
+xlrd==1.0.0

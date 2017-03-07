@@ -33,7 +33,7 @@ Anno-docs
 * [Run a remote fab command](#run-a-remote-fab-command)
 * [Report analytics](#report-analytics)
 * [License and credits](#license-and-credits)
-* [Additional contributors](#additional-contributors)
+* [Contributors](#contributors)
 
 What is this?
 -------------
@@ -115,7 +115,7 @@ Hide project secrets
 
 Project secrets should **never** be stored in ``app_config.py`` or anywhere else in the repository. They will be leaked to the client if you do. Instead, always store passwords, keys, etc. in environment variables and document that they are needed here in the README.
 
-Any environment variable that starts with ``$PROJECT_SLUG_`` will be automatically loaded when ``app_config.get_secrets()`` is called.
+Any environment variable that starts with ``anno_docs`` will be automatically loaded when ``app_config.get_secrets()`` is called.
 
 Save media assets
 -----------------
@@ -651,21 +651,23 @@ The Google Analytics events tracked in this application are:
 
 |Category|Action|Label|Value|
 |--------|------|-----|-----|
-|debates|tweet|`location`||
-|debates|facebook|`location`||
-|debates|email|`location`||
-|debates|new-comment||
-|debates|open-share-discuss||
-|debates|close-share-discuss||
-|debates|summary-copied||
-|debates|featured-tweet-action|`action`|
-|debates|featured-facebook-action|`action`|
+|anno-docs|tweet|`location`||
+|anno-docs|facebook|`location`||
+|anno-docs|email|`location`||
+|anno-docs|new-comment||
+|anno-docs|open-share-discuss||
+|anno-docs|close-share-discuss||
+|anno-docs|summary-copied||
+|anno-docs|featured-tweet-action|`action`|
+|anno-docs|featured-facebook-action|`action`|
 
 License and credits
----------
+-------------------
 Released under the MIT open source license. See ``LICENSE`` for details.
 
 
 Contributors
----------
-See ``CONTRIBUTORS``
+------------
+`anno-docs` was built by the NPR Visuals team.
+
+See ``CONTRIBUTORS`` for additional contributors

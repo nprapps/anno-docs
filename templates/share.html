@@ -29,6 +29,7 @@
 
             #output {
                 margin-top: 30px;
+                display: none;
             }
 
             #input {
@@ -81,6 +82,8 @@
         </div>
         <script src="js/lib/jquery.js"></script>
         <script type="text/javascript">
+            var local_st_campaign = "{{CURRENT_FACTCHECK}}-share-campaigns"
+            var local_st_url = "{{CURRENT_FACTCHECK}}-share-url"
             var theId = null;
             var div = null;
             function createShareLinks(url, campaignsRaw){
@@ -152,11 +155,11 @@
                 }
                 // Store data on localStorage
                 if (storageAvailable('localStorage')) {
-                    localStorage.setItem("share-url", url);
+                    localStorage.setItem(local_st_url, url);
                     if (campaigns) {
-                        localStorage.setItem("share-campaigns", campaigns);
+                        localStorage.setItem(local_st_campaign, campaigns);
                     } else {
-                        localStorage.removeItem("share-campaigns");
+                        localStorage.removeItem(local_st_campaign);
                     }
                 }
                 createShareLinks(url, campaigns);
@@ -176,15 +179,14 @@
             }
 
             $(function() {
-                $('#output').hide();
                 $('#submit').click(validate);
                 // Get data from localStorage
                 if (storageAvailable('localStorage')) {
-                    var campaigns = localStorage.getItem("share-campaigns");
+                    var campaigns = localStorage.getItem(local_st_campaign);
                     if (campaigns) {
                         $("#campaigns").val(campaigns);
                     }
-                    var url = localStorage.getItem("share-url");
+                    var url = localStorage.getItem(local_st_url);
                     if (url) {
                         $("#url").val(url);
                         createShareLinks(url, campaigns);
