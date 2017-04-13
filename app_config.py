@@ -126,6 +126,11 @@ AUTOINIT_LOADER = False
 AUTHORS DICTIONARY
 """
 AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
+try:
+    # Override AUTHORS SPREADSHEET
+    from local_settings import AUTHORS_GOOGLE_DOC_KEY
+except ImportError:
+    pass
 AUTHORS_PATH = 'data/authors.xlsx'
 
 TRANSCRIPT_HTML_PATH = 'data/transcript.html'
