@@ -89,6 +89,7 @@ def child():
 
 @app.route('/')
 @app.route('/index.html')
+@oauth.oauth_required
 def index():
     """
     Example view demonstrating rendering a simple HTML page.
