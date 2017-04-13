@@ -234,7 +234,8 @@ def deploy_factcheck():
         }
     )
 
-    if app_config.DEPLOYMENT_TARGET == 'production':
+    if (app_config.DEPLOYMENT_TARGET == 'production' and
+            not app_config.DEPLOY_STATIC_FACTCHECK):
         execute('deploy_transcript_backup')
 
 
