@@ -105,6 +105,11 @@ cd anno-docs
 mkvirtualenv anno-docs
 pip install -r requirements.txt
 npm install
+```
+
+Before you can run the next step of the bootstrap you will need to setup Google OAuth to be able to connect to your google drive documents & spreadsheets. Follow the instructions [here](http://blog.apps.npr.org/2015/03/02/app-template-oauth.html) and once you have created the need Oauth credentials run:
+
+```
 fab update
 ```
 
