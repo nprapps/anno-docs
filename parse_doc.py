@@ -204,7 +204,6 @@ def process_tags(rawTags):
     """
     tagList = []
     tagList.extend(rawTags.split(','))
-    logger.info(tagList)
     return tagList
 
 
