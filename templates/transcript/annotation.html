@@ -1,7 +1,8 @@
-<div class="annotation{%if published == 'no' %} draft{% endif %}" id="{{slug}}">
+<div class="annotation{%if published == 'no' %} draft{% endif %}{% for tag in tagList %} {{tag}}{% endfor %}" id="{{slug}}">
     <div class="annotations-wrapper">
         {{contents|safe}}
     </div>
+    <div class="annotation-status">{{status}}</div>
     <div class="annotation-header">
     {% if image %}
         <img class="annotation-label" src="{{image}}"></img>

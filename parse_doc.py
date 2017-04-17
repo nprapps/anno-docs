@@ -198,6 +198,17 @@ def add_author_metadata(metadata, authors):
     metadata['image'] = author_img
 
 
+def process_tags(rawTags):
+    """
+    process tags into list
+    """
+    tagList = []
+    tagList.extend(rawTags.split(','))
+    logger.info(tagList)
+    return tagList
+
+
+
 def process_annotation_contents(contents):
     """
     Process post copy content
@@ -265,7 +276,10 @@ def parse_raw_contents(data, status, authors):
             metadata = process_metadata(raw_metadata)
             add_author_metadata(metadata, authors)
             for k, v in metadata.iteritems():
-                annotation[k] = v
+                if k == 'tags':
+                    annotation['tagList'] = process_tags(v.lower())
+                else:
+                    annotation[k] = v
             annotation[u'contents'] = process_annotation_contents(raw_contents)
             annotation[u'markup'] = transform_annotation_markup(annotation)
             annotation[u'type'] = "annotation"

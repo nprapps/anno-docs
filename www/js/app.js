@@ -267,6 +267,7 @@ const buildTranscriptvDOM = function(transcript) {
             className: child.className
         },[
             virtualize(child.querySelector('.annotations-wrapper')),
+            virtualize(child.querySelector('.annotation-status')),
             virtualize(child.querySelector('.annotation-header')),
             virtualize(child.querySelector('.annotation-nav'))
         ])

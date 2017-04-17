@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20170306-travelban-eo'
+CURRENT_FACTCHECK = '20170418-trump-100days-revisited'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -255,7 +255,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1cU5eR4OMHCXYTYWp8J4YEsVp1Q5wV31sy1jZuGDYSG0'
+        TRANSCRIPT_GDOC_KEY = '1rGzUynBbqYRs44DpqIbViwO-fVtsysDPjGqaE56uQpw'
         # PRODUCTION TEST DOCUMENT
         # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
@@ -274,7 +274,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1IJot3xfpcIS-RmqeGrkkQ8xQtmvxlnhMFb6LmL2_OvE'
+        TRANSCRIPT_GDOC_KEY = '1rGzUynBbqYRs44DpqIbViwO-fVtsysDPjGqaE56uQpw'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
@@ -288,7 +288,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '19J7LB38ePACZnvs3PrFA0jcV_x1kRRgXlAIMPaS6zD4'
+        TRANSCRIPT_GDOC_KEY = '1rGzUynBbqYRs44DpqIbViwO-fVtsysDPjGqaE56uQpw'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app
