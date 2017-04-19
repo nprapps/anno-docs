@@ -7,9 +7,7 @@
     <div class="annotations-wrapper">
         {{contents|safe}}
     </div>
-    {% if status %}
-    <p class="annotation-status"><strong>Status:</strong> {{status}}</p>
-    {% endif %}
+    <p class="annotation-status">{% if status %}<strong>Status:</strong> {{status}}{% endif %}</p>
     <div class="annotation-header">
     {% if image %}
         <img class="annotation-label" src="{{image}}"></img>
