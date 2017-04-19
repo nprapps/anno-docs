@@ -19,7 +19,7 @@ import copytext
 from flask import Flask, make_response, render_template
 from flask_cors import CORS, cross_origin
 from render_utils import flatten_app_config, make_context
-from render_utils import smarty_filter, urlencode_filter
+from render_utils import smarty_filter, urlencode_filter, classify_filter
 from werkzeug.debug import DebuggedApplication
 
 app = Flask(__name__)
@@ -28,6 +28,7 @@ CORS(app)
 
 app.add_template_filter(smarty_filter, name='smarty')
 app.add_template_filter(urlencode_filter, name='urlencode')
+app.add_template_filter(classify_filter, name='classify')
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)

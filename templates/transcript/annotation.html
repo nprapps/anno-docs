@@ -1,4 +1,4 @@
-<div class="annotation{%if published == 'no' %} draft{% endif %}{% for tag in tagList %} {{tag}}{% endfor %}" id="{{slug}}">
+<div class="annotation{%if published == 'no' %} draft{% endif %}{% for tag in tagList %} {{tag|smarty}}{% endfor %}" id="{{slug}}">
     <div class="annotations-wrapper">
         {{contents|safe}}
     </div>

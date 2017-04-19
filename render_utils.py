@@ -7,6 +7,7 @@ import logging
 import time
 import urllib
 import subprocess
+import re
 
 from flask import Markup, g, render_template, request
 from slimit import minify
@@ -223,3 +224,25 @@ def smarty_filter(s):
     except:
         logger.error('This string failed to encode: %s' % s)
         return Markup(s)
+
+def classify_filter(s):
+    """
+    Convert arbitrary strings to valid css classes.
+    NOTE: This implementation must be consistent with the Javascript classify
+    function defined in base.js.
+    """
+    print s
+
+    # Evaulate COPY elements
+    if type(s) is not unicode:
+        s = unicode(s)              # Always start with unicode
+
+    s = s.encode('ascii', 'ignore') # Convert to ascii
+    s = s.lower()                    # Lowercase
+    s = re.sub('\s+', '-', s)         # Replace spaces with -
+    s = re.sub('[^\w\-]+', '', s)     # Remove all non-word chars
+    s = re.sub('\-\-+', '-', s)       # Replace multiple - with single -
+    s = re.sub('^-+', '', s)          # Trim - from start of s
+    s = re.sub('-+$', '', s)          # Trim - from end of s
+
+    return Markup(s)
