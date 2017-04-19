@@ -266,6 +266,7 @@ const buildTranscriptvDOM = function(transcript) {
             id: child.getAttribute('id'),
             className: child.className
         },[
+            virtualize(child.querySelector('.annotation-tag-wrapper')),
             virtualize(child.querySelector('.annotations-wrapper')),
             virtualize(child.querySelector('.annotation-status')),
             virtualize(child.querySelector('.annotation-header')),
