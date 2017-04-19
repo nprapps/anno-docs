@@ -5,8 +5,11 @@ import re
 import app_config
 import xlrd
 from jinja2 import Environment, FileSystemLoader
+from render_utils import classify_filter
+
 
 env = Environment(loader=FileSystemLoader('templates/transcript'))
+env.filters['classify'] = classify_filter
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)

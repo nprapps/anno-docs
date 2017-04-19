@@ -28,7 +28,6 @@ CORS(app)
 
 app.add_template_filter(smarty_filter, name='smarty')
 app.add_template_filter(urlencode_filter, name='urlencode')
-app.add_template_filter(classify_filter, name='classify')
 
 logging.basicConfig(format=app_config.LOG_FORMAT)
 logger = logging.getLogger(__name__)
