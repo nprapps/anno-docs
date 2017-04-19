@@ -205,10 +205,12 @@ def process_tags(rawTags):
     """
     process tags into list
     """
-    tagList = []
-    tagList.extend(rawTags.split(','))
-    return tagList
-
+    if rawTags.strip():
+        tagList = []
+        tagList.extend(rawTags.split(','))
+        return tagList
+    else:
+        return None
 
 
 def process_annotation_contents(contents):

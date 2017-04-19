@@ -1,9 +1,12 @@
-<div class="annotation{%if published == 'no' %} draft{% endif %}{% for tag in tagList %} {{tag|classify}}{% endfor %}" id="{{slug}}">
+<div class="annotation{%if published == 'no' %} draft{% endif %}{%if tagList %}{% for tag in tagList %} {{tag|classify}}{% endfor %}{% endif %}" id="{{slug}}">
     <div class="annotation-tag-wrapper">
-        {% for tag in tagList %}
-            <span class="tag-label {{ tag|classify }}">{{ tag }}</span>
-        {% endfor %}
+        {% if tagList %}
+            {% for tag in tagList %}
+                <span class="tag-label {{ tag|classify }}">{{ tag }}</span>
+            {% endfor %}
+        {% endif %}
     </div>
+
     <div class="annotations-wrapper">
         {{contents|safe}}
     </div>
