@@ -281,7 +281,7 @@ def parse_raw_contents(data, status, authors):
             add_author_metadata(metadata, authors)
             for k, v in metadata.iteritems():
                 if k == 'tags':
-                    annotation['tagList'] = process_tags(v.lower())
+                    annotation['tagList'] = process_tags(v)
                 else:
                     annotation[k] = v
             annotation[u'contents'] = process_annotation_contents(raw_contents)

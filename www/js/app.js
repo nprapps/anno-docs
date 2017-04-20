@@ -268,7 +268,6 @@ const buildTranscriptvDOM = function(transcript) {
         },[
             virtualize(child.querySelector('.annotation-tag-wrapper')),
             virtualize(child.querySelector('.annotations-wrapper')),
-            virtualize(child.querySelector('.annotation-status')),
             virtualize(child.querySelector('.annotation-header')),
             virtualize(child.querySelector('.annotation-nav'))
         ])

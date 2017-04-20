@@ -64,8 +64,8 @@ body {
 
     p.update-notice {
         .gotham();
-        border: 2px solid @highlight;
-        background: @highlight-pale;
+        /*border: 2px solid @highlight;*/
+        /*background: @highlight-pale;*/
         padding: 0.7em 1em;
         color: @black;
 
@@ -337,8 +337,8 @@ a:hover, a:active { color: @link-active; }
     }
 
     &.unread {
-        border: 2px solid @highlight;
-        background: @highlight-pale;
+        /*border: 2px solid @highlight;*/
+        /*background: @highlight-pale;*/
     }
 
     &.offscreen, &.offscreen.unread {
@@ -397,21 +397,33 @@ a:hover, a:active { color: @link-active; }
         }
 
         &.unread, &.offscreen.unread {
-            border: 2px solid @highlight;
-            background: @highlight-pale;
+            /*border: 2px solid @highlight;*/
+            /*background: @highlight-pale;*/
         }
     }
 
     .annotation-tag-wrapper {
+        .gotham();
         margin: 0.5em 0 1em;
+        font-size: 0.75rem;
+        color: @darker-gray;
 
-        .tag-label {
-            .gotham();
-            /*text-transform: uppercase;*/
-            font-size: 0.75rem;
-            color: @white;
-            background: @text-gray;
-            padding: 3px 4px;
+        &.no-tags&.no-status {
+            display: none;
+        }
+
+        span {
+            display: inline-block;
+            padding: 2px 5px 2px 0;
+        }
+
+        .tag-list {
+            border-right: 1px solid @text-gray;
+            margin-right: 2px;
+        }
+
+        &.no-status .tag-list {
+            border-right: none;
         }
     }
 

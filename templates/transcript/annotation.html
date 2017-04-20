@@ -1,16 +1,16 @@
 <div class="annotation{%if published == 'no' %} draft{% endif %}{%if tagList %}{% for tag in tagList %} {{tag|classify}}{% endfor %}{% endif %}" id="{{slug}}">
-    <div class="annotation-tag-wrapper">
+    <div class="annotation-tag-wrapper{% if tagList is none %} no-tags{% endif %}{% if status|length == 0 %} no-status{% endif %}">
         {% if tagList %}
-            {% for tag in tagList %}
-                <span class="tag-label {{ tag|classify }}">{{ tag }}</span>
-            {% endfor %}
+            <span class="tag-list">{% for tag in tagList %}{% if loop.index0 > 0 %}, {% endif %}{{ tag }}{% endfor %}</span>
+        {% endif %}
+        {% if status %}
+        <span class="annotation-status">Status: {{ status }}</span>
         {% endif %}
     </div>
 
     <div class="annotations-wrapper">
         {{contents|safe}}
     </div>
-    <p class="annotation-status">{% if status %}<strong>Status:</strong> {{status}}{% endif %}</p>
     <div class="annotation-header">
     {% if image %}
         <img class="annotation-label" src="{{image}}"></img>
