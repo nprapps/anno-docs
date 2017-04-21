@@ -231,8 +231,6 @@ def classify_filter(s):
     NOTE: This implementation must be consistent with the Javascript classify
     function defined in base.js.
     """
-    print s
-
     # Evaulate COPY elements
     if type(s) is not unicode:
         s = unicode(s)              # Always start with unicode
