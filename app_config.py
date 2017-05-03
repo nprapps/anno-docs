@@ -274,7 +274,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1IJot3xfpcIS-RmqeGrkkQ8xQtmvxlnhMFb6LmL2_OvE'
+        TRANSCRIPT_GDOC_KEY = '18AhgQ9uo2krA7AVwZSj2M4mgdTtdeILr3QUfp4uHguU'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
