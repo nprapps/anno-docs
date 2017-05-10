@@ -214,9 +214,12 @@ def process_transcript_content(tag):
     TODO
     """
     text = tag.get_text()
-    combined_contents = ''
-    for content in tag.contents:
-        combined_contents += unicode(content)
+    combined_contents = unicode(tag)
+    # for content in tag.contents:
+    #     if tag.name == 'h2':
+    #         combined_contents += unicode(tag)
+    #     else:
+    #         combined_contents += unicode(content)
     if speaker_regex.match(text):
         typ = 'speaker'
         context = process_speaker_transcript(combined_contents)
