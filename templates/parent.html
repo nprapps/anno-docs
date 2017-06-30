@@ -2,10 +2,6 @@
 
 {% block content %}
 <div id="preview-wrapper">
-{% if AUTOINIT_LOADER %}
-    <p data-pym-src="child.html">Loading...</p>
-{% else %}
-    <div id='preview'></div>
-{% endif %}
+    <p data-pym-annotation-loader data-child-src="child.html" id="preview">Loading...</p>
 </div>
 {% endblock %}
