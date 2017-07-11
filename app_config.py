@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20170616-mccabe-hearing'
+CURRENT_FACTCHECK = '20170711-trump-jr-emails'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -250,7 +250,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1WI5kX2LWsmxpSkpYObcLLRXENfD4zByc4G7y8wfrLow'
+        TRANSCRIPT_GDOC_KEY = '1m6xcJJhGWsIbHIGAdgPJbP3le1xuLmrbKWesuU0szG8'
         # PRODUCTION TEST DOCUMENT
         # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
@@ -269,7 +269,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1WI5kX2LWsmxpSkpYObcLLRXENfD4zByc4G7y8wfrLow'
+        TRANSCRIPT_GDOC_KEY = '1m6xcJJhGWsIbHIGAdgPJbP3le1xuLmrbKWesuU0szG8'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
@@ -283,7 +283,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1WI5kX2LWsmxpSkpYObcLLRXENfD4zByc4G7y8wfrLow'
+        TRANSCRIPT_GDOC_KEY = '1m6xcJJhGWsIbHIGAdgPJbP3le1xuLmrbKWesuU0szG8'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app
