@@ -316,7 +316,7 @@ const renderHeaderContentsBefore = function(data) {
  * Render virtual DOM representation of header contents DURING debate
  */
 const renderHeaderContentsDuring = function(data) {
-    var textEnd = (data.numAnnotations > 1) ? ' Annotations' : ' Annotation';
+    var textEnd = (data.numAnnotations == 1) ? ' Annotation' : ' Annotations';
     return [
         h('a', {
             href: 'http://npr.org'
