@@ -283,7 +283,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '19J7LB38ePACZnvs3PrFA0jcV_x1kRRgXlAIMPaS6zD4'
+        TRANSCRIPT_GDOC_KEY = '1uXXt_5CpzSbb3uSd76I6tsAlgxbPpZdLvTGIfhr8gbc'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app

@@ -307,7 +307,7 @@ const renderHeaderContentsBefore = function(data) {
         }, h('img.header-logo', {
             src: './assets/npr-color-100.png'
         })),
-        h('h2.header-title', 'NPR Live Transcript'),
+        h('h2.header-title', 'NPR Live Annotation'),
         h('p.header-info', 'Once the event has started, a live transcript will appear below.'),
     ]
 };
@@ -316,16 +316,17 @@ const renderHeaderContentsBefore = function(data) {
  * Render virtual DOM representation of header contents DURING debate
  */
 const renderHeaderContentsDuring = function(data) {
+    var textEnd = (data.numAnnotations == 1) ? ' Annotation' : ' Annotations';
     return [
         h('a', {
             href: 'http://npr.org'
         }, h('img.header-logo', {
             src: './assets/npr-color-100.png'
         })),
-        h('h2.header-title', 'NPR Live Transcript'),
+        h('h2.header-title', 'NPR Live Annotation'),
         h('p.header-info', [
             h('span.last-updated', ['Last updated: ' + data.updated]),
-            h('span.num-annotations', data.numAnnotations + ' Annotations')
+            h('span.num-annotations', data.numAnnotations + textEnd)
         ]),
     ]
 };

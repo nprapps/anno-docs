@@ -56,7 +56,7 @@ window.ANALYTICS = (function () {
     var trackEvent = function(eventName, label, value) {
         var eventData = {
             'hitType': 'event',
-            'eventCategory': APP_CONFIG.CURRENT_DEBATE,
+            'eventCategory': APP_CONFIG.CURRENT_FACTCHECK,
             'eventAction': eventName
         }
 
