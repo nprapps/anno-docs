@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20171213-trump-tax-pitchh'
+CURRENT_FACTCHECK = '20180117-api-test'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -141,7 +141,7 @@ PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
 GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = '1Byvot9oRRS9gvm2nTFuO4dLiyOrI02f-Xhy6pbMk34s' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
-CSPAN = False
+CSPAN = True
 """
 SHARING
 """
@@ -250,9 +250,9 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1KRzafjgUzM2MD4xJYdXw3HmNqN7Rg6zqLYHYI-UDAfc'
-        # PRODUCTION TEST DOCUMENT
-        # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
+        # TRANSCRIPT_GDOC_KEY = '1g0zSDNhNJxQ-YkdX33TpGcrJmd9tbQ77ZpcjrT982Zs'
+        # PRODUCTION TEST DOCUMENT
+        TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
@@ -269,7 +269,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1KRzafjgUzM2MD4xJYdXw3HmNqN7Rg6zqLYHYI-UDAfc'
+        TRANSCRIPT_GDOC_KEY = '17kCee04E25mRRB_pSxtB8rDbTRdoM794yQfy9Vzlw9I'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
@@ -283,7 +283,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1KRzafjgUzM2MD4xJYdXw3HmNqN7Rg6zqLYHYI-UDAfc'
+        TRANSCRIPT_GDOC_KEY = '18tK5NoJvSWNLhAbTByvZutHZMKqb9A1AnjeMXlE5Dd4'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app
