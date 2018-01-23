@@ -15,7 +15,7 @@ logger.setLevel(app_config.LOG_LEVEL)
 # REGULAR EXPRESSIONS
 end_transcript_regex = re.compile(ur'.*LIVE\sTRANSCRIPT\sHAS\sENDED.*',
                                   re.UNICODE)
-do_not_write_regex = re.compile(ur'.*DO\s*NOT\s*WRITE\s*BELOW\s*THIS\s*LINE.*',
+do_not_write_regex = re.compile(ur'.*DO\s*NOT\s*WRITE\s*BELOW\s*THIS\s*LINE\s*([Ee][Rr]{2}[Oo][Rr])?.*',
                                 re.UNICODE)
 end_fact_check_regex = re.compile(ur'^\s*[Ee][Nn][Dd]\s*$',
                                   re.UNICODE)
@@ -308,6 +308,9 @@ def categorize_doc_content(doc):
                 m = do_not_write_regex.match(after_hr_text)
                 if m:
                     child.extract()
+                    if m.group(1):
+                        # Force before and error status on transcript
+                        fact_check_status = 'error'
             hr.unwrap()
 
     result = []
