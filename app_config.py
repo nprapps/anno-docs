@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20180117-api-test'
+CURRENT_FACTCHECK = '20180130-state-of-the-union'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK

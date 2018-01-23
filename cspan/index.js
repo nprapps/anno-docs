@@ -36,7 +36,7 @@ const words = parseCsv(fs.readFileSync('words.csv'))
 var cache = []
 
 // Setup a cache buster so our cache doesn't use all the memory
-const ttl = 20 * 60 * 1000 // 20 mins -> miliseconds
+const ttl = 60 * 60 * 1000 // 60 mins -> miliseconds
 const cacheCheckInterval = 5 * 60 * 1000 // 5 mins -> miliseconds
 setInterval(cleanCache, cacheCheckInterval)
 
