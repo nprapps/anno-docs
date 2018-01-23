@@ -250,9 +250,9 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        # TRANSCRIPT_GDOC_KEY = '1g0zSDNhNJxQ-YkdX33TpGcrJmd9tbQ77ZpcjrT982Zs'
+        TRANSCRIPT_GDOC_KEY = '1g0zSDNhNJxQ-YkdX33TpGcrJmd9tbQ77ZpcjrT982Zs'
         # PRODUCTION TEST DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
+        # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
