@@ -271,9 +271,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        # TRANSCRIPT_GDOC_KEY = '17kCee04E25mRRB_pSxtB8rDbTRdoM794yQfy9Vzlw9I'
-        # SOTU DRESS REHEARSAL
-        TRANSCRIPT_GDOC_KEY = '1hETfE2heYzYPrFxbDVwlJnlJJUiAoTnSpZYhZ1OoI3U'
+        TRANSCRIPT_GDOC_KEY = '17kCee04E25mRRB_pSxtB8rDbTRdoM794yQfy9Vzlw9I'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
