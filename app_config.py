@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20180130-state-of-the-union'
+CURRENT_FACTCHECK = '20180202-gop-russia-memo'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -121,9 +121,7 @@ LOG_LEVEL = None
 AUTHORS DICTIONARY
 """
 # Complete
-# AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
-# SOTU
-AUTHORS_GOOGLE_DOC_KEY = '1GB4n0kx8F0RmQF17X0pRLu7D3-CGHc4yVhZe86VEbJY'
+AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
 
 try:
     # Override AUTHORS SPREADSHEET
@@ -254,7 +252,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1g0zSDNhNJxQ-YkdX33TpGcrJmd9tbQ77ZpcjrT982Zs'
+        TRANSCRIPT_GDOC_KEY = '161ZUNsT-nABLIZMdJrslgAqGuJ14CzkGt9zqrxzy20I'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
