@@ -12,16 +12,33 @@ body {
 }
 
 .transcript-wrapper {
+    h1, h2 {
+        font-family: Georgia, serif;
+        font-size: 0.9rem;
+        line-height: 1.5rem;
+        margin-bottom: 0;
+        margin-top: 0;
+        font-weight: 400;
+    }
+
+    h2 { margin-bottom: 1.5rem; }
+
     h3 {
         .gotham();
-        margin-top: 30px;
-        margin-bottom: 10px;
-        font-size: 22px;
+        margin-top: 5px;
+        margin-bottom: 0px;
+        font-size: 18px;
         color: #333;
         font-weight: 600;
         line-height: 1.4em;
+        text-align: center;
+
+        &:last-child {
+            padding-bottom: 13px;
+        }
     }
-    padding-bottom: 5px; 
+
+    padding-bottom: 5px;
 }
 
 .init {
@@ -328,6 +345,15 @@ a:hover, a:active { color: @link-active; }
 h3 .fact-checked {
     font-weight: bold;
     line-height: 2.4rem;
+}
+
+ol {
+    font-family: Georgia, serif;
+    font-size: 0.9rem;
+    line-height: 1.5rem;
+    margin-bottom: 1.5em;
+    margin-top: 0;
+    list-style-type: lower-alpha;
 }
 
 // For ease of editing, so we don't have to repeat as much with the vis-enabled
