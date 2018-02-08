@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20180202-gop-russia-memo'
+CURRENT_FACTCHECK = '20180209-dem-russia-memo'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -252,7 +252,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '161ZUNsT-nABLIZMdJrslgAqGuJ14CzkGt9zqrxzy20I'
+        TRANSCRIPT_GDOC_KEY = '1nsntBRFWuh9WwR71kD0SHC1fjrzmNjgWnWKJpKV3G9k'
         # PRODUCTION LOGS
         GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
