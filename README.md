@@ -41,7 +41,16 @@ What is this?
 A live transcription application with embedded fact checks and annotations.
 For a detailed explanation of how this works, check out [this blog post](https://source.opennews.org/en-US/articles/how-npr-transcribes-and-fact-checks-debates-live/) by Tyler Fisher.
 
-_Note: On February 2017 we have added the ability to use CSPAN through [openedcaptions.com](openedcaptions.com) by default this repo uses Verb8tm service as the transcript source, if you want to use CSPAN instead there's some configuration changes needed. take a look at the [CSPAN](#run-cspan-transcript-test) section.
+The architecture of this app is well summarized in this [tweet](https://twitter.com/eads/status/780578980957151232):
+
+> transcription service ←→ google app script → google doc (+18 factcheckers) ←→ server → s3 → embedded widget
+
+_Note: On February 2017 we have added the ability to use CSPAN through [openedcaptions.com](openedcaptions.com) by default this repo uses Verb8tm service as the transcript source, if you want to use CSPAN instead there's some configuration changes needed. take a look at the [CSPAN](#run-cspan-transcript-test) section._
+
+Examples
+--------
+
+* [Fact Check: Trump And Clinton Debate For The First Time](http://www.npr.org/2016/09/26/495115346/fact-check-first-presidential-debate)
 
 Assumptions
 -----------
