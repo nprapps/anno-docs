@@ -219,7 +219,6 @@ def process_transcript_content(tag):
     #     combined_contents += unicode(content)
     if speaker_regex.match(text):
         typ = 'speaker'
-        logger.info(text)
         context = process_speaker_transcript(combined_contents)
     elif soundbite_regex.match(text):
         typ = 'soundbite'
