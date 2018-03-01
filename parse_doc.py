@@ -31,11 +31,11 @@ frontmatter_marker_regex = re.compile(ur'^\s*-{3}\s*$',
 extract_metadata_regex = re.compile(ur'^(.*?):(.*)$',
                                     re.UNICODE)
 
-speaker_regex = re.compile(ur'^[A-Z\s.-]+(\s\[.*\])?:', re.UNICODE)
+speaker_regex = re.compile(ur'^[A-Z\s\.,-]+(\s\[.*\])?:', re.UNICODE)
 soundbite_regex = re.compile(ur'^\s*:', re.UNICODE)
 
 extract_speaker_metadata_regex = re.compile(
-    ur'^\s*(<.*?>)?([A-Z0-9\s.-]+)\s*(?:\[(.*)\]\s*)?:\s*(.*)', re.UNICODE)
+    ur'^\s*(<.*?>)?([A-Z0-9\s\.,-]+)\s*(?:\[(.*)\]\s*)?:\s*(.*)', re.UNICODE)
 extract_soundbite_metadata_regex = re.compile(
     ur'^\s*(?:<.*?>)?\s*:\[\((.*)\)\]', re.UNICODE)
 extract_author_metadata_regex = re.compile(
@@ -219,6 +219,7 @@ def process_transcript_content(tag):
     #     combined_contents += unicode(content)
     if speaker_regex.match(text):
         typ = 'speaker'
+        logger.info(text)
         context = process_speaker_transcript(combined_contents)
     elif soundbite_regex.match(text):
         typ = 'soundbite'
