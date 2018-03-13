@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20180209-dem-russia-memo'
+CURRENT_FACTCHECK = '20180313-skillshare-annotations'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -269,7 +269,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '17kCee04E25mRRB_pSxtB8rDbTRdoM794yQfy9Vzlw9I'
+        TRANSCRIPT_GDOC_KEY = '13gxGZKbLRtHzX5QjbqPCveOYdydyHBPUDY15AMXPmuw'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
