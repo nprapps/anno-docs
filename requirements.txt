@@ -12,7 +12,7 @@ beautifulsoup4==4.4.1
 boto==2.34.0
 botocore==1.4.56
 clan==0.1.3
-copydoc==1.0.8
+-e git://github.com/nprapps/copydoc.git@e9a8dfad851db5b29cab31e042b7a6ccd0da7d09#egg=copydocs
 copytext==0.1.9
 csvkit==0.9.1
 docutils==0.11
