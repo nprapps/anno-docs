@@ -39,7 +39,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20180614-inspector-general-report'
+CURRENT_FACTCHECK = '20180612-singapore-summit-press-conference'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -139,7 +139,7 @@ GOOGLE APPS SCRIPTS
 
 PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
 GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
-TRANSCRIPT_GDOC_KEY = '1Yd9rQOFv11yna3u_C56GLwLi633Iu0UpOKlWo6e1fb0' # Google app script google doc key
+TRANSCRIPT_GDOC_KEY = '1reiMesGSAkxvMeFzsycnGJGsY_JJq915qL6AfRCxQ4o' # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
 CSPAN = False
 """
@@ -250,7 +250,7 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1Yd9rQOFv11yna3u_C56GLwLi633Iu0UpOKlWo6e1fb0'
+        TRANSCRIPT_GDOC_KEY = '1reiMesGSAkxvMeFzsycnGJGsY_JJq915qL6AfRCxQ4o'
         # PRODUCTION TEST DOCUMENT
         # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
@@ -269,7 +269,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1Yd9rQOFv11yna3u_C56GLwLi633Iu0UpOKlWo6e1fb0'
+        TRANSCRIPT_GDOC_KEY = '1reiMesGSAkxvMeFzsycnGJGsY_JJq915qL6AfRCxQ4o'
         # STAGING LOGS
         GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
@@ -283,7 +283,7 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1Yd9rQOFv11yna3u_C56GLwLi633Iu0UpOKlWo6e1fb0'
+        TRANSCRIPT_GDOC_KEY = '1reiMesGSAkxvMeFzsycnGJGsY_JJq915qL6AfRCxQ4o'
         # DEVELOPMENT LOGS
         GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app
