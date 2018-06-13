@@ -9,13 +9,14 @@
     "minimist": "^1.2.0",
     "moment": "^2.15.0",
     "moment-timezone": "^0.5.5",
-    "socket.io": "^1.7.2",
-    "superagent": "^2.2.0",
+    "socket.io": "^2.0.2",
+    "superagent": "^3.7.0",
     "superagent-no-cache": "^0.1.0",
     "underscore.string": "^3.3.4",
     "url-parse": "^1.1.3",
     "vdom-virtualize": "^2.0.0",
-    "virtual-dom": "^2.1.1"
+    "virtual-dom": "^2.1.1",
+    "snyk": "^1.82.2"
   },
   "devDependencies": {
     "babel-core": "^6.14.0",
@@ -32,7 +33,9 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --progress --watch --devtool source-map",
     "build": "webpack -p --colors --progress --config 'webpack.production.config.js'",
-    "preinstall": "npm install -g concurrently"
+    "preinstall": "npm install -g concurrently",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -43,5 +46,6 @@
   "bugs": {
     "url": "https://github.com/nprapps/anno-docs/issues"
   },
-  "homepage": "https://github.com/nprapps/anno-docs#readme"
+  "homepage": "https://github.com/nprapps/anno-docs#readme",
+  "snyk": true
 }
