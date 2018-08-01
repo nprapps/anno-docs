@@ -10,7 +10,7 @@
     "moment": "^2.15.0",
     "moment-timezone": "^0.5.5",
     "socket.io": "^1.7.2",
-    "superagent": "^2.2.0",
+    "superagent": "^3.8.1",
     "superagent-no-cache": "^0.1.0",
     "underscore.string": "^3.3.4",
     "url-parse": "^1.1.3",
