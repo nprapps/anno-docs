@@ -143,7 +143,8 @@ def process_other_transcript(contents):
     """
     process all other transcript output
     """
-    context = {'text': contents}
+    checked = contents.count('<strong>') > 0
+    context = {'text': contents, 'checked': checked }
     return context
 
 

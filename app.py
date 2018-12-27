@@ -51,6 +51,23 @@ def _preview():
     context = get_factcheck_context()
     return make_response(render_template('factcheck.html', **context))
 
+@app.route('/<slug>/embed.html', methods=['GET', 'OPTIONS'])
+def _embed(slug):
+    """
+    Specific annotations can be embedded
+    """
+    context = get_factcheck_context();
+    contents = context['contents']
+    annotations = [post for post in contents if post['type'] == 'annotation']
+    filtered = [post for post in annotations if post['slug'] == slug]
+    filtered = filtered[0]
+    context['filtered'] = filtered
+
+    index = contents.index(filtered)
+    start = index - 1;
+    prior = contents[start:index]
+    context['prior'] = prior
+    return make_response(render_template('embed.html', **context))
 
 @app.route('/share.html', methods=['GET', 'OPTIONS'])
 def _share():
@@ -120,7 +137,7 @@ def get_factcheck_context():
     in order not to perform the parsing twice
     """
     from flask import g
-    context = flatten_app_config()
+    context = make_context()
     parsed_factcheck_doc = getattr(g, 'parsed_factcheck', None)
     if parsed_factcheck_doc is None:
         logger.debug("did not find parsed_factcheck")

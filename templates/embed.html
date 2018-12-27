@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Fact Check</title>
+
+    <base target="_blank">
+
+    <!-- META TAGS -->
+    {% include '_meta.html' %}
+
+    <!-- FONTS --><!-- Fonts -->
+    <script src="../js/lib/webfont.js"></script>
+    <script>
+        var urls = [
+            'http://s.npr.org/templates/css/fonts/GothamSSm.css',
+            'http://s.npr.org/templates/css/fonts/Knockout.css'
+        ];
+
+        if (window.location.protocol == "https:") {
+            urls = [
+                'https://secure.npr.org/templates/css/fonts/GothamSSm.css',
+                'https://secure.npr.org/templates/css/fonts/Knockout.css'
+            ];
+        }
+
+        WebFont.load({
+             custom: {
+                 families: [
+                     'Gotham SSm:n4,n7',
+                     'Knockout 31 4r:n4'
+                 ],
+                 urls: urls
+             },
+             timeout: 10000
+        });
+    </script>
+    {{ CSS.push('www/css/icon/npr-app-template.css') }}
+
+
+    <!-- CSS -->
+    {{ CSS.push('less/app.less') }}
+    {% block extra_css %}{% endblock extra_css %}
+    {{ CSS.render('css/rendered/app.min.css') }}
+
+    {% block extra_head %}
+    {% endblock extra_head %}
+</head>
+<body>
+    {% for post in prior %}
+    {{ post.markup|safe }}
+    {% endfor %}
+    {{ filtered.markup|safe }}
+
+    <script src="https://pym.nprapps.org/pym.v1.min.js"></script>
+    <script>
+        var child = new pym.Child({
+            polling: 300
+        });
+        child.sendHeight();
+    </script>
+</body>
+</html>
