@@ -252,9 +252,11 @@ def configure_targets(deployment_target):
         DEBUG = False
         ASSETS_MAX_AGE = 86400
         # PRODUCTION DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '1nsntBRFWuh9WwR71kD0SHC1fjrzmNjgWnWKJpKV3G9k'
+        # TRANSCRIPT_GDOC_KEY = '1gibir_r26oZ0gi3ujlXHtzuzNusQZUUj0KCuhYCdJSk'
+        # PRODUCTION TEST DOCUMENT
+        # TRANSCRIPT_GDOC_KEY = '1sK3FQ1VGh2bZZHoI2ontZWy_32UchVyIOZ2X5vbWJIo'
         # PRODUCTION LOGS
-        GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
+        # GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU'
     elif deployment_target == 'staging':
         S3_BUCKET = STAGING_S3_BUCKET
         S3_BASE_URL = 'https://s3.amazonaws.com/%s/%s%s' % (
@@ -269,9 +271,9 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # STAGING DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '13gxGZKbLRtHzX5QjbqPCveOYdydyHBPUDY15AMXPmuw'
+        # TRANSCRIPT_GDOC_KEY = '1gibir_r26oZ0gi3ujlXHtzuzNusQZUUj0KCuhYCdJSk'
         # STAGING LOGS
-        GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
+        # GAS_LOG_KEY = '1vpRgWpqGqW1p3yMv6nCixAjczc8cJr_TlMCTg52Ch9I'
     else:
         S3_BUCKET = None
         S3_BASE_URL = '//127.0.0.1:8000'
@@ -283,9 +285,9 @@ def configure_targets(deployment_target):
         DEBUG = True
         ASSETS_MAX_AGE = 20
         # DEVELOPMENT DOCUMENT
-        TRANSCRIPT_GDOC_KEY = '18tK5NoJvSWNLhAbTByvZutHZMKqb9A1AnjeMXlE5Dd4'
+        # TRANSCRIPT_GDOC_KEY = '1gibir_r26oZ0gi3ujlXHtzuzNusQZUUj0KCuhYCdJSk'
         # DEVELOPMENT LOGS
-        GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
+        # GAS_LOG_KEY = '1I7IUCUJHIWLW3c_E-ukfqIp4QxuvUoHqbEQIlKQFC7w'
         # Override S3_BASE_URL to use another port locally for fab app
         try:
             from local_settings import S3_BASE_URL

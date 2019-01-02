@@ -46,6 +46,7 @@ www/js/copy.js
 www/test/test.html
 www/comments/index.html
 confs/rendered/*
+www/embeds/*
 
 # Local data
 data/gdoc*.csv
