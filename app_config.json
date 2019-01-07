@@ -3,5 +3,6 @@
   "log_sheet": "1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU",
   "transcript": "1rOKb7n9rLmOthrV5PpPgO0EvrIydYJ8P43q4wEJQRik",
   "script_project": "1mMSF3no0gLofIyuz187jDDHANsjXg-U5QPRO8L49HZLCaZxOrv-7ARGI",
-  "server": "34.198.159.219"
+  "staging": "34.198.159.219",
+  "production": "34.200.31.147"
 }

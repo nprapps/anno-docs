@@ -2,6 +2,9 @@ var login = require("@nprapps/google-login");
 var { google } = require("googleapis");
 var minimist = require("minimist");
 
+var args = minimist(process.argv);
+var [ node, here, task, ...params ] = args._;
+
 var log = data => console.log(JSON.stringify(data, null, 2));
 
 var secrets = {
@@ -15,6 +18,7 @@ for (var k in secrets) {
 
 var config = require("./app_config.json");
 var scriptId = config.script_project;
+var server = args.env == "production" ? config.production : config.staging;
 
 var auth = login.getClient();
 var scriptAPI = google.script({ version: "v1", auth });
@@ -34,7 +38,7 @@ var tasks = {
     process.exit();
   },
   setup: async function() {
-    var cspanServer = `http://ec2-${config.server.replace(/\./g, "-")}.compute-1.amazonaws.com:5000/`;
+    var cspanServer = `http://ec2-${server.replace(/\./g, "-")}.compute-1.amazonaws.com:5000/`;
     var parameters = [
       secrets.VERB8TM_SRT_API,
       secrets.VERB8TM_TIMESTAMP_API,
@@ -75,9 +79,6 @@ var tasks = {
     log(result.data);
   }
 }
-
-var args = minimist(process.argv);
-var [ node, here, task, ...params ] = args._;
 
 if (tasks[task]) {
   tasks[task](args, params);
