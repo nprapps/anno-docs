@@ -5,6 +5,7 @@
   "main": "webpack.config.js",
   "dependencies": {
     "@nprapps/google-login": "^1.0.1",
+    "clasp": "^1.0.0",
     "csv-parse": "^1.1.9",
     "forever": "^0.15.3",
     "googleapis": "^36.0.0",
@@ -34,7 +35,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack --progress --watch --devtool source-map",
     "build": "webpack -p --colors --progress --config 'webpack.production.config.js'",
-    "preinstall": "npm install -g concurrently"
+    "preinstall": "npm install -g concurrently",
+    "gs:push_cron": "cd google_apps_script && clasp push",
+    "gs:push_addon": "cd add-on && clasp push",
+    "gs:setup": "node fab setup"
   },
   "repository": {
     "type": "git",
