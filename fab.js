@@ -2,6 +2,8 @@ var login = require("@nprapps/google-login");
 var { google } = require("googleapis");
 var minimist = require("minimist");
 
+var log = data => console.log(JSON.stringify(data, null, 2));
+
 var secrets = {
   VERB8TM_SRT_API: "",
   VERB8TM_TIMESTAMP_API: ""
@@ -12,7 +14,6 @@ for (var k in secrets) {
 }
 
 var config = require("./app_config.json");
-var apiId = "MmMXhvnD6H8NqA_izF7l3Z2GKoUaL1Yht";
 var scriptId = config.script_project;
 
 var auth = login.getClient();
@@ -22,6 +23,7 @@ var tasks = {
   login: async function() {
     await login.authenticate([
       "https://www.googleapis.com/auth/script.projects",
+      "https://www.googleapis.com/auth/script.scriptapp",
       "https://www.googleapis.com/auth/script.deployments",
       "https://www.googleapis.com/auth/documents",
       "https://www.googleapis.com/auth/script.external_request",
@@ -54,16 +56,23 @@ var tasks = {
       if (data.error) {
         throw data.error;
       }
-      console.log(JSON.stringify(result.data, null, 2));
+      log(result.data);
     } catch (err) {
       console.error(err.details);
     }
+  },
+  run: async function(argv, [f, ...params]) {
+    var result = await scriptAPI.scripts.run({
+      scriptId,
+      resource: { function: f }
+    });
+    log(result.error || result.data);
   },
   metadata: async function() {
     var result = await scriptAPI.projects.get({
       scriptId
     });
-    console.log(JSON.stringify(result.data, null, 2));
+    log(result.data);
   }
 }
 
