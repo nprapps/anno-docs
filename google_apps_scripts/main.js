@@ -30,31 +30,31 @@ var props;
 * via: https://developers.google.com/apps-script/guides/triggers/installable#time-driven_triggers
 */
 function update() {
-    var cspan = false;
-    try {
-        props = PropertiesService.getScriptProperties();
-        // Open the google drive document
-        var documentID = props.getProperty('documentID');
-        doc = DocumentApp.openById(documentID);
-        _initializeLogging();
-        PersistLog.info("update process start");
-        cspan = _getBoolProperty('cspan');
-        if (cspan) {
-            updateCSPAN();
-        } else {
-            updateVerb8tm();
-        }
-    } catch(e) {
-        // Notify admins of the failure and propagate
-        e = (typeof e === 'string') ? new Error(e): e;
-        var msg =  Utilities.formatString('%s: %s (line %s, file %s). Stack: %s .', e.name || '',
-                                      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
-        PersistLog.severe(msg);
-        // Send email
-        if (NOTIFICATION_ENABLED) MailApp.sendEmail(NOTIFICATION_RECIPIENTS,"Error: Report", msg);
-        // Propagate
-        throw e;
+  var cspan = false;
+  try {
+    props = PropertiesService.getScriptProperties();
+    // Open the google drive document
+    var documentID = props.getProperty('documentID');
+    doc = DocumentApp.openById(documentID);
+    _initializeLogging();
+    PersistLog.info("update process start");
+    cspan = _getBoolProperty('cspan');
+    if (cspan) {
+      updateCSPAN();
+    } else {
+      updateVerb8tm();
     }
+  } catch(e) {
+    // Notify admins of the failure and propagate
+    e = (typeof e === 'string') ? new Error(e): e;
+    var msg =  Utilities.formatString('%s: %s (line %s, file %s). Stack: %s .', e.name || '',
+      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
+    PersistLog.severe(msg);
+    // Send email
+    if (NOTIFICATION_ENABLED) MailApp.sendEmail(NOTIFICATION_RECIPIENTS,"Error: Report", msg);
+    // Propagate
+    throw e;
+  }
 }
 
 /**
@@ -102,7 +102,7 @@ function reset() {
     // Notify admins of the failure and propagate
     e = (typeof e === 'string') ? new Error(e): e;
     var msg =  Utilities.formatString('%s: %s (line %s, file %s). Stack: %s .', e.name || '',
-                                      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
+      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
     PersistLog.severe(msg);
     // Send email
     if (NOTIFICATION_ENABLED) MailApp.sendEmail(NOTIFICATION_RECIPIENTS,"Error: Report", msg);
@@ -137,7 +137,7 @@ function pause() {
     // Notify admins of the failure and propagate
     e = (typeof e === 'string') ? new Error(e): e;
     var msg =  Utilities.formatString('%s: %s (line %s, file %s). Stack: %s .', e.name || '',
-                                      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
+      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
     PersistLog.severe(msg);
     // Send email
     if (NOTIFICATION_ENABLED) MailApp.sendEmail(NOTIFICATION_RECIPIENTS,"Error: Report", msg);
@@ -186,7 +186,7 @@ function restart() {
     // Notify admins of the failure and propagate
     e = (typeof e === 'string') ? new Error(e): e;
     var msg =  Utilities.formatString('%s: %s (line %s, file %s). Stack: %s .', e.name || '',
-                                      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
+      e.message || '', e.lineNumber || '', e.fileName || '', e.stack || '');
     PersistLog.severe(msg);
     // Send email
     if (NOTIFICATION_ENABLED) MailApp.sendEmail(NOTIFICATION_RECIPIENTS,"Error: Report", msg);
@@ -201,15 +201,15 @@ function restart() {
 * as script properties.
 */
 function setup(api_srt_url, api_timestamp_url, api_cspan_url,
-               cspan, documentID, logID) {
-    // Setup api endpoint urls
-    props = PropertiesService.getScriptProperties();
-    props.setProperty('api_srt_url', api_srt_url);
-    props.setProperty('api_timestamp_url', api_timestamp_url);
-    props.setProperty('api_cspan_url', api_cspan_url);
-    props.setProperty('cspan', cspan);
-    // Setup documentID and logID
-    props.setProperty('documentID', documentID);
-    props.setProperty('logID', logID);
+ cspan, documentID, logID) {
+  // Setup api endpoint urls
+  props = PropertiesService.getScriptProperties();
+  props.setProperty('api_srt_url', api_srt_url);
+  props.setProperty('api_timestamp_url', api_timestamp_url);
+  props.setProperty('api_cspan_url', api_cspan_url);
+  props.setProperty('cspan', cspan);
+  // Setup documentID and logID
+  props.setProperty('documentID', documentID);
+  props.setProperty('logID', logID);
 
 }
