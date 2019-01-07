@@ -11,9 +11,17 @@ See get_secrets() below for a fast way to access them.
 
 import logging
 import os
+import json
 
 from authomatic.providers import oauth2
 from authomatic import Authomatic
+
+with open("app_config.json") as f:
+    raw = f.read();
+    json_config = json.loads(raw)
+
+print(json_config)
+exit()
 
 
 """
@@ -121,7 +129,7 @@ LOG_LEVEL = None
 AUTHORS DICTIONARY
 """
 # Complete
-AUTHORS_GOOGLE_DOC_KEY = '1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw'
+AUTHORS_GOOGLE_DOC_KEY = json_config['authors_doc']
 
 try:
     # Override AUTHORS SPREADSHEET
@@ -140,8 +148,8 @@ GOOGLE APPS SCRIPTS
 """
 
 PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
-GAS_LOG_KEY = '1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU' # Google app script logs spreadsheet key
-TRANSCRIPT_GDOC_KEY = '1nFvMWKEyRijnQyAfduu8BIrPZJdWQO7bwJ8zdTgmRY4' # Google app script google doc key
+GAS_LOG_KEY = json_config['log_sheet'] # Google app script logs spreadsheet key
+TRANSCRIPT_GDOC_KEY = json_config['transcript'] # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
 CSPAN = True
 """
