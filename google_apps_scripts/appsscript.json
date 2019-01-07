@@ -1,0 +1,9 @@
+{
+  "timeZone": "America/Mexico_City",
+  "dependencies": {
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "executionApi": {
+    "access": "DOMAIN"
+  }
+}

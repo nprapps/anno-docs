@@ -4,8 +4,10 @@
   "description": "",
   "main": "webpack.config.js",
   "dependencies": {
+    "@nprapps/google-login": "^1.0.1",
     "csv-parse": "^1.1.9",
     "forever": "^0.15.3",
+    "googleapis": "^36.0.0",
     "minimist": "^1.2.0",
     "moment": "^2.15.0",
     "moment-timezone": "^0.5.5",
