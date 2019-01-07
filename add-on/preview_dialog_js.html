@@ -1,0 +1,13 @@
+<script>
+    /**
+    * On document load, assign click handlers to each button and try to load the
+    * user's origin and destination language preferences if previously set.
+    */
+    $(function() {
+        $('#ok').click(close);
+    });
+
+    function close() {
+        google.script.host.close();
+    }
+</script>

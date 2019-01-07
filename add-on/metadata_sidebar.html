@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- The CSS package above applies Google styling to buttons and other elements. -->
+    <?!= include('style'); ?>
+  </head>
+  <body>
+    <div class="sidebar branding-below">
+      <form class="metadata">
+        <div class="block form-group">
+          <h3 for="description">Description (< 50 chars)<span class="required-flag">*</span></h3>
+          <input class="width-100" placeholder="Annotation Brief Description"
+                 type="text" name="description" id="description">
+        </div>
+
+        <div class="block form-group">
+          <h3>Author<span class="required-flag">*</span></h3>
+          <? var half = Math.floor(data.length/2);?>
+          <div class="col-one">
+          <? for (var i = 0; i < half; i++) { ?>
+              <div>
+                <input type="radio" class="author-input" name="author" id="<?=data[i][0]?>" value="<?=data[i][1]?> (<?=data[i][0]?>)" />
+                <label class="radio width-100" for="<?=data[i][0]?>"><?=data[i][1]?></label>
+              </div>
+          <? } ?>
+          </div>
+          <div class="col-one">
+          <? for (var i = half; i < data.length; i++) { ?>
+              <div>
+                <input type="radio" class="author-input" name="author" id="<?=data[i][0]?>" value="<?=data[i][1]?> (<?=data[i][0]?>)" />
+                <label class="radio width-100" for="<?=data[i][0]?>"><?=data[i][1]?></label>
+              </div>
+          <? } ?>
+          </div>
+          <div>
+            <input type="radio" class="author-input" name="author" id="other" value="other" />
+            <label class="radio width-100" for="other">Other</label>
+            <div id="input-other" class="block form-group">
+              <input class="width-100" placeholder="John Doe (jd)" type="text" name="otherAuthor" id="other-author">
+            </div>
+          </div>
+        </div>
+
+        <div class="block" id="button-bar">
+          <button class="blue" id="create-metadata">Create Draft Annotation</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="sidebar bottom">
+      <? if (logo) {?>
+        <img alt="Add-on logo" class="logo" src="<?=logo?>">
+      <? } ?>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <?!= include('metadata_sidebar_js'); ?>
+  </body>
+</html>

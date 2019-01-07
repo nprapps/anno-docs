@@ -1,0 +1,60 @@
+<script>
+    /**
+    * On document load, assign click handlers to each button and try to load the
+    * user's origin and destination language preferences if previously set.
+    */
+    $(function() {
+        $('#ok').click(setAuthors);
+        $('#cancel').click(warning);
+    });
+
+    /**
+    * Runs a server-side function to insert the frontmatter of an annotation
+    * into the document at the user's cursor or selection.
+    */
+    function setAuthors() {
+        if (!$('#url').val()) {
+            msg = 'The url is required';
+            showError(msg, $('#input'));
+            return;
+        }
+        $('#error').remove();
+        this.disabled = true;
+        google.script.run
+            .withSuccessHandler(
+              function(returnSuccess, element) {
+                element.disabled = false;
+                if (returnSuccess) {
+                    google.script.host.close();
+                }
+              })
+            .withFailureHandler(
+              function(msg, element) {
+                showError(msg, $('#input'));
+                element.disabled = false;
+              })
+            .withUserObject(this)
+            .authorsProperty($('#url').val());
+    }
+
+    function warning(msg) {
+        $('#error').remove();
+        if (!($('#key').length)) {
+            msg = 'We need to initialize the authors to be able to add new annotations.';
+            showError(msg, $('#input'));
+        } else {
+            google.script.host.close();
+        }
+    }
+    /**
+    * Inserts a div that contains an error message after a given element.
+    *
+    * @param msg The error message to display.
+    * @param element The element after which to display the error.
+    */
+    function showError(msg, element) {
+        $('#error').remove();
+        var div = $('<div id="error" class="error">' + msg + '</div>');
+        $(element).after(div);
+    }
+</script>

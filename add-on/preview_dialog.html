@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_blank">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- The CSS package above applies Google styling to buttons and other elements. -->
+    <?!= include('style'); ?>
+  </head>
+  <body>
+    <? if (responseCode == 200) {?>
+    <h2 class="success">Success</h2>
+    <div><?=msg?></div>
+    <div id="results">
+      <ul>
+        <li><a href="https://s3.amazonaws.com/stage-apps.npr.org/factchecks/preview/index.html">Published annotations</a></li>
+        <li><a href="https://s3.amazonaws.com/stage-apps.npr.org/factchecks/preview/preview.html">Draft annotations</a></li>
+        <li><a href="https://s3.amazonaws.com/stage-apps.npr.org/factchecks/preview/share.html">Social sharing assets</a></li>
+      </ul>
+    </div>
+    <? } else {?>
+    <h2 class="error">Error</h2>
+    <div class="results">
+      <span class="message"><?=msg?></span>
+      <p class="gray">Contact support</p>
+    </div>
+    <? } ?>
+    <div class="block" id="button-bar">
+        <button class="blue" id="ok">Ok</button>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <?!= include('preview_dialog_js'); ?>
+  </body>
+</html>

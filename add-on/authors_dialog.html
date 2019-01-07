@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://ssl.gstatic.com/docs/script/css/add-ons1.css">
+    <!-- The CSS package above applies Google styling to buttons and other elements. -->
+    <?!= include('style'); ?>
+  </head>
+  <body>
+    <? if (key) {?>
+    <span id="key" class="hidden"><?=key?></span>
+    <? } ?>
+    <div class="explainer width-80">
+      <p> In order to use the <i>Annotate Add-on</i>, you'll need to generate a google spreadsheet that follows the schema provided as an example <a href="https://docs.google.com/spreadsheets/d/18dzZhuqnoz2e2Y7TBfYYAuhgK8SRwPEPpEGL1Sl9Rng/edit" target='blank'>here</a>. The spreadsheet needs to be <strong>accesible to everyone that will work on the annotated document</strong> so we recommend that you set the permissions to be viewable to <i>everyone with the link</i>. Basically it needs a header row and the following columns:</p>
+      <ul>
+        <li>Initials (Required): Initials of the author 2-3 chars.</li>
+        <li>Name (Required): Name of the author.</li>
+        <li>Role (Optional): Role of the author.</li>
+        <li>Page (Optional): Page of the author to link to it.</li>
+        <li>Image (Optional): Image of the author.</li>
+    </div>
+    <div id="input" class="block form-group">
+        <label class="bold width-80" for="url">Enter the author spreadsheet url <span class="required-flag">*</span></label>
+        <input class="width-100" placeholder="https://docs.google.com/spreadsheets/d/18dzZhuqnoz2e2Y7TBfYYAuhgK8SRwPEPpEGL1Sl9Rng/edit" type="text" name="url" id="url">
+    </div>
+    <div class="block" id="button-bar">
+        <button class="blue" id="ok">Ok</button>
+        <button class="red" id="cancel">Cancel</button>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <?!= include('authors_dialog_js'); ?>
+  </body>
+</html>
