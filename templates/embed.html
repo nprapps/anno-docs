@@ -35,13 +35,10 @@
              timeout: 10000
         });
     </script>
-    {{ CSS.push('www/css/icon/npr-app-template.css') }}
 
 
     <!-- CSS -->
-    {{ CSS.push('less/app.less') }}
-    {% block extra_css %}{% endblock extra_css %}
-    {{ CSS.render('css/rendered/app.min.css') }}
+    <link rel="stylesheet" href="../css/rendered/app.min.css">
 
     {% block extra_head %}
     {% endblock extra_head %}
