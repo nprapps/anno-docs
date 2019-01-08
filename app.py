@@ -51,7 +51,7 @@ def _preview():
     context = get_factcheck_context()
     return make_response(render_template('factcheck.html', **context))
 
-@app.route('/<slug>/embed.html', methods=['GET', 'OPTIONS'])
+@app.route('/embeds/<slug>.html', methods=['GET', 'OPTIONS'])
 def _embed(slug):
     """
     Specific annotations can be embedded
@@ -64,10 +64,23 @@ def _embed(slug):
     context['filtered'] = filtered
 
     index = contents.index(filtered)
-    start = index - 1;
+    paragraphs = int(filtered.get('prior', 1))
+    start = index - paragraphs;
     prior = contents[start:index]
     context['prior'] = prior
     return make_response(render_template('embed.html', **context))
+
+@app.route('/embeds/', methods=['GET', 'OPTIONS'])
+def _embedlist():
+    """
+    List out embeddable annotations
+    """
+    context = get_factcheck_context()
+    contents = context['contents']
+    annotations = [post for post in contents if post['type'] == 'annotation']
+    slugs = [x['slug'] for x in annotations]
+    context['slugs'] = slugs
+    return make_response(render_template('embedlist.html', **context))
 
 @app.route('/share.html', methods=['GET', 'OPTIONS'])
 def _share():
