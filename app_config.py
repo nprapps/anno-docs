@@ -20,9 +20,6 @@ with open("app_config.json") as f:
     raw = f.read();
     json_config = json.loads(raw)
 
-print(json_config)
-exit()
-
 
 """
 NAMES

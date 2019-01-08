@@ -43,7 +43,7 @@ var tasks = {
       secrets.VERB8TM_SRT_API,
       secrets.VERB8TM_TIMESTAMP_API,
       cspanServer,
-      true,
+      config.cspan,
       config.transcript,
       config.log_sheet
     ];

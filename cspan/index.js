@@ -110,13 +110,8 @@ function formatText(str) {
 }
 
 function getWordsSince(timestamp) {
-  var ret = []
-  cache.forEach((val, i) => {
-    if ( val.t >= parseInt(timestamp) ) {
-      ret.push(val.r)
-    }
-  })
-  return ret.join(' ')
+  var time = parseInt(timestamp, 10);
+  return cache.filter(val => val.t >= time).map(v => v.r).join(" ");
 }
 
 function cleanCache() {
