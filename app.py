@@ -57,6 +57,7 @@ def _embed(slug):
     Specific annotations can be embedded
     """
     context = get_factcheck_context();
+    context['slug'] = slug
     contents = context['contents']
     annotations = [post for post in contents if post['type'] == 'annotation']
     filtered = [post for post in annotations if post['slug'] == slug]

@@ -44,6 +44,14 @@
     {% endblock extra_head %}
     <style>
         .annotation-nav { display: none; }
+        .embed-code { display: none; }
+        .embed-code textarea {
+            width: 100%;
+            font-family: monospace;
+        }
+        .not-embedded .embed-code {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -51,6 +59,12 @@
     {{ post.markup|safe }}
     {% endfor %}
     {{ filtered.markup|safe }}
+
+    <div class="embed-code">
+        <h2>Embed code</h2>
+        <textarea rows=5>&lt;p data-pym-loader data-child-src="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/embeds/{{slug}}.html" id="responsive-embed-{{slug}}"&gt;Loading...&lt;/p&gt;&lt;script type="text/javascript" src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"&gt;&lt;/script&gt;
+        </textarea>
+    </div>
 
     <script src="https://pym.nprapps.org/pym.v1.min.js"></script>
     <script>
