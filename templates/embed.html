@@ -49,8 +49,24 @@
             width: 100%;
             font-family: monospace;
         }
-        .not-embedded .embed-code {
-            display: block;
+        .embed-code blockquote {
+            padding: 15px;
+            background: lightgray;
+        }
+        .annotation {
+            margin-bottom: 0;
+        }
+        .link-to-full {
+            padding: 10px;
+            text-align: right;
+        }
+        .link-to-full a {
+            text-transform: uppercase;
+            color: darkgray;
+            font-family: 'Gotham SSm',Helvetica,Arial,sans-serif;
+            text-decoration: underline;
+            font-style: italic;
+            font-size: 80%;
         }
     </style>
 </head>
@@ -59,11 +75,21 @@
     {{ post.markup|safe }}
     {% endfor %}
     {{ filtered.markup|safe }}
+    <div class="link-to-full">
+        <a href="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/">See full transcript</a>
+    </div>
 
     <div class="embed-code">
         <h2>Embed code</h2>
         <textarea rows=5>&lt;p data-pym-loader data-child-src="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/embeds/{{slug}}.html" id="responsive-embed-{{slug}}"&gt;Loading...&lt;/p&gt;&lt;script type="text/javascript" src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"&gt;&lt;/script&gt;
         </textarea>
+        <h2>Direct link</h2>
+        <blockquote class="direct-link">
+        <p><em><strong> <a
+  href="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/embeds/{{slug}}.html?mode=childlink&utm_source=nprnews&utm_medium=app&utm_campaign=storyredirect">
+  Don't see the graphic above? Click here.
+</a></em></strong></p>
+        </blockquote>
     </div>
 
     <script src="https://pym.nprapps.org/pym.v1.min.js"></script>
@@ -72,6 +98,13 @@
             polling: 300
         });
         child.sendHeight();
+
+        var admin = document.querySelector(".embed-code");
+        var isChildLink = window.location.href.toLowerCase().indexOf("mode=childlink") > -1;
+        var isEmbedded = window.parent != window;
+        if (!isChildLink && !isEmbedded) {
+            admin.style.display = "block"
+        }
     </script>
 </body>
 </html>
