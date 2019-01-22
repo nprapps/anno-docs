@@ -42,43 +42,20 @@
 
     {% block extra_head %}
     {% endblock extra_head %}
-    <style>
-        .annotation-nav { display: none; }
-        .embed-code { display: none; }
-        .embed-code textarea {
-            width: 100%;
-            font-family: monospace;
-        }
-        .embed-code blockquote {
-            padding: 15px;
-            background: lightgray;
-        }
-        .annotation {
-            margin-bottom: 0;
-        }
-        .link-to-full {
-            padding: 10px;
-            text-align: right;
-            margin: 0;
-        }
-        .link-to-full a {
-            text-transform: uppercase;
-            color: darkgray;
-            font-family: 'Gotham SSm',Helvetica,Arial,sans-serif;
-            text-decoration: underline;
-            font-style: italic;
-            font-size: 80%;
-        }
-    </style>
 </head>
-<body>
+<body class="excerpt-embed">
+    <header>
+        <h1><a href="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/">Transcript Excerpt</a></h1>
+    </header>
+
     {% for post in prior %}
     {{ post.markup|safe }}
     {% endfor %}
     {{ filtered.markup|safe }}
-    <div class="link-to-full">
-        <a href="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/">See full transcript</a>
-    </div>
+
+    <footer class="link-to-full">
+        <a href="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/">See Full Transcript &rsaquo;</a>
+    </footer>
 
     <div class="embed-code">
         <h2>Embed code</h2>

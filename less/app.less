@@ -21,7 +21,7 @@ body {
         font-weight: 600;
         line-height: 1.4em;
     }
-    padding-bottom: 5px; 
+    padding-bottom: 5px;
 }
 
 .init {
@@ -490,4 +490,76 @@ h3 .fact-checked {
 
 .shareLink{
   margin-top: 2em;
+}
+
+// CSS specific to the embeds of transcript excerpts
+body.excerpt-embed {
+    padding: 33px 0;
+
+    .annotation {
+        margin-bottom: 0;
+
+        + .annotation { margin-top: 22px; }
+    }
+    .annotation-nav { display: none; }
+
+    .embed-code {
+        display: none;
+        padding-top: 22px;
+
+        h2 {
+            .gotham();
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        textarea {
+            width: 100%;
+            font-family: monospace;
+        }
+
+        blockquote {
+            margin: 0;
+            padding: 15px;
+            background: lightgray;
+
+            p { margin: 0; }
+        }
+    }
+
+    .link-to-full {
+        padding-top: 11px;
+        text-align: right;
+        margin: 0;
+
+        a {
+            .gotham();
+            font-size: 12px;
+            font-weight: 700;
+        }
+    }
+
+    header {
+        background-color: #2a2a2a;
+        color: #ddd;
+        margin-bottom: 1.5rem;
+        padding: 15px 22px;
+
+        h1 {
+            .gotham();
+            font-size: 14px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        a:link,
+        a:visited {
+            color: #ccc;
+        }
+
+        a:hover,
+        a:active {
+            color: #fff;
+        }
+    }
 }
