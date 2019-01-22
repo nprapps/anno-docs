@@ -152,6 +152,7 @@ def get_factcheck_context():
     """
     from flask import g
     context = make_context()
+    context['config'] = flatten_app_config()
     parsed_factcheck_doc = getattr(g, 'parsed_factcheck', None)
     if parsed_factcheck_doc is None:
         logger.debug("did not find parsed_factcheck")
