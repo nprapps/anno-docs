@@ -52,9 +52,8 @@
     {{ post.markup|safe }}
     {% endfor %}
     {{ filtered.markup|safe }}
-
     <footer class="link-to-full">
-        <a href="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/">See Full Transcript &rsaquo;</a>
+        <a href="{{ config.EMBEDDING_PAGE }}">See full transcript</a>
     </footer>
 
     <div class="embed-code">
