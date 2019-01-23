@@ -45,7 +45,7 @@
 </head>
 <body class="excerpt-embed">
     <header>
-        <h1><a href="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/">Transcript Excerpt</a></h1>
+        <h1><a href="{{ config.EMBEDDING_PAGE }}#{{slug}}">Excerpt</a></h1>
     </header>
 
     {% for post in prior %}
@@ -53,13 +53,14 @@
     {% endfor %}
     {{ filtered.markup|safe }}
     <footer class="link-to-full">
-        <a href="{{ config.EMBEDDING_PAGE }}">See full transcript</a>
+        <a href="{{ config.EMBEDDING_PAGE }}#{{slug}}">Read all annotations</a>
     </footer>
 
     <div class="embed-code">
         <h2>Embed code</h2>
         <textarea rows=5>&lt;p data-pym-loader data-child-src="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/embeds/{{slug}}.html" id="responsive-embed-{{slug}}"&gt;Loading...&lt;/p&gt;&lt;script type="text/javascript" src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"&gt;&lt;/script&gt;
         </textarea>
+        
         <h2>Direct link</h2>
         <blockquote class="direct-link">
         <p><em><strong> <a
