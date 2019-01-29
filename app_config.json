@@ -1,8 +1,9 @@
 {
   "authors_doc": "1s0Vs4c41kp8mCvGnIFbdPK9YI9t18u0c2kvh6W1eZBw",
   "log_sheet": "1tUxTFa2J5IKIlOMLop9IA9eaZ6uDDhgh6KwxeLdgQGU",
-  "transcript": "1rOKb7n9rLmOthrV5PpPgO0EvrIydYJ8P43q4wEJQRik",
+  "transcript": "1Es-w4EgbEtwZZtsKE5kmGTHKBNSIi1J_frtxcLYB8DU",
   "script_project": "1mMSF3no0gLofIyuz187jDDHANsjXg-U5QPRO8L49HZLCaZxOrv-7ARGI",
   "staging": "34.198.159.219",
-  "production": "34.200.31.147"
+  "production": "34.200.31.147",
+  "cspan": false
 }
