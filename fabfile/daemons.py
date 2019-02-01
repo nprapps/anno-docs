@@ -47,6 +47,7 @@ def main(run_once=False):
             execute('text.get_transcript')
             if app_config.DEPLOYMENT_TARGET:
                 execute('deploy_factcheck')
+                execute('deploy_embeds')
             if (cycle % app_config.REFRESH_AUTHOR_CYCLES == 0):
                 logger.info('Update authors file')
                 cycle = 0
