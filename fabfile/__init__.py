@@ -244,7 +244,7 @@ def deploy_embeds():
     flat.deploy_folder(
         app_config.S3_BUCKET,
         'www/embeds',
-        '%s%s' % (app_config.FACTCHECKS_DIRECTORY_PREFIX,
+        '%s%s/embeds' % (app_config.FACTCHECKS_DIRECTORY_PREFIX,
                   app_config.CURRENT_FACTCHECK),
         headers={
             'Cache-Control': 'max-age=%i' % app_config.DEFAULT_MAX_AGE
