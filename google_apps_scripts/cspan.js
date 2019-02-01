@@ -94,7 +94,6 @@ function updateCSPAN() {
   }
 }
 
-
 function _formatCSPANTranscript(blob) {
   PersistLog.debug('_formatDocTexts start');
   var formattedTexts = [];
@@ -114,9 +113,9 @@ function _formatCSPANTranscript(blob) {
   for (var i = 0; i < formattedParagraphs.length; i += 1) {
     PersistLog.debug('Paragraph %s: %s', i+1, formattedParagraphs[i]);
     formattedParagraphs[i] = formattedParagraphs[i].trim();
-    // Make speakers uppercase to mimic SRT format
-    formattedParagraphs[i] = formattedParagraphs[i].replace(/^([ A-Za-z0-9.-]{2,30}?:)/, function(v) { return v.toUpperCase(); });
-  }
+      // Make speakers uppercase to mimic SRT format
+      formattedParagraphs[i] = formattedParagraphs[i].replace(/^([ A-Za-z0-9.-]{2,30}?:)/, function(v) { return v.toUpperCase(); });
+    }
   // If there's only one paragraph in a given chunk
   // and the paragraph under the Horizontal rule is too long
   // Find the first period and add an artificial paragraph so that
