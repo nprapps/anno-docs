@@ -223,7 +223,8 @@ def render_embeds():
     view = app.__dict__['_embed']
     contents = parsed_factcheck['contents']
     annotations = [x for x in contents if x['type'] == 'annotation']
-    slugs = [x['slug'] for x in annotations]
+    published = [x for x in annotations if x['published'] == 'yes']
+    slugs = [x['slug'] for x in published]
     with _fake_context('/embeds/'):
         g.slugs = slugs
         response = app.__dict__['_embedlist']()

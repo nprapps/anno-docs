@@ -79,7 +79,8 @@ def _embedlist():
     context = get_factcheck_context()
     contents = context['contents']
     annotations = [post for post in contents if post['type'] == 'annotation']
-    slugs = [x['slug'] for x in annotations]
+    published = [x for x in annotations if x['published'] == 'yes']
+    slugs = [x['slug'] for x in published]
     context['slugs'] = slugs
     return make_response(render_template('embedlist.html', **context))
 
