@@ -70,7 +70,7 @@
   <body>
         <div id="input">
             <label class="bold input-item" for="url">Enter the factcheck url<span class="required-flag">*</span></label>
-            <input class="input-item" placeholder="http://www.npr.org/2017/01/31/512439121/trumps-executive-order-on-immigration-annotated" type="text" name="url" id="url">
+            <input class="input-item" value="{{ config.EMBEDDING_PAGE }}" type="text" name="url" id="url">
             <label class="input-item" for="campaigns">Enter optional twitter campaigns</label>
             <input class="input-item" placeholder="npr,politics" type="text" name="campaigns" id="campaigns">
             <button class="input-item" id="submit" type="button">Generate sharing page</button>
