@@ -153,7 +153,7 @@ CSPAN = True
 SHARING
 """
 SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET, PROJECT_SLUG)
-EMBEDDING_PAGE = 'http://npr.org'
+EMBEDDING_PAGE = 'https://www.npr.org/templates/story/story.php?storyId=690345256'
 
 """
 SERVICES
