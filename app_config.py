@@ -148,7 +148,7 @@ PARENT_FOLDER_ID = '0B6C-jdxmvrJoM3JnZ1ZZUkhVQTg'
 GAS_LOG_KEY = json_config['log_sheet'] # Google app script logs spreadsheet key
 TRANSCRIPT_GDOC_KEY = json_config['transcript'] # Google app script google doc key
 SCRIPT_PROJECT_NAME = 'factcheck_scripts' # Google app scripts project name
-CSPAN = True
+CSPAN = json_config['cspan']
 """
 SHARING
 """
