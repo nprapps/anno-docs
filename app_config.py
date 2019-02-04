@@ -44,7 +44,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20190205-sotu-trump'
+CURRENT_FACTCHECK = '20190205-sotu-dems'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
@@ -153,7 +153,7 @@ CSPAN = True
 SHARING
 """
 SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET, PROJECT_SLUG)
-EMBEDDING_PAGE = 'https://www.npr.org/templates/story/story.php?storyId=690345256'
+EMBEDDING_PAGE = 'https://www.npr.org/templates/story/story.php?storyId=690346427'
 
 """
 SERVICES
