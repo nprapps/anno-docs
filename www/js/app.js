@@ -150,6 +150,11 @@ const updateTranscript = function(data) {
     const patches = diff(transcriptvDOM, newTranscriptvDOM);
 
     transcriptDOM = patch(transcriptDOM, patches);
+    // remove draggable attributes
+    var draggables = document.querySelectorAll("[draggable]");
+    for (var i = 0; i < draggables.length; i++) {
+        draggables[i].removeAttribute("draggable");
+    }
     transcriptvDOM = newTranscriptvDOM;
     registerTrackers();
     addNavListeners();
