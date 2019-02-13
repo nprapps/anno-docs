@@ -100,12 +100,7 @@ The project contains the following folders and important files:
 Bootstrap the project
 ---------------------
 
-Node.js is required for the static asset pipeline. If you don't already have it, get it like this:
-
-```
-brew install node
-curl https://npmjs.org/install.sh | sh
-```
+Node.js is required for the static asset pipeline and for talking to the Apps Script API. If you don't already have it, get it from [nvm](https://github.com/creationix/nvm):
 
 Then bootstrap the project:
 
@@ -120,6 +115,7 @@ Before you can run the next step of the bootstrap you will need to setup Google 
 
 ```
 fab update
+node fab login
 ```
 
 **Problems installing requirements?** You may need to run the pip command as ``ARCHFLAGS=-Wno-error=unused-command-line-argument-hard-error-in-future pip install -r requirements.txt`` to work around an issue with OSX.
@@ -306,7 +302,13 @@ It is better to follow the documentation but let me throw in some tips that will
 
 Done that? Phewww that was crazy, right....now let's enjoy our work.
 
-Use the `fab.js` Node script to run and update code over the Apps Script API. For example, to set up the script properties for the project, set the correct values in `app_config.json`, and then execute:
+Use the `fab.js` Node script to run and update code over the Apps Script API. You will need to be authenticated, with extra permissions (compared to the Dailygraphics Next rig). So before doing anything, authenticate Node against Google:
+
+```
+node fab login
+```
+
+At that point, you can actually talk to the remote API. Set up the script properties for the project, set the correct values in `app_config.json`, and then execute:
 
 ```
 node fab setup
