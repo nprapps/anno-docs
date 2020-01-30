@@ -61,9 +61,11 @@ www/assets/*
 www/live-data/*
 .copydoc/*
 .factcheck/*
+src/
 
 #Logs
 logs/*.log
 
 # Ignore override local settings file
 local_settings.py
+a_local_settings.py
