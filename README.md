@@ -50,7 +50,7 @@ _Note: On February 2017 we have added the ability to use CSPAN through [openedca
 Examples
 --------
 
-* [Fact Check: Trump And Clinton Debate For The First Time](http://www.npr.org/2016/09/26/495115346/fact-check-first-presidential-debate)
+* [FACT CHECK: Trump Delivers State Of The Union To Tense, Partisan Congress](https://www.npr.org/2020/02/04/800983688/fact-check-president-trump-delivers-his-3rd-state-of-the-union-address)
 
 Assumptions
 -----------
