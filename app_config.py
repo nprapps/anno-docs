@@ -44,7 +44,7 @@ ASSETS_SLUG = 'anno-docs'
 
 # DEPLOY SETUP CONFIG
 FACTCHECKS_DIRECTORY_PREFIX = 'factchecks/'
-CURRENT_FACTCHECK = '20200224-factcheck-test'
+CURRENT_FACTCHECK = '20200820-dnc'
 try:
     # Override CURRENT FACTCHECK
     from local_settings import CURRENT_FACTCHECK
