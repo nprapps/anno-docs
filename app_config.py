@@ -153,7 +153,7 @@ CSPAN = json_config['cspan']
 SHARING
 """
 SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET, PROJECT_SLUG)
-EMBEDDING_PAGE = 'https://www.npr.org/templates/story/story.php?storyId=690345256'
+EMBEDDING_PAGE = 'https://www.npr.org/2020/08/20/901380014/fact-check-bidens-address-to-the-dnc-annotated'
 
 """
 SERVICES
