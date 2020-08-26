@@ -57,10 +57,14 @@
     </footer>
 
     <div class="embed-code">
-        <h2>Embed code</h2>
+        <h2>Liveblog embed code</h2>
+        <textarea rows=5>&lt;side-chain src="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/embeds/{{slug}}.html" id="sidechain-{{slug}}"&gt;&lt;/side-chain&gt;
+        </textarea>
+
+        <h2>Seamus embed code</h2>
         <textarea rows=5>&lt;p data-pym-loader data-child-src="https://{{ PRODUCTION_S3_BUCKET }}/{{ FACTCHECKS_DIRECTORY_PREFIX }}{{ CURRENT_FACTCHECK }}/embeds/{{slug}}.html" id="responsive-embed-{{slug}}"&gt;Loading...&lt;/p&gt;&lt;script type="text/javascript" src="https://pym.nprapps.org/npr-pym-loader.v2.min.js"&gt;&lt;/script&gt;
         </textarea>
-        
+
         <h2>Direct link</h2>
         <blockquote class="direct-link">
         <p><em><strong> <a

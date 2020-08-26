@@ -59,7 +59,7 @@ def _embed(slug):
     context = get_factcheck_context();
     context['slug'] = slug
     contents = context['contents']
-    annotations = [post for post in contents if post['type'] == 'annotation']
+    annotations = [post for post in contents if post['type'] == 'annotation' and post['published'] == 'yes']
     filtered = [post for post in annotations if post['slug'] == slug]
     filtered = filtered[0]
     context['filtered'] = filtered
@@ -78,7 +78,7 @@ def _embedlist():
     """
     context = get_factcheck_context()
     contents = context['contents']
-    annotations = [post for post in contents if post['type'] == 'annotation']
+    annotations = [post for post in contents if post['type'] == 'annotation' and post['published'] == 'yes']
     published = [x for x in annotations if x['published'] == 'yes']
     slugs = [x['slug'] for x in published]
     context['slugs'] = slugs

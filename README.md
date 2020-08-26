@@ -1,3 +1,5 @@
+_The tl;dr quickstart guide can be found [here](https://docs.google.com/document/d/1tHLkywjzPsjdg82a0pkWC46mDfSD6eS57pH8oJcLo5k/edit?usp=sharing). It contains helpful tips about how to create and run the annotation rig. If you want to understand the ins and outs of its architecture, see below_
+
 Anno-docs
 ========================
 
