@@ -2,8 +2,6 @@
  * Module for tracking standardized analytics.
  */
 
-import URL from 'url-parse';
-
 var _gaq = _gaq || [];
 var _sf_async_config = {};
 var _comscore = _comscore || [];
@@ -23,19 +21,29 @@ window.ANALYTICS = (function () {
     }
 
     var setupVizAnalytics = function() {
-        var startUrl = location.host + location.pathname;
+        const currentUrl = new URL(window.location.href);
+        const parentUrl = new URL(currentUrl.searchParams.get("parentUrl"));
 
-        var parentUrl = new URL(decodeURIComponent(getParameterByName('parentUrl')));
+        const embedUrl = window.location.protocol +
+            '//' + window.location.hostname +
+            window.location.pathname;
 
-        var gaLocation = startUrl + '?parentUrl=' + parentUrl.hostname
-        var gaPath = location.pathname.substring(1) + '?parentUrl=' + parentUrl.hostname;
+        const gaLocation = embedUrl;
+        const gaPath = window.location.pathname;
 
-        ga('create', APP_CONFIG.VIZ_GOOGLE_ANALYTICS.ACCOUNT_ID, 'auto');
-        ga('send', {
-            hitType: 'pageview',
-            location: gaLocation,
-            page: gaPath
-        });
+        // Dimension structure mirrrors that of the standard Visuals team analytics
+        const DIMENSION_PARENT_URL = 'dimension1';
+        const DIMENSION_PARENT_HOSTNAME = 'dimension2';
+        const DIMENSION_PARENT_INITIAL_WIDTH = 'dimension3';
+        let customData = {};
+        customData[DIMENSION_PARENT_URL] = currentUrl.searchParams.get("parentUrl") || '';
+        customData[DIMENSION_PARENT_HOSTNAME] = parentUrl.hostname;
+        customData[DIMENSION_PARENT_INITIAL_WIDTH] = currentUrl.searchParams.get("initialWidth") || '';
+
+        window.ga('create', APP_CONFIG.VIZ_GOOGLE_ANALYTICS.ACCOUNT_ID, 'auto');
+        window.ga('set', 'location', gaLocation);
+        window.ga('set', 'page', gaPath);
+        window.ga('send', 'pageview', customData);
     }
 
     var getParameterByName = function(name) {
