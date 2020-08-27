@@ -323,6 +323,7 @@ a:hover, a:active { color: @link-active; }
     border-bottom: 4px solid @highlight;
     line-height: 1.9rem;
     padding-bottom: 3px;
+    cursor: pointer;
 }
 
 h3 .fact-checked {
@@ -355,10 +356,10 @@ h3 .fact-checked {
         background-color: @orange !important;
     }
 
-    &.unread {
-        border: 2px solid @highlight;
-        background: @highlight-pale;
-    }
+    // &.unread {
+    //     border: 2px solid @highlight;
+    //     background: @highlight-pale;
+    // }
 
     &.offscreen, &.offscreen.unread {
         max-height: 0;
@@ -562,4 +563,8 @@ body.excerpt-embed {
             color: #fff;
         }
     }
+}
+
+.annotation.hidden {
+    display: none;
 }

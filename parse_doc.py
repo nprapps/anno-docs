@@ -239,6 +239,7 @@ def parse_raw_contents(data, status, authors):
     # - FrontMatter
     # - Contents
     # Parse rest of doc content, i.e., transcript contents
+    annotationCount = 0
     contents = []
     if not status:
         if len(data):
@@ -268,9 +269,11 @@ def parse_raw_contents(data, status, authors):
             for k, v in metadata.iteritems():
                 annotation[k] = v
             annotation[u'contents'] = process_annotation_contents(raw_contents)
+            annotation[u'number'] = annotationCount
             annotation[u'markup'] = transform_annotation_markup(annotation)
             annotation[u'type'] = "annotation"
             contents.append(annotation)
+            annotationCount += 1
         else:
             transcript = {'type': 'other'}
             typ, context = process_transcript_content(r['content'])

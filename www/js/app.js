@@ -158,6 +158,7 @@ const updateTranscript = function(data) {
     transcriptvDOM = newTranscriptvDOM;
     registerTrackers();
     addNavListeners();
+    addAnnotationListeners();
 }
 
 /*
@@ -603,6 +604,38 @@ const addNavListeners = function(){
 
 }
 
+const addAnnotationListeners = function(){
+  var checkedArray = document.getElementsByClassName('fact-checked');
+  for (var i = 0; i < checkedArray.length; i++){
+    checkedArray[i].classList.add(`a${i}`);
+    checkedArray[i].dataset.annoNum = `a${i}`;
+    checkedArray[i].addEventListener('click', showAnnotation, false);
+
+    var associatedAnno = document.getElementsByClassName(`annotation ${`a${i}`}`)[0];
+    if (localStorage.getItem(associatedAnno.id)) {
+        associatedAnno.classList.remove('hidden');
+        localStorage.setItem(associatedAnno.id, true)
+        }
+    }
+}
+
+const showAnnotation = function(e) {
+    var num = e.target.dataset.annoNum;
+
+    var currentAnnotation = document.getElementsByClassName(`annotation ${num}`)[0];
+    showOrHideAnno(currentAnnotation)
+}
+
+const showOrHideAnno = function(curr) {
+    if (curr.classList.contains('hidden')) {
+        curr.classList.remove('hidden');
+        localStorage.setItem(curr.id, true)
+    } else {
+        curr.classList.add('hidden');
+        localStorage.removeItem(curr.id)
+    }
+}
+
 const onNavigatePreviousClick = function(e){
   e.preventDefault();
   var parentId = this.parentNode.parentNode.id;
@@ -612,6 +645,8 @@ const onNavigatePreviousClick = function(e){
   } else {
     var prevAnnotation = currentFactChecks[currentFactChecks.length - 1];
   }
+  document.getElementById(prevAnnotation).classList.remove('hidden')
+  localStorage.setItem(prevAnnotation, true)
   scrollToFactCheck('#' + prevAnnotation);
   if (!navAnalyticsTracked) {
     ANALYTICS.trackEvent('fact-check-nav-click');
@@ -628,6 +663,9 @@ const onNavigateNextclick = function(e){
   } else {
     var nextAnnotation = currentFactChecks[0];
   }
+  console.log(document.getElementById(nextAnnotation))
+  document.getElementById(nextAnnotation).classList.remove('hidden')
+  localStorage.setItem(prevAnnotation, true)
   scrollToFactCheck('#' + nextAnnotation);
   if (!navAnalyticsTracked) {
     ANALYTICS.trackEvent('fact-check-nav-click');
