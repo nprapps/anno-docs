@@ -153,7 +153,7 @@ CSPAN = json_config['cspan']
 SHARING
 """
 SHARE_URL = 'http://%s/%s/' % (PRODUCTION_S3_BUCKET, PROJECT_SLUG)
-EMBEDDING_PAGE = 'REPLACE_ME'
+EMBEDDING_PAGE = 'https://npr.org/989118802/'
 
 """
 SERVICES
